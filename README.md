@@ -1,40 +1,26 @@
-# 💉 Assistente de Dados Públicos da Saúde para Vacinação
+# 💉 Assistente de Vacinação - Dados Públicos
+> "A informação da saúde pública na palma do seu terminal."
 
-Projeto Integrador (API) desenvolvido para o **1º semestre de Análise e Desenvolvimento de Sistemas (ADS)** da Fatec, em parceria com o **CADI** (Centro de Apoio à Docência e Institucional).
+Olá! Bem-vindo ao repositório do nosso Assistente de Vacinação. Este projeto foi criado por alunos do 1º semestre de Análise e Desenvolvimento de Sistemas (ADS) da Fatec, em parceria com o CADI.
 
-## 🎯 O Desafio
-Desenvolver um assistente virtual voltado para a saúde pública, capaz de informar o cidadão sobre:
-* **Calendários de vacinação** para diferentes faixas etárias (crianças, adultos, idosos, etc.).
-* **Coberturas vacinais** em diferentes regiões do Brasil.
+## ❓ O que este programa faz?
+Ele é um assistente via linha de comando (terminal) que ajuda você a descobrir:
+- Quais vacinas você ou sua família precisam tomar com base na idade.
+- Como está a cobertura vacinal em diferentes regiões do Brasil.
 
-**Restrições do Projeto (Regras de Negócio):**
-* O sistema funciona com base em **Lógica Algorítmica**, sem persistência de dados (não utilizamos bancos de dados tradicionais como SQL/NoSQL).
-* A leitura de dados é feita através de arquivos locais de portais oficiais.
-* **Proibido o uso de APIs externas** para a inteligência de busca ou integração.
+**Tudo isso de forma local, rápida e sem complicação.**
 
-## 🛠️ Tecnologias e Ferramentas
-* **Linguagem:** Python 3.x
-* **Controle de Versão:** Git e GitHub
-* **Gestão de Projeto:** Jira (Metodologia Ágil / Scrum)
+## ⚙️ Como a mágica acontece (Para os Professores/Devs)
+Como o foco do nosso semestre é **Lógica Algorítmica**, nós construímos este sistema com algumas regras rígidas:
+1. **Zero Banco de Dados:** Não usamos MySQL ou PostgreSQL. Todos os dados são lidos em tempo real de arquivos `.csv` e `.json` locais.
+2. **Zero APIs Externas:** Não usamos inteligência artificial externa ou sistemas de terceiros para buscar as informações. A inteligência do assistente é 100% código Python feito por nós!
 
-## 📂 Estrutura do Repositório
+## 🚀 Passo a Passo: Como testar na sua máquina
 
-O projeto está organizado da seguinte forma:
+Quer ver o assistente funcionando? É só seguir estas etapas simples:
 
-```text
-/
-├── README.md                   # Documentação principal
-├── requirements.txt            # Dependências do projeto em Python
-├── .gitignore                  # Arquivos e pastas ignorados pelo Git
-└── assistente-vacinacao/       # Diretório da aplicação
-    ├── data/                   # Arquivos de dados locais (.csv, .json)
-    │   ├── raw/                # Dados originais do governo
-    │   └── processed/          # Dados limpos/filtrados
-    ├── docs/                   # Manuais do projeto
-    │   ├── manual_instalacao.md
-    │   └── manual_usuario.md
-    └── src/                    # Código-fonte principal
-        ├── main.py             # Arquivo de execução do assistente (Terminal)
-        ├── core/               # Lógica de busca e validação (Cérebro do sistema)
-        ├── data_handler/       # Funções para leitura dos dados locais
-        └── utils/              # Ferramentas auxiliares e formatação
+**Passo 1: Baixe o código**
+Abra o seu terminal e clone este repositório:
+```bash
+git clone [https://github.com/SEU_USUARIO/NOME_DO_REPOSITORIO.git](https://github.com/SEU_USUARIO/NOME_DO_REPOSITORIO.git)
+cd NexusDev

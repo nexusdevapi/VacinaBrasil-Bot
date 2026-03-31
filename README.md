@@ -1,4 +1,4 @@
-# Aprendizado por Projeto Integrado (API) - Vacina Brasil BOT
+# Aprendizado por Projeto Integrado (API) - Vacina Brasil Bot
 
 Projeto API desenvolvido durante o 1º semestre de 2026 por estudantes do curso de ADS da FATEC São José dos Campos - Prof. Jessen Vidal baseado na metodologia ágil Scrum, procurando desenvolver conceitos diretamente relacionados ao trabalho em equipe.
 

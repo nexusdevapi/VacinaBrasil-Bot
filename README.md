@@ -46,6 +46,7 @@ Ressalta-se que todas as funcionalidades devem ser desenvolvidas por meio de pro
 * Python;
 * Telegram;
 * Git/GitHub;
+* Google Colab;
 * Visual Studio Code;
 * Microsoft Teams;
 * WhatsApp;
@@ -55,11 +56,11 @@ Ressalta-se que todas as funcionalidades devem ser desenvolvidas por meio de pro
 
 # Product Backlog
 
-| Rank | Prioridade | User Story | Estimativa | Sprint |
-|------|------------|------------|------------|--------|
-| 1    | Alta       |  |  |  |
-| 2    | Alta       |  |  |  |
-| 3    | Alta       |  |  |  |
+| Rank | Prioridade | User Story | Sprint |
+|------|------------|------------|--------|
+| 1    | Alta       |  |  |
+| 2    | Alta       |  |  |
+| 3    | Alta       |  |  |
 
 # Registro das Sprints
 

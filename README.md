@@ -30,8 +30,6 @@ Desenvolver um assistente virtual para Telegram que utilize dados de portais pú
 
 Não deverá haver persistência dos dados através de um banco de dados.
 
-Ressalta-se que todas as funcionalidades devem ser desenvolvidas por meio de programação própria, sem a utilização de APIs externas.
-
 # Requisitos (não-funcionais)
 
 * Linguagem de Programação Python;
@@ -79,13 +77,13 @@ Ressalta-se que todas as funcionalidades devem ser desenvolvidas por meio de pro
 
 Para instalar e executar o bot de maneira local:
 
-1.1 Requisitos
+### 1.1 Requisitos
 
 * Conexão à Internet;
 * Python (https://www.python.org/ftp/python/pymanager/python-manager-26.0.msix);
 * Token do bot para Telegram.
 
-1.2 Instalação
+### 1.2 Instalação
 
 Abra um terminal e clone o seguinte repositório:
 ```bash

@@ -54,7 +54,7 @@ Ressalta-se que todas as funcionalidades devem ser desenvolvidas por meio de pro
 |------|------------|------------|------------|--------|
 | 1    | Alta       |  |  |  |
 | 2    | Alta       |  |  |  |
-| 3    | Alta       | C |  |  |
+| 3    | Alta       |  |  |  |
 
 # Registro das Sprints
 

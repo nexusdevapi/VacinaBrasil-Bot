@@ -61,8 +61,8 @@ Não deverá haver persistência dos dados através de um banco de dados.
 | 3 | Alta | Como desenvolvedor, preciso estruturar o repositório e a documentação ágil para atender aos requisitos da Fatec. | 1 |
 | 4 | Média | Como usuário, quero visualizar dados de cobertura vacinal de diferentes regiões do Brasil para me manter informado. | 2 |
 | 5 | Média | Como usuário, quero interagir com o bot utilizando Linguagem Natural (mensagens de texto livres) em vez de apenas botões. | 2 |
-| 7 | Baixa | Como usuário, quero gerar um relatório simples ou resumo das vacinas pendentes para minha idade. | 3 |
-| 8 | Alta | Como administrador, preciso dos manuais de usuário e instalação finalizados para replicar o ambiente do bot. | 3 |
+| 6 | Baixa | Como usuário, quero gerar um relatório simples ou resumo das vacinas pendentes para minha idade. | 3 |
+| 7 | Alta | Como administrador, preciso dos manuais de usuário e instalação finalizados para replicar o ambiente do bot. | 3 |
 
 # Registro das Sprints
 

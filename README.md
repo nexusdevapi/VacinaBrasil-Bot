@@ -91,5 +91,5 @@ Para instalar e executar o bot de maneira local:
 
 Abra um terminal e clone o seguinte repositório:
 ```bash
-git clone [https://github.com/nexusdevapi/VacinaBrasil-Bot.git](https://github.com/.git)
-cd NexusDev
+git clone [https://github.com/nexusdevapi/VacinaBrasil-Bot.git](https://github.com/nexusdevapi/VacinaBrasil-Bot.git)
+cd VacinaBrasil-Bot

@@ -83,9 +83,9 @@ Para instalar e executar o bot de maneira local:
 
 ### 1.1 Requisitos
 
-* Conexão à Internet
-* [Python](https://www.python.org/ftp/python/pymanager/python-manager-26.0.msix)
-* Token do bot para Telegram
+* Conexão à Internet;
+* [Python](https://www.python.org/ftp/python/pymanager/python-manager-26.0.msix);
+* Token do bot para Telegram.
 
 ### 1.2 Instalação
 

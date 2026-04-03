@@ -40,15 +40,15 @@ Não deverá haver persistência dos dados através de um banco de dados.
 
 ## Tecnologias Utilizadas
 
-* Jira Software;
-* Python;
-* Telegram;
-* Git/GitHub;
-* Google Colab;
-* Visual Studio Code;
-* Microsoft Teams;
-* WhatsApp;
-* Canva;
+* Jira Software
+* Python
+* Telegram
+* Git/GitHub
+* Google Colab
+* Visual Studio Code
+* Microsoft Teams
+* WhatsApp
+* Canva
 
 
 

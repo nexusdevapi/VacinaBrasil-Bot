@@ -1,25 +1,24 @@
 # API 1º Semestre ADS - Vacina Brasil Bot (NexusDev)
 
-> Status do Projeto: Sprint 1 - Em andamento 🔵
+> Status do Projeto: Sprint 1 - Concluída ✅
 
 ## 🏅 Desafio <a id="desafio"></a>
 
-Desenvolver um assistente virtual para Telegram focado em saúde pública. O objetivo é informar o cidadão sobre calendários vacinais e coberturas por região, utilizando exclusivamente dados de portais públicos oficiais processados localmente (sem APIs externas de bancos de dados ou IA generativa paga).
+Desenvolver um assistente virtual para Telegram focado em saúde pública. O bot informa ao usuário **as vacinas recomendadas de acordo com a idade ou semana de gestação**, utilizando **dados processados localmente a partir de arquivos JSON**.
 
-## 📋 Backlog da Sprint 1 <a id="backlog"></a>
+---
 
-Este backlog reflete o planejamento estratégico e a estimativa de esforço (Story Points) definida para a primeira entrega.
+## 📋 Product Backlog <a id="backlog"></a>
 
-| Rank | Prioridade | User Story | Estimativa (Points) |
-| :--: | :--------: | :--- | :---: |
-| 1 | Alta | **Organização:** Definir papéis de PO e SM e estabelecer canais de comunicação oficial da equipe. | 2 |
-| 2 | Alta | **Mapeamento:** Realizar levantamento de competências técnicas do time para distribuição de tarefas. | 1 |
-| 3 | Alta | **Análise:** Estudar os requisitos da API e garantir a conformidade com a restrição de dados locais. | 1 |
-| 4 | Alta | **Infraestrutura:** Configurar o repositório GitHub, .gitignore e a estrutura de pastas inicial. | 1 |
-| 5 | Alta | **Data Mining:** Coletar e tratar arquivos CSV/JSON de fontes oficiais (DATASUS) sobre vacinação. | 4 |
-| 6 | Alta | **Arquitetura:** Desenhar a estrutura lógica das classes Python e fluxo de navegação do bot. | 5 |
-| 7 | Alta | **Setup Telegram:** Configurar o BotFather e implementar o comando inicial `/start` no código. | 5 |
-| 8 | Alta | **Protótipo:** Desenvolver a lógica de busca que consulta arquivos locais e responde o nome da vacina. | 8 |
+| Rank | Prioridade | User Story | Sprint |
+| :--- | :---: | :--- | :---: |
+| 1 | Alta | Como usuário, quero acessar o bot pelo Telegram para iniciar a consulta de informações sobre vacinação. | 1 |
+| 2 | Alta | Como usuário, quero informar minha data de nascimento para receber as vacinas recomendadas para minha idade. | 1 |
+| 3 | Alta | Como usuário gestante, quero informar a semana de gestação para receber as vacinas recomendadas para esse período. | 1 |
+| 4 | Alta | Como equipe de desenvolvimento, precisamos estruturar o repositório Git e organizar as tarefas no Jira para gerenciar o desenvolvimento do projeto. | 1 |
+| 5 | Média | Como usuário, quero interagir com o bot utilizando linguagem natural em vez de apenas botões. | 2 |
+| 6 | Baixa | Como usuário, quero gerar um resumo simples das vacinas recomendadas para minha faixa etária. | 3 |
+| 7 | Média | Como administrador, preciso disponibilizar os manuais de usuário e instalação para permitir a execução do bot em outros ambientes. | 3 |
 
 ---
 
@@ -39,47 +38,23 @@ Este backlog reflete o planejamento estratégico e a estimativa de esforço (Sto
 
 | Critério | Descrição |
 | :--- | :--- |
-| **Funcionalidade Implementada** | Todos os critérios de aceitação da User Story foram atendidos. |
+| **Funcionalidade Implementada** | O bot retorna vacinas de acordo com a idade ou semana de gestação. |
 | **Revisão de Código** | O código foi revisado por outro membro ou validado tecnicamente. |
 | **Zero APIs Externas** | A entrega utiliza apenas processamento local de dados, conforme o requisito. |
 | **Integração no Git** | O código foi mergeado no branch principal sem conflitos. |
-| **Validação do PO** | O Product Owner validou que a entrega atende à necessidade do usuário. |
+| **Validação do PO** | O Product Owner validou que a entrega atende à necessidade mínima do usuário. |
 
 ---
 
 ## 🎓 Equipe <a id="equipe"></a>
 
 <div align="center">
-  <table>
-    <tr>
-      <th>Membro</th>
-      <th>Função</th>
-      <th>Github</th>
-      <th>Linkedin</th>
-    </tr>
-    <tr>
-      <td>Nicolas Fonseca Meira</td>
-      <td>Product Owner</td>
-      <td><a href="https://github.com/NicolasFonsecaM"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white"></a></td>
-      <td><a href="https://www.linkedin.com/in/nicolas-fonseca-60386130b/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"></a></td>
-    </tr>
-    <tr>
-      <td>Caio Gabriel Ferreira</td>
-      <td>Scrum Master</td>
-      <td><a href="https://github.com/caiogabrielfp-cpu"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white"></a></td>
-      <td><a href="https://www.linkedin.com/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"></a></td>
-    </tr>
-    <tr>
-      <td>Gabriel Yudi Fujimoto</td>
-      <td>Scrum Team</td>
-      <td><a href="https://github.com/fujimotogabriel"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white"></a></td>
-      <td><a href="https://www.linkedin.com/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"></a></td>
-    </tr>
-    <tr>
-      <td>Miguel Silva Gomes</td>
-      <td>Scrum Team</td>
-      <td><a href="https://github.com/miguelsg97"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white"></a></td>
-      <td><a href="https://www.linkedin.com/in/miguelsg479/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"></a></td>
-    </tr>
-  </table>
+
+| Nome | Função | LinkedIn & GitHub |
+| :--------------------- | :-----------: | :-----------------------------------------------------------------------------------------------------------: |
+| Nicolas Fonseca Meira | Scrum Master | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/nicolas-fonseca-60386130b/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/NicolasFonsecaM) |
+| Caio Gabriel Ferreira de Paula | Product Owner | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/caiogabrielfp-cpu) |
+| Gabriel Yudi Fujimoto | Scrum Team | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/gabriel-fujimoto-a90239367/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/fujimotogabriel) |
+| Miguel Silva Gomes | Scrum Team | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/miguelsg479/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/miguelsg97) |
+
 </div>

@@ -1,0 +1,22 @@
+[
+  {
+    "grupo":"Idoso",
+    "idade_min":60.0,
+    "idade_max":null,
+    "idade_texto":"60+ anos",
+    "vacina":"Influenza",
+    "dose":"anual",
+    "descricao":"Gripe",
+    "observacoes":null
+  },
+  {
+    "grupo":"Idoso",
+    "idade_min":60.0,
+    "idade_max":null,
+    "idade_texto":"60+ anos",
+    "vacina":"Covid-19",
+    "dose":"semestral",
+    "descricao":"Formas graves COVID",
+    "observacoes":null
+  }
+]

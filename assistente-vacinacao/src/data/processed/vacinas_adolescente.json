@@ -1,0 +1,22 @@
+[
+  {
+    "grupo":"Adolescente",
+    "idade_min":9.0,
+    "idade_max":14.0,
+    "idade_texto":"9-14 anos",
+    "vacina":"HPV",
+    "dose":"1 dose",
+    "descricao":"HPV",
+    "observacoes":null
+  },
+  {
+    "grupo":"Adolescente",
+    "idade_min":10.0,
+    "idade_max":14.0,
+    "idade_texto":"10-14 anos",
+    "vacina":"Dengue",
+    "dose":"2 doses",
+    "descricao":"Dengue",
+    "observacoes":null
+  }
+]

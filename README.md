@@ -1,5 +1,9 @@
 # Aprendizado por Projeto Integrado (API) - Vacina Brasil Bot
 
+## Vacina Brasil Bot
+
+Assistente virtual para Telegram que informa vacinas recomendadas com base na idade do usuário ou na semana de gestação.
+
 Projeto API desenvolvido durante o 1º semestre de 2026 por estudantes do curso de ADS da FATEC São José dos Campos - Prof. Jessen Vidal baseado na metodologia ágil Scrum, procurando desenvolver conceitos diretamente relacionados ao trabalho em equipe.
 
 # Índice
@@ -15,22 +19,22 @@ Projeto API desenvolvido durante o 1º semestre de 2026 por estudantes do curso 
 # Equipe
 | Nome                   | Função        | LinkedIn & GitHub                                                                                              |
 | :--------------------- | :-----------: | :-----------------------------------------------------------------------------------------------------------: |
-| Nicolas Fonseca Meira   | Scrum Master | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/NicolasFonsecaM) |
-| Caio Gabriel Ferreira de Paula |  Product Owner | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/caiogabrielfp-cpu) |
-| Gabriel Yudi Fujimoto  | Scrum Team    | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/fujimotogabriel) |
+| Nicolas Fonseca Meira   | Scrum Master | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](link do linkedin) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/NicolasFonsecaM) |
+| Caio Gabriel Ferreira de Paula |  Product Owner | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](link do linkedin) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/caiogabrielfp-cpu) |
+| Gabriel Yudi Fujimoto  | Scrum Team    | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/gabriel-fujimoto-a90239367/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/fujimotogabriel) |
 | Miguel Silva Gomes     | Scrum Team    | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/miguelsg479/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/miguelsg97) |
 
 # Objetivo do Projeto
 
 Desenvolver um assistente virtual para Telegram que utilize dados de portais públicos oficiais de saúde sobre vacinação para informar o cidadão sobre:
 
-* Calendário vacinal para diferentes faixas etárias (crianças, adultos, idosos, etc.);
-* Cobertura vacinal em diferentes regiões do Brasil;
-* Demais informações relevantes disponíveis sobre o tema.
+* Calendário vacinal para diferentes faixas etárias (crianças, adultos e idosos);
+* Consulta de vacinas recomendadas a partir da data de nascimento do usuário;
+* Consulta de vacinas recomendadas para gestantes de acordo com a semana de gestação.
 
 Não deverá haver persistência dos dados através de um banco de dados.
 
-# Requisitos (não-funcionais)
+# Requisitos Não Funcionais
 
 * Linguagem de Programação Python;
 * Repositório Git;
@@ -40,42 +44,187 @@ Não deverá haver persistência dos dados através de um banco de dados.
 
 ## Tecnologias Utilizadas
 
-* Jira Software
 * Python
+* pyTelegramBotAPI
 * Telegram
-* Git/GitHub
-* Google Colab
+* JSON
+* datetime
+* pathlib
+* Git
+* GitHub
 * Visual Studio Code
-* Microsoft Teams
-* WhatsApp
-* Canva
-
-
+* Google Colab
+* Jira Software
 
 # Product Backlog
 
 | Rank | Prioridade | User Story | Sprint |
 | :--- | :---: | :--- | :---: |
-| 1 | Alta | Como usuário, quero acessar o bot pelo Telegram para receber orientações iniciais sobre vacinação. | 1 |
-| 2 | Alta | Como usuário, quero consultar o calendário vacinal por faixa etária (criança, adulto, idoso) através de arquivos locais. | 1 |
-| 3 | Alta | Como desenvolvedor, preciso estruturar o repositório e a documentação ágil para atender aos requisitos da Fatec. | 1 |
-| 4 | Média | Como usuário, quero visualizar dados de cobertura vacinal de diferentes regiões do Brasil para me manter informado. | 2 |
-| 5 | Média | Como usuário, quero interagir com o bot utilizando Linguagem Natural (mensagens de texto livres) em vez de apenas botões. | 2 |
-| 6 | Baixa | Como usuário, quero gerar um relatório simples ou resumo das vacinas pendentes para minha idade. | 3 |
-| 7 | Alta | Como administrador, preciso dos manuais de usuário e instalação finalizados para replicar o ambiente do bot. | 3 |
+| 1 | Alta | Como usuário, quero acessar o bot pelo Telegram para iniciar a consulta de informações sobre vacinação. | 1 |
+| 2 | Alta | Como usuário, quero informar minha data de nascimento para receber as vacinas recomendadas para minha idade. | 1 |
+| 3 | Alta | Como usuário gestante, quero informar a semana de gestação para receber as vacinas recomendadas para esse período. | 1 |
+| 4 | Alta | Como equipe de desenvolvimento, precisamos estruturar o repositório Git e organizar as tarefas no Jira para gerenciar o desenvolvimento do projeto. | 1 |
+| 5 | Média | Como usuário, quero interagir com o bot utilizando linguagem natural em vez de apenas botões. | 2 |
+| 6 | Baixa | Como usuário, quero gerar um resumo simples das vacinas recomendadas para minha faixa etária. | 3 |
+| 7 | Média | Como administrador, preciso disponibilizar os manuais de usuário e instalação para permitir a execução do bot em outros ambientes. | 3 |
 
 # Registro das Sprints
 
 | Sprint            | Previsão   | Status         | Histórico |
 |-------------------|------------|----------------|-----------|
-| 01                | 05/04/2026 | em andamento   | [MVP](MVP/sp1.md) |
-| 02                | dd/mm/aaaa | a fazer        | [MVP](MVP/sp2.md) |
-| 03                | dd/mm/aaaa | a fazer        | [MVP](MVP/sp3.md) |
-| Feira de Soluções | dd/mm/aaaa | a fazer        | [MVP](#) |
+| 01                | 05/04/2026 | Concluída   | [MVP](MVP/sp1.md) |
 
 # Manual do Usuário
 
+## 1. Apresentação
 
+O bot de vacinação (`@vacinabrasil_bot`) é um assistente no Telegram que permite consultar rapidamente quais vacinas são recomendadas de acordo com a **idade do usuário** ou **período de gestação**.
+
+A interação ocorre diretamente pelo chat do Telegram, onde o usuário seleciona opções ou informa dados básicos, e o sistema retorna as vacinas recomendadas para aquele perfil. A base de dados utilizada pelo bot é obtida por meio de **scraping dos calendários de vacinação disponibilizados pelo Ministério da Saúde** no site:
+
+https://www.gov.br/saude/pt-br/vacinacao/calendario
+
+---
+
+# 2. Público-alvo e Problemas Resolvidos
+
+## 👤 Usuários atendidos
+
+* **Responsáveis por crianças:** Pais ou responsáveis que desejam acompanhar as vacinas recomendadas para seus filhos.
+* **Jovens e adultos:** Pessoas que querem verificar quais vacinas ou reforços são indicados para sua faixa etária.
+* **Idosos:** Usuários que desejam consultar quais imunizações são recomendadas a partir dos 60 anos.
+* **Gestantes:** Mulheres que precisam saber quais vacinas são indicadas durante o período de gestação.
+
+## 🩹 Problemas que o bot resolve
+
+* **Dificuldade de interpretação do calendário vacinal:** As tabelas oficiais possuem muitas informações. O bot simplifica e mostra apenas as vacinas relevantes para o usuário.
+* **Cálculo manual de faixa etária:** Muitas pessoas não sabem em qual categoria do calendário se encaixam. O bot calcula automaticamente a idade a partir da data de nascimento.
+* **Acesso rápido à informação:** Em vez de navegar por páginas e documentos, o usuário pode consultar as vacinas diretamente no Telegram.
+* **Informação específica para gestantes:** O bot permite consultar rapidamente as vacinas recomendadas conforme a semana de gestação.
+
+---
+
+# 3. Iniciando o Bot
+
+1. Abra o **Telegram**
+2. Procure pelo bot `@vacinabrasil_bot` ou leia o QR Code abaixo:
+
+
+
+3. Abra a conversa e digite:
+
+```
+/start
+```
+
+Após enviar o comando, o bot iniciará a interação e exibirá as opções disponíveis.
+
+---
+
+# 4. Fluxo principal de uso
+
+## 4.1 Menu inicial
+
+Após o comando `/start`, o bot responderá com a mensagem:
+
+**Escolha sua opção:**
+
+e exibirá dois botões:
+
+* `Desejo ver as minhas vacinas`
+* `Sou gestante`
+
+---
+
+## 4.2 Consulta por data de nascimento
+
+1. Clique em **Desejo ver as minhas vacinas**
+2. O bot solicitará o **dia de nascimento** (botões)
+3. Em seguida solicitará o **mês de nascimento** (botões)
+4. Depois solicitará o **ano de nascimento** (botões)
+
+Após a seleção completa da data, o sistema calcula automaticamente a idade do usuário e identifica a faixa etária correspondente.
+
+O bot então retorna as vacinas recomendadas para aquela idade.
+
+Exemplo de resposta:
+
+```
+Vacina - Dose
+--------------------
+Hepatite B - 3 doses
+dT - 3 doses
+Febre amarela - 1 dose
+```
+
+---
+
+## 4.3 Consulta para gestantes
+
+1. Clique em **Sou gestante**
+2. O bot solicitará a **semana de gestação** (botões)
+3. Após a seleção da semana, o sistema retorna as vacinas recomendadas para aquele período da gestação.
+
+Exemplo de resposta:
+
+```
+Vacina - Dose
+--------------------
+Hepatite B - 3 doses
+dT - 3 doses
+```
+
+---
+
+# 5. Respostas do sistema
+
+Após a consulta, o bot retorna uma lista com as vacinas recomendadas e suas respectivas doses.
+
+Exemplo:
+
+```
+Vacina - Dose
+--------------------
+Hepatite B - 3 doses
+dT - 3 doses
+Febre amarela - 1 dose
+```
+
+As informações são apresentadas de forma direta, indicando o **nome da vacina** e a **dose ou periodicidade recomendada**.
+
+---
+
+# 6. Observações
+
+* O bot precisa estar **em execução** para responder às mensagens.
+* Caso alguma combinação de data não seja válida, o sistema solicitará que o processo seja reiniciado.
+* O tempo de resposta pode levar alguns segundos enquanto o sistema processa os dados.
+
+---
+
+# 7. Exemplo de uso
+
+Digite:
+
+```
+/start
+```
+
+Selecione **Desejo ver as minhas vacinas**
+
+Escolha o **dia**, **mês** e **ano** de nascimento utilizando os botões.
+
+Após a seleção completa da data, o bot exibirá as vacinas recomendadas para a faixa etária correspondente.
+
+Exemplo de saída:
+
+```
+Vacina - Dose
+--------------------
+Hepatite B - 3 doses
+dT - 3 doses
+Febre amarela - 1 dose
+```
 
 # Manual de Instalação
 
@@ -89,7 +238,10 @@ Para instalar e executar o bot de maneira local:
 
 ### 1.2 Instalação
 
-Abra um terminal e clone o seguinte repositório:
+Abra um terminal e clone o repositório:
+
 ```bash
-git clone [https://github.com/nexusdevapi/VacinaBrasil-Bot.git](https://github.com/nexusdevapi/VacinaBrasil-Bot.git)
+git clone https://github.com/nexusdevapi/VacinaBrasil-Bot.git
 cd VacinaBrasil-Bot
+pip install pyTelegramBotAPI
+python src/main.py

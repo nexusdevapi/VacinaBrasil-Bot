@@ -24,7 +24,7 @@ Projeto API desenvolvido durante o 1º semestre de 2026 por estudantes do curso 
 | Gabriel Yudi Fujimoto  | Scrum Team    | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/gabriel-fujimoto-a90239367/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/fujimotogabriel) |
 | Miguel Silva Gomes     | Scrum Team    | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/miguelsg479/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/miguelsg97) |
 
-# Objetivo do Projeto 🎯
+<h2 id="objetivo-do-projeto">Objetivo do Projeto 🎯</h2>
 
 Desenvolver um assistente virtual para Telegram que utilize dados de portais públicos oficiais de saúde sobre vacinação para informar o cidadão sobre:
 
@@ -74,7 +74,7 @@ Não deverá haver persistência dos dados através de um banco de dados.
 |-------------------|------------|----------------|-----------|
 | 01                | 05/04/2026 | Concluída ✅   | [MVP](MVP/sp1.md) |
 
-# Manual do Usuário 📖
+<h2 id="manual-do-usuario">Manual do Usuário 📖</h2>
 
 ## 1. Apresentação
 
@@ -102,7 +102,7 @@ A interação ocorre diretamente pelo chat do Telegram, onde o usuário selecion
 
 ---
 
-# 3. Iniciando o Bot 🚀
+# 3. Iniciando o Bot
 
 1. Abra o **Telegram**
 2. Procure pelo bot `@vacinabrasil_bot` ou leia o QR Code abaixo:
@@ -226,7 +226,7 @@ dT - 3 doses
 Febre amarela - 1 dose
 ```
 
-# Manual de Instalação 🛠️
+<h2 id="manual-de-instalacao">Manual de Instalação 🛠️</h2>
 
 Para instalar e executar o bot de maneira local:
 

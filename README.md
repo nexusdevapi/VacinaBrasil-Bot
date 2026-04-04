@@ -1,4 +1,4 @@
-# Aprendizado por Projeto Integrado (API) - Vacina Brasil Bot
+# Aprendizado por Projeto Integrado (API)
 
 ## Vacina Brasil Bot
 

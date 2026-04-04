@@ -9,7 +9,7 @@ Projeto API desenvolvido durante o 1º semestre de 2026 por estudantes do curso 
 # Índice
 * [Objetivo do Projeto](#objetivo-do-projeto)
 * [Equipe](#equipe)
-* [Requisitos](#requisitos)
+* [Requisitos Não Funcionais](#requisitos-não-funcionais)
 * [Tecnologias Utilizadas](#tecnologias-utilizadas)
 * [Product Backlog](#product-backlog)
 * [Registro das Sprints](#registro-das-sprints)
@@ -19,12 +19,12 @@ Projeto API desenvolvido durante o 1º semestre de 2026 por estudantes do curso 
 # Equipe
 | Nome                   | Função        | LinkedIn & GitHub                                                                                              |
 | :--------------------- | :-----------: | :-----------------------------------------------------------------------------------------------------------: |
-| Nicolas Fonseca Meira   | Scrum Master | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](link do linkedin) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/NicolasFonsecaM) |
-| Caio Gabriel Ferreira de Paula |  Product Owner | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](link do linkedin) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/caiogabrielfp-cpu) |
+| Nicolas Fonseca Meira   | Scrum Master | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/nicolas-fonseca-60386130b/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/NicolasFonsecaM) |
+| Caio Gabriel Ferreira de Paula |  Product Owner | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/caiogabrielfp-cpu) |
 | Gabriel Yudi Fujimoto  | Scrum Team    | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/gabriel-fujimoto-a90239367/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/fujimotogabriel) |
 | Miguel Silva Gomes     | Scrum Team    | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/miguelsg479/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/miguelsg97) |
 
-# Objetivo do Projeto
+# Objetivo do Projeto 🎯
 
 Desenvolver um assistente virtual para Telegram que utilize dados de portais públicos oficiais de saúde sobre vacinação para informar o cidadão sobre:
 
@@ -72,30 +72,28 @@ Não deverá haver persistência dos dados através de um banco de dados.
 
 | Sprint            | Previsão   | Status         | Histórico |
 |-------------------|------------|----------------|-----------|
-| 01                | 05/04/2026 | Concluída   | [MVP](MVP/sp1.md) |
+| 01                | 05/04/2026 | Concluída ✅   | [MVP](MVP/sp1.md) |
 
-# Manual do Usuário
+# Manual do Usuário 📖
 
 ## 1. Apresentação
 
 O bot de vacinação (`@vacinabrasil_bot`) é um assistente no Telegram que permite consultar rapidamente quais vacinas são recomendadas de acordo com a **idade do usuário** ou **período de gestação**.
 
-A interação ocorre diretamente pelo chat do Telegram, onde o usuário seleciona opções ou informa dados básicos, e o sistema retorna as vacinas recomendadas para aquele perfil. A base de dados utilizada pelo bot é obtida por meio de **scraping dos calendários de vacinação disponibilizados pelo Ministério da Saúde** no site:
-
-https://www.gov.br/saude/pt-br/vacinacao/calendario
+A interação ocorre diretamente pelo chat do Telegram, onde o usuário seleciona opções ou informa dados básicos, e o sistema retorna as vacinas recomendadas para aquele perfil. A base de dados utilizada pelo bot é obtida por meio de **scraping dos calendários de vacinação disponibilizados pelo Ministério da Saúde** no site `https://www.gov.br/saude/pt-br/vacinacao/calendario`.
 
 ---
 
-# 2. Público-alvo e Problemas Resolvidos
+# 2. Público-alvo e Problemas Resolvidos 👤🩺
 
-## 👤 Usuários atendidos
+## Usuários atendidos
 
 * **Responsáveis por crianças:** Pais ou responsáveis que desejam acompanhar as vacinas recomendadas para seus filhos.
 * **Jovens e adultos:** Pessoas que querem verificar quais vacinas ou reforços são indicados para sua faixa etária.
 * **Idosos:** Usuários que desejam consultar quais imunizações são recomendadas a partir dos 60 anos.
 * **Gestantes:** Mulheres que precisam saber quais vacinas são indicadas durante o período de gestação.
 
-## 🩹 Problemas que o bot resolve
+## Problemas que o bot resolve
 
 * **Dificuldade de interpretação do calendário vacinal:** As tabelas oficiais possuem muitas informações. O bot simplifica e mostra apenas as vacinas relevantes para o usuário.
 * **Cálculo manual de faixa etária:** Muitas pessoas não sabem em qual categoria do calendário se encaixam. O bot calcula automaticamente a idade a partir da data de nascimento.
@@ -104,12 +102,14 @@ https://www.gov.br/saude/pt-br/vacinacao/calendario
 
 ---
 
-# 3. Iniciando o Bot
+# 3. Iniciando o Bot 🚀
 
 1. Abra o **Telegram**
 2. Procure pelo bot `@vacinabrasil_bot` ou leia o QR Code abaixo:
 
-
+<p align="center">
+  <img src="assets/img/qrcode_vacinabrasil_bot.png" width="250"/>
+</p>
 
 3. Abra a conversa e digite:
 
@@ -226,15 +226,18 @@ dT - 3 doses
 Febre amarela - 1 dose
 ```
 
-# Manual de Instalação
+# Manual de Instalação 🛠️
 
 Para instalar e executar o bot de maneira local:
 
 ### 1.1 Requisitos
 
+Para executar o bot localmente é necessário:
+
 * Conexão à Internet;
-* [Python](https://www.python.org/ftp/python/pymanager/python-manager-26.0.msix);
-* Token do bot para Telegram.
+* Python **3.10 ou superior** instalado;
+* Token de um bot criado no **BotFather (@BotFather no Telegram)**;
+* Biblioteca **pyTelegramBotAPI** instalada.
 
 ### 1.2 Instalação
 

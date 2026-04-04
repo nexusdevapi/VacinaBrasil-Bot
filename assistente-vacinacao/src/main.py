@@ -5,7 +5,7 @@ from datetime import datetime
 from core.engine import vacinas
 from core.validator import validate
 
-TOKEN = "8266156765:AAGL-xN8VBkcXoXHPk5-_arliCnkRQNRIUA"
+TOKEN = ""
 bot = telebot.TeleBot(TOKEN)
 
 user_data = {}

@@ -7,14 +7,14 @@ Assistente virtual para Telegram que informa vacinas recomendadas com base na id
 Projeto API desenvolvido durante o 1º semestre de 2026 por estudantes do curso de ADS da FATEC São José dos Campos - Prof. Jessen Vidal baseado na metodologia ágil Scrum, procurando desenvolver conceitos diretamente relacionados ao trabalho em equipe.
 
 # Índice
-* [Objetivo do Projeto](#objetivo-do-projeto)
+* [Objetivo do Projeto 🎯](#objetivo-do-projeto)
 * [Equipe](#equipe)
-* [Requisitos Não Funcionais](#requisitos-não-funcionais)
+* [Requisitos Não Funcionais](#requisitos-nao-funcionais)
 * [Tecnologias Utilizadas](#tecnologias-utilizadas)
 * [Product Backlog](#product-backlog)
 * [Registro das Sprints](#registro-das-sprints)
-* [Manual do Usuário](#manual-do-usuário)
-* [Manual de Instalação](#manual-de-instalação)
+* [Manual do Usuário 📖](#manual-do-usuario)
+* [Manual de Instalação 🛠️](#manual-de-instalacao)
 
 # Equipe
 | Nome                   | Função        | LinkedIn & GitHub                                                                                              |

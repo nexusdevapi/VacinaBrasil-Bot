@@ -1,6 +1,4 @@
-# Aprendizado por Projeto Integrado (API)
-
-## Vacina Brasil Bot
+# Aprendizado por Projeto Integrado (API) - Vacina Brasil Bot
 
 Assistente virtual para Telegram que informa vacinas recomendadas com base na idade do usuário ou na semana de gestação.
 
@@ -9,7 +7,7 @@ Projeto API desenvolvido durante o 1º semestre de 2026 por estudantes do curso 
 # Índice
 * [Objetivo do Projeto 🎯](#objetivo-do-projeto)
 * [Equipe](#equipe)
-* [Requisitos Não Funcionais](#requisitos-nao-funcionais)
+* [Requisitos Não Funcionais](#requisitos-não-funcionais)
 * [Tecnologias Utilizadas](#tecnologias-utilizadas)
 * [Product Backlog](#product-backlog)
 * [Registro das Sprints](#registro-das-sprints)
@@ -44,17 +42,41 @@ Não deverá haver persistência dos dados através de um banco de dados.
 
 ## Tecnologias Utilizadas
 
-* Python
-* pyTelegramBotAPI
-* Telegram
-* JSON
-* datetime
-* pathlib
-* Git
-* GitHub
-* Visual Studio Code
-* Google Colab
-* Jira Software
+<h4 align="center">
+  <a href="https://www.python.org/">
+    <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
+  </a>
+  <a href="https://pytba.readthedocs.io/">
+    <img src="https://img.shields.io/badge/pyTelegramBotAPI-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white"/>
+  </a>
+  <a href="https://telegram.org/">
+    <img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white"/>
+  </a>
+  <a href="https://www.json.org/">
+    <img src="https://img.shields.io/badge/JSON-000000?style=for-the-badge&logo=json&logoColor=white"/>
+  </a>
+  <a href="https://docs.python.org/3/library/datetime.html">
+    <img src="https://img.shields.io/badge/datetime-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
+  </a>
+  <a href="https://docs.python.org/3/library/pathlib.html">
+    <img src="https://img.shields.io/badge/pathlib-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
+  </a>
+  <a href="https://git-scm.com/">
+    <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white"/>
+  </a>
+  <a href="https://github.com/">
+    <img src="https://img.shields.io/badge/GitHub-121011?style=for-the-badge&logo=github&logoColor=white"/>
+  </a>
+  <a href="https://code.visualstudio.com/">
+    <img src="https://img.shields.io/badge/Visual%20Studio%20Code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white"/>
+  </a>
+  <a href="https://colab.research.google.com/">
+    <img src="https://img.shields.io/badge/Google%20Colab-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white"/>
+  </a>
+  <a href="https://www.atlassian.com/software/jira">
+    <img src="https://img.shields.io/badge/Jira%20Software-0052CC?style=for-the-badge&logo=jira&logoColor=white"/>
+  </a>
+</h4>
 
 # Product Backlog
 

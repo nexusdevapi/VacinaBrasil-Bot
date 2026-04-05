@@ -1,4 +1,6 @@
-# Aprendizado por Projeto Integrado (API) - Vacina Brasil Bot
+# Aprendizado por Projeto Integrado (API) - Vacina Brasil Bot 💉
+
+<img src="assets/img/banner_vacina_brasil.png" style="margin-left: auto; margin-right: auto;">
 
 Assistente virtual para Telegram que informa vacinas recomendadas com base na idade do usuário ou na semana de gestação.
 

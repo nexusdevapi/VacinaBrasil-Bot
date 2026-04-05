@@ -112,7 +112,7 @@ Não deve haver persistência dos dados através de bancos de dados.
 ### Sprint 1
 
 <p align="center">
-  <img src="assets/relatorio_spr1.png" width="800">
+  <img src="assets/img/relatorio_spr1.png" width="800">
 </p>
 
 ## 📖 Manual do Usuário
@@ -148,8 +148,8 @@ A interação ocorre diretamente pelo chat do Telegram, onde o usuário selecion
 1. Abra o **Telegram**
 2. Procure pelo bot `@vacinabrasil_bot` ou leia o QR Code abaixo:
 
-<p align="center">
-  <img src="assets/img/qrcode_vacinabrasil_bot.png" width="250"/>
+<p>
+  <img width="1563" height="584" alt="relatorio_spr1" src="https://github.com/user-attachments/assets/55e3c585-886b-4f28-8cc2-ff1649f9bd26" />
 </p>
 
 3. Abra a conversa e digite:

@@ -16,7 +16,7 @@ Desenvolver um assistente virtual para Telegram focado em saúde pública. O bot
 | 2 | Alta | Como usuário, quero informar minha data de nascimento para receber as vacinas recomendadas para minha idade. | 1 |
 | 3 | Alta | Como usuário gestante, quero informar a semana de gestação para receber as vacinas recomendadas para esse período. | 1 |
 | 4 | Alta | Como equipe de desenvolvimento, precisamos estruturar o repositório Git e organizar as tarefas no Jira para gerenciar o desenvolvimento do projeto. | 1 |
-| 5 | Média | Como usuário, quero interagir com o bot utilizando linguagem natural em vez de apenas botões. | 2 |
+| 5 | Média | Como usuário, quero utilizar botões no Telegram para consultar facilmente as vacinas recomendadas para minha idade ou período de gestação. | 2 |
 | 6 | Baixa | Como usuário, quero gerar um resumo simples das vacinas recomendadas para minha faixa etária. | 3 |
 | 7 | Média | Como administrador, preciso disponibilizar os manuais de usuário e instalação para permitir a execução do bot em outros ambientes. | 3 |
 

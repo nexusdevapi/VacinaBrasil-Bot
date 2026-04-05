@@ -64,7 +64,7 @@ Não deverá haver persistência dos dados através de um banco de dados.
 | 2 | Alta | Como usuário, quero informar minha data de nascimento para receber as vacinas recomendadas para minha idade. | 1 |
 | 3 | Alta | Como usuário gestante, quero informar a semana de gestação para receber as vacinas recomendadas para esse período. | 1 |
 | 4 | Alta | Como equipe de desenvolvimento, precisamos estruturar o repositório Git e organizar as tarefas no Jira para gerenciar o desenvolvimento do projeto. | 1 |
-| 5 | Média | Como usuário, quero interagir com o bot utilizando linguagem natural em vez de apenas botões. | 2 |
+| 5 | Média | Como usuário, quero utilizar botões no Telegram para consultar facilmente as vacinas recomendadas para minha idade ou período de gestação. | 2 |
 | 6 | Baixa | Como usuário, quero gerar um resumo simples das vacinas recomendadas para minha faixa etária. | 3 |
 | 7 | Média | Como administrador, preciso disponibilizar os manuais de usuário e instalação para permitir a execução do bot em outros ambientes. | 3 |
 
@@ -80,7 +80,7 @@ Não deverá haver persistência dos dados através de um banco de dados.
 
 O bot de vacinação (`@vacinabrasil_bot`) é um assistente no Telegram que permite consultar rapidamente quais vacinas são recomendadas de acordo com a **idade do usuário** ou **período de gestação**.
 
-A interação ocorre diretamente pelo chat do Telegram, onde o usuário seleciona opções ou informa dados básicos, e o sistema retorna as vacinas recomendadas para aquele perfil. A base de dados utilizada pelo bot é obtida por meio de **scraping dos calendários de vacinação disponibilizados pelo Ministério da Saúde** no site `https://www.gov.br/saude/pt-br/vacinacao/calendario`.
+A interação ocorre diretamente pelo chat do Telegram, onde o usuário seleciona opções ou informa dados básicos, e o sistema retorna as vacinas recomendadas para aquele perfil. A base de dados utilizada pelo bot é composta por arquivos JSON processados a partir de calendários de vacinação disponibilizados pelo Ministério da Saúde em `https://www.gov.br/saude/pt-br/vacinacao/calendario`.
 
 ---
 
@@ -246,5 +246,5 @@ Abra um terminal e clone o repositório:
 ```bash
 git clone https://github.com/nexusdevapi/VacinaBrasil-Bot.git
 cd VacinaBrasil-Bot
-pip install pyTelegramBotAPI
+pip install -r requirements.txt
 python src/main.py

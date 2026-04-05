@@ -1,30 +1,27 @@
 # Aprendizado por Projeto Integrado (API) - Vacina Brasil Bot 💉
 
-<img src="assets/img/banner_vacina_brasil.png" style="margin-left: auto; margin-right: auto;">
+<p align="center">
+  <img src="assets/img/banner_vacina_brasil.png">
+</p>
 
 Assistente virtual para Telegram que informa vacinas recomendadas com base na idade do usuário ou na semana de gestação.
 
-Projeto API desenvolvido durante o 1º semestre de 2026 por estudantes do curso de ADS da FATEC São José dos Campos - Prof. Jessen Vidal baseado na metodologia ágil Scrum, procurando desenvolver conceitos diretamente relacionados ao trabalho em equipe.
+Projeto desenvolvido durante o **1º semestre de 2026** por estudantes do curso de **Análise e Desenvolvimento de Sistemas da FATEC São José dos Campos**.
 
-# Índice
-* [Objetivo do Projeto 🎯](#objetivo-do-projeto)
-* [Equipe](#equipe)
-* [Requisitos Não Funcionais](#requisitos-não-funcionais)
-* [Tecnologias Utilizadas](#tecnologias-utilizadas)
-* [Product Backlog](#product-backlog)
-* [Registro das Sprints](#registro-das-sprints)
-* [Manual do Usuário 📖](#manual-do-usuario)
-* [Manual de Instalação 🛠️](#manual-de-instalacao)
+O projeto segue a metodologia ágil **Scrum**, com foco em desenvolvimento colaborativo e organização de tarefas.
 
-# Equipe
-| Nome                   | Função        | LinkedIn & GitHub                                                                                              |
-| :--------------------- | :-----------: | :-----------------------------------------------------------------------------------------------------------: |
-| Nicolas Fonseca Meira   | Scrum Master | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/nicolas-fonseca-60386130b/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/NicolasFonsecaM) |
-| Caio Gabriel Ferreira de Paula |  Product Owner | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/caiogabrielfp-cpu) |
-| Gabriel Yudi Fujimoto  | Scrum Team    | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/gabriel-fujimoto-a90239367/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/fujimotogabriel) |
-| Miguel Silva Gomes     | Scrum Team    | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/miguelsg479/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/miguelsg97) |
+## Índice
+* [🎯 Objetivo do Projeto](#-objetivo-do-projeto)
+* [👥 Equipe](#equipe)
+* [🎓 Orientadores](#-orientadores)
+* [📋 Requisitos Não Funcionais](#requisitos-não-funcionais)
+* [🧰 Tecnologias Utilizadas](#tecnologias-utilizadas)
+* [📌 Product Backlog](#product-backlog)
+* [📊 Registro das Sprints](#registro-das-sprints)
+* [📖 Manual do Usuário](#-manual-do-usuário)
+* [🛠️ Manual de Instalação](#-manual-de-instalação)
 
-<h2 id="objetivo-do-projeto">Objetivo do Projeto 🎯</h2>
+## 🎯 Objetivo do Projeto
 
 Desenvolver um assistente virtual para Telegram que utilize dados de portais públicos oficiais de saúde sobre vacinação para informar o cidadão sobre:
 
@@ -32,9 +29,23 @@ Desenvolver um assistente virtual para Telegram que utilize dados de portais pú
 * Consulta de vacinas recomendadas a partir da data de nascimento do usuário;
 * Consulta de vacinas recomendadas para gestantes de acordo com a semana de gestação.
 
-Não deverá haver persistência dos dados através de um banco de dados.
+Não deve haver persistência dos dados através de bancos de dados.
 
-# Requisitos Não Funcionais
+## 👥 Equipe
+
+| Nome                   | Função        | LinkedIn & GitHub                                                                                              |
+| :--------------------- | :-----------: | :-----------------------------------------------------------------------------------------------------------: |
+| Nicolas Fonseca Meira   | Scrum Master | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/nicolas-fonseca-60386130b/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/NicolasFonsecaM) |
+| Caio Gabriel Ferreira de Paula |  Product Owner | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/caiogabrielfp-cpu) |
+| Gabriel Yudi Fujimoto  | Scrum Team    | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/gabriel-fujimoto-a90239367/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/fujimotogabriel) |
+| Miguel Silva Gomes     | Scrum Team    | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/miguelsg479/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/miguelsg97) |
+
+## 🎓 Orientadores
+
+- Prof. Jean Carlos Lourenço Costa
+- Prof. Giuliano Araújo Bertoti
+
+## 📋 Requisitos Não Funcionais
 
 * Linguagem de Programação Python;
 * Repositório Git;
@@ -42,7 +53,7 @@ Não deverá haver persistência dos dados através de um banco de dados.
 * Gestão de Projetos de Software com Jira;
 * Manual de Instalação.
 
-## Tecnologias Utilizadas
+## 🧰 Tecnologias Utilizadas
 
 <h4 align="center">
   <a href="https://www.python.org/">
@@ -80,7 +91,7 @@ Não deverá haver persistência dos dados através de um banco de dados.
   </a>
 </h4>
 
-# Product Backlog
+## 📌 Product Backlog
 
 | Rank | Prioridade | User Story | Sprint |
 | :--- | :---: | :--- | :---: |
@@ -92,15 +103,21 @@ Não deverá haver persistência dos dados através de um banco de dados.
 | 6 | Baixa | Como usuário, quero gerar um resumo simples das vacinas recomendadas para minha faixa etária. | 3 |
 | 7 | Média | Como administrador, preciso disponibilizar os manuais de usuário e instalação para permitir a execução do bot em outros ambientes. | 3 |
 
-# Registro das Sprints
+## 📊 Registro das Sprints
 
 | Sprint            | Previsão   | Status         | Histórico |
 |-------------------|------------|----------------|-----------|
 | 01                | 05/04/2026 | Concluída ✅   | [MVP](MVP/sp1.md) |
 
-<h2 id="manual-do-usuario">Manual do Usuário 📖</h2>
+### Sprint 1
 
-## 1. Apresentação
+<p align="center">
+  <img src="assets/relatorio_spr1.png" width="800">
+</p>
+
+## 📖 Manual do Usuário
+
+### 1. Apresentação
 
 O bot de vacinação (`@vacinabrasil_bot`) é um assistente no Telegram que permite consultar rapidamente quais vacinas são recomendadas de acordo com a **idade do usuário** ou **período de gestação**.
 
@@ -108,16 +125,16 @@ A interação ocorre diretamente pelo chat do Telegram, onde o usuário selecion
 
 ---
 
-# 2. Público-alvo e Problemas Resolvidos 👤🩺
+### 2. Público-alvo e Problemas Resolvidos 👤🩺
 
-## Usuários atendidos
+#### Usuários atendidos
 
 * **Responsáveis por crianças:** Pais ou responsáveis que desejam acompanhar as vacinas recomendadas para seus filhos.
 * **Jovens e adultos:** Pessoas que querem verificar quais vacinas ou reforços são indicados para sua faixa etária.
 * **Idosos:** Usuários que desejam consultar quais imunizações são recomendadas a partir dos 60 anos.
 * **Gestantes:** Mulheres que precisam saber quais vacinas são indicadas durante o período de gestação.
 
-## Problemas que o bot resolve
+#### Problemas que o bot resolve
 
 * **Dificuldade de interpretação do calendário vacinal:** As tabelas oficiais possuem muitas informações. O bot simplifica e mostra apenas as vacinas relevantes para o usuário.
 * **Cálculo manual de faixa etária:** Muitas pessoas não sabem em qual categoria do calendário se encaixam. O bot calcula automaticamente a idade a partir da data de nascimento.
@@ -126,7 +143,7 @@ A interação ocorre diretamente pelo chat do Telegram, onde o usuário selecion
 
 ---
 
-# 3. Iniciando o Bot
+### 3. Iniciando o Bot
 
 1. Abra o **Telegram**
 2. Procure pelo bot `@vacinabrasil_bot` ou leia o QR Code abaixo:
@@ -145,9 +162,9 @@ Após enviar o comando, o bot iniciará a interação e exibirá as opções dis
 
 ---
 
-# 4. Fluxo principal de uso
+### 4. Fluxo principal de uso
 
-## 4.1 Menu inicial
+#### 4.1 Menu inicial
 
 Após o comando `/start`, o bot responderá com a mensagem:
 
@@ -160,7 +177,7 @@ e exibirá dois botões:
 
 ---
 
-## 4.2 Consulta por data de nascimento
+#### 4.2 Consulta por data de nascimento
 
 1. Clique em **Desejo ver as minhas vacinas**
 2. O bot solicitará o **dia de nascimento** (botões)
@@ -183,7 +200,7 @@ Febre amarela - 1 dose
 
 ---
 
-## 4.3 Consulta para gestantes
+#### 4.3 Consulta para gestantes
 
 1. Clique em **Sou gestante**
 2. O bot solicitará a **semana de gestação** (botões)
@@ -200,7 +217,7 @@ dT - 3 doses
 
 ---
 
-# 5. Respostas do sistema
+### 5. Respostas do sistema
 
 Após a consulta, o bot retorna uma lista com as vacinas recomendadas e suas respectivas doses.
 
@@ -218,7 +235,7 @@ As informações são apresentadas de forma direta, indicando o **nome da vacina
 
 ---
 
-# 6. Observações
+### 6. Observações
 
 * O bot precisa estar **em execução** para responder às mensagens.
 * Caso alguma combinação de data não seja válida, o sistema solicitará que o processo seja reiniciado.
@@ -226,7 +243,7 @@ As informações são apresentadas de forma direta, indicando o **nome da vacina
 
 ---
 
-# 7. Exemplo de uso
+### 7. Exemplo de uso
 
 Digite:
 
@@ -250,7 +267,7 @@ dT - 3 doses
 Febre amarela - 1 dose
 ```
 
-<h2 id="manual-de-instalacao">Manual de Instalação 🛠️</h2>
+## 🛠️ Manual de Instalação
 
 Para instalar e executar o bot de maneira local:
 

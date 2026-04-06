@@ -114,7 +114,7 @@ Não deve haver persistência dos dados através de bancos de dados.
 
 * `helpers.py` — Conjunto de funções auxiliares utilizadas em diferentes partes do projeto;
 
-* `*Arquivos JSON` — Arquivos que armazenam os dados de vacinação utilizados pelo bot, organizados de forma estruturada para permitir a consulta das vacinas recomendadas de acordo com a faixa etária ou período de gestação;
+* `Arquivos JSON` — Arquivos que armazenam os dados de vacinação utilizados pelo bot, organizados de forma estruturada para permitir a consulta das vacinas recomendadas de acordo com a faixa etária ou período de gestação;
 
 * `requirements.txt` — Lista de bibliotecas Python necessárias para executar o projeto.
 
@@ -320,7 +320,7 @@ cd VacinaBrasil-Bot
 Instale as dependências:
 
 ```bash
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
 ### 1.3 Executando o Bot

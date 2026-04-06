@@ -18,7 +18,7 @@ O projeto segue a metodologia ágil **Scrum**, com foco em desenvolvimento colab
   </a>
 </p>
 
-## Índice
+## 📑 Índice
 
 * [🎥 Demonstração](#-demonstração)
 * [🎯 Objetivo do Projeto](#-objetivo-do-projeto)

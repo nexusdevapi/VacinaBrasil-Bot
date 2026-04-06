@@ -10,12 +10,23 @@ Projeto desenvolvido durante o **1º semestre de 2026** por estudantes do curso 
 
 O projeto segue a metodologia ágil **Scrum**, com foco em desenvolvimento colaborativo e organização de tarefas.
 
+## 🎥 Demonstração
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=tY-uqS3kM9k">
+    <img src="https://img.youtube.com/vi/tY-uqS3kM9k/maxresdefault.jpg" width="800">
+  </a>
+</p>
+
 ## Índice
+
+* [🎥 Demonstração](#-demonstração)
 * [🎯 Objetivo do Projeto](#-objetivo-do-projeto)
-* [👥 Equipe](#equipe)
+* [👥 Equipe](#-equipe)
 * [🎓 Orientadores](#-orientadores)
 * [📋 Requisitos Não Funcionais](#requisitos-não-funcionais)
 * [🧰 Tecnologias Utilizadas](#tecnologias-utilizadas)
+* [🏗 Estrutura do Projeto](#-estrutura-do-projeto)
 * [📌 Product Backlog](#product-backlog)
 * [📊 Registro das Sprints](#registro-das-sprints)
 * [📖 Manual do Usuário](#-manual-do-usuário)
@@ -90,6 +101,22 @@ Não deve haver persistência dos dados através de bancos de dados.
     <img src="https://img.shields.io/badge/Jira%20Software-0052CC?style=for-the-badge&logo=jira&logoColor=white"/>
   </a>
 </h4>
+
+## 🏗 Estrutura do Projeto
+
+* `main.py` — Arquivo principal do bot, responsável por iniciá-lo e controlar o funcionamento dele no Telegram;
+
+* `engine.py` — Implementa a lógica central do bot, processando as informações fornecidas pelo usuário e determinando quais respostas são apropriadas;
+
+* `validator.py` — Realiza verificações e validações dos dados informados pelo usuário de forma a garantir que estejam adequados para processamento;
+
+* `loader.py` — Responsável por carregar e preparar os dados utilizados pelo sistema;
+
+* `helpers.py` — Conjunto de funções auxiliares utilizadas em diferentes partes do projeto;
+
+* `*Arquivos JSON` — Arquivos que armazenam os dados de vacinação utilizados pelo bot, organizados de forma estruturada para permitir a consulta das vacinas recomendadas de acordo com a faixa etária ou período de gestação;
+
+* `requirements.txt` — Lista de bibliotecas Python necessárias para executar o projeto.
 
 ## 📌 Product Backlog
 
@@ -277,6 +304,7 @@ Para executar o bot localmente é necessário:
 
 * Conexão à Internet;
 * Python **3.10 ou superior** instalado;
+* Git;
 * Token de um bot criado no **BotFather (@BotFather no Telegram)**;
 * Biblioteca **pyTelegramBotAPI** instalada.
 
@@ -287,5 +315,20 @@ Abra um terminal e clone o repositório:
 ```bash
 git clone https://github.com/nexusdevapi/VacinaBrasil-Bot.git
 cd VacinaBrasil-Bot
+```
+
+Instale as dependências:
+
+```bash
 pip install -r requirements.txt
+```
+
+### 1.3 Executando o Bot
+
+Dentro da pasta `src`, execute:
+
+```bash
 python src/main.py
+```
+
+Antes de executar o bot, certifique-se de inserir o token do Telegram no arquivo `main.py`.

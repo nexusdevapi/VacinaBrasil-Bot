@@ -32,7 +32,7 @@ def procurar(message):
             bot.reply_to(message, 'Use: /procurar nome da vacina')
             return
         for m in message.text.split()[1:]:
-            vacina += m + ''
+            vacina += m + ' '
         vacina = vacina.rstrip().lower()
         vacina = vacinas(f'{idade}_{vacina}')
         bot.reply_to(message, f'{vacina}')

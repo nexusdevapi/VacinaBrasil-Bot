@@ -1,0 +1,32 @@
+[
+  {
+    "grupo":"Adulto",
+    "idade_min":25.0,
+    "idade_max":59.0,
+    "idade_texto":"25-59 anos",
+    "vacina":"Hepatite B",
+    "dose":"3 doses",
+    "descricao":"Hepatite B e D",
+    "observacoes":null
+  },
+  {
+    "grupo":"Adulto",
+    "idade_min":25.0,
+    "idade_max":59.0,
+    "idade_texto":"25-59 anos",
+    "vacina":"dT",
+    "dose":"3 doses",
+    "descricao":"Difteria tetano",
+    "observacoes":null
+  },
+  {
+    "grupo":"Adulto",
+    "idade_min":25.0,
+    "idade_max":59.0,
+    "idade_texto":"25-59 anos",
+    "vacina":"Febre amarela",
+    "dose":"1 dose",
+    "descricao":"Febre amarela",
+    "observacoes":null
+  }
+]

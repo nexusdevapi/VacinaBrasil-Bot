@@ -260,12 +260,7 @@ Exemplo de uso:
 
 Como funciona:
 
-Ao enviar o comando, o bot realiza uma busca na base de dados e retorna informações detalhadas sobre a vacina informada.
-
-Informações exibidas:
-
-* Nome da vacina
-* Faixa etária recomendada
+Ao enviar o comando, o bot realiza uma busca na base de dados e retorna informações a respeito da faixa etária que deve tomar a vacina informada.
 
 Exemplo de resposta:
 

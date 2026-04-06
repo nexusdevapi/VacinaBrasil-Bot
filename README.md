@@ -242,6 +242,37 @@ Hepatite B - 3 doses
 dT - 3 doses
 ```
 
+#### 4.4 Consulta por nome da vacina
+
+Além das consultas por idade ou gestação, o bot também permite buscar informações específicas sobre uma vacina pelo nome.
+
+Para isso, utilize o comando:
+
+```
+/procurar <nome_da_vacina>
+```
+
+Exemplo de uso:
+
+```
+/procurar dengue
+```
+
+Como funciona:
+
+Ao enviar o comando, o bot realiza uma busca na base de dados e retorna informações detalhadas sobre a vacina informada.
+
+Informações exibidas:
+
+* Nome da vacina
+* Faixa etária recomendada
+
+Exemplo de resposta:
+
+```
+A vacina dengue deve ser tomada a partir dos 10 anos
+```
+
 ---
 
 ### 5. Respostas do sistema

@@ -18,19 +18,19 @@ O projeto segue a metodologia ágil **Scrum**, com foco em desenvolvimento colab
   </a>
 </p>
 
-## Índice
+## 📑 Índice
 
 * [🎥 Demonstração](#-demonstração)
 * [🎯 Objetivo do Projeto](#-objetivo-do-projeto)
 * [👥 Equipe](#-equipe)
 * [🎓 Orientadores](#-orientadores)
-* [📋 Requisitos Não Funcionais](#requisitos-não-funcionais)
-* [🧰 Tecnologias Utilizadas](#tecnologias-utilizadas)
+* [📋 Requisitos Não Funcionais](#-requisitos-não-funcionais)
+* [🧰 Tecnologias Utilizadas](#-tecnologias-utilizadas)
 * [🏗 Estrutura do Projeto](#-estrutura-do-projeto)
-* [📌 Product Backlog](#product-backlog)
-* [📊 Registro das Sprints](#registro-das-sprints)
+* [📌 Product Backlog](#-product-backlog)
+* [📊 Registro das Sprints](#-registro-das-sprints)
 * [📖 Manual do Usuário](#-manual-do-usuário)
-* [🛠️ Manual de Instalação](#-manual-de-instalação)
+* [🛠️ Manual de Instalação](#manual-instalacao)
 
 ## 🎯 Objetivo do Projeto
 
@@ -294,7 +294,7 @@ dT - 3 doses
 Febre amarela - 1 dose
 ```
 
-## 🛠️ Manual de Instalação
+## 🛠️ Manual de Instalação <a id="manual-instalacao"></a>
 
 Para instalar e executar o bot de maneira local:
 

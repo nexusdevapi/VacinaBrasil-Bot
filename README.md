@@ -139,7 +139,7 @@ Não deve haver persistência dos dados através de bancos de dados.
 ### Sprint 1
 
 <p>
-  <img width="1319" height="714" alt="image" src="https://github.com/user-attachments/assets/9120f863-4441-4a67-b832-86f25ad62331" />
+  <img width="819" height="443" alt="image" src="https://github.com/user-attachments/assets/9120f863-4441-4a67-b832-86f25ad62331" />
 </p>
 
 ## 📖 Manual do Usuário

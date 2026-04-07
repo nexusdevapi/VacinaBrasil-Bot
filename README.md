@@ -329,8 +329,8 @@ Para instalar e executar o bot de maneira local:
 Para executar o bot localmente é necessário:
 
 * Conexão à Internet;
-* Python **3.10 ou superior** instalado;
-* Git;
+* [Python](https://www.python.org/downloads/) 3.9 ou superior instalado;
+* [Git](https://git-scm.com/install/);
 * Token de um bot criado no **BotFather (@BotFather no Telegram)**;
 * Biblioteca **pyTelegramBotAPI** instalada.
 

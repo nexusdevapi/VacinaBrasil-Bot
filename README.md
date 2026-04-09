@@ -136,12 +136,6 @@ Não deve haver persistência dos dados através de bancos de dados.
 |-------------------|------------|----------------|-----------|
 | 01                | 05/04/2026 | Concluída ✅   | [MVP](MVP/sp1.md) |
 
-### Sprint 1
-
-<p>
-  <img width="819" height="443" alt="image" src="https://github.com/user-attachments/assets/9120f863-4441-4a67-b832-86f25ad62331" />
-</p>
-
 ## 📖 Manual do Usuário
 
 ### 1. Apresentação

@@ -1,8 +1,13 @@
 import json
+import sys
 from io import BytesIO
+from pathlib import Path
 
 import requests
 import pdfplumber
+
+BASE_DIR = Path(__file__).resolve().parents[1]
+sys.path.append(str(BASE_DIR))
 
 from utils.helpers import extrair_idade
 
@@ -66,7 +71,10 @@ for url in urls:
                     arquivo_json.append(registro)
 
 # salva registros em um arquivo json na pasta "processed"
-with open('../data/processed/calendario_vacinas.json', 'w', encoding='utf-8') as f:
+OUTPUT_DIR = BASE_DIR / "data" / "processed"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+with open(OUTPUT_DIR / "calendario_vacinas.json", "w", encoding="utf-8") as f:
     json.dump(arquivo_json, f, ensure_ascii=False, indent=2)
     
 

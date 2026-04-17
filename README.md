@@ -342,7 +342,7 @@ python -m pip install -r requirements.txt
 Dentro da pasta `src`, execute:
 
 ```bash
-python src/main.py
+python main.py
 ```
 
 Antes de executar o bot, certifique-se de inserir o token do Telegram no arquivo `main.py`.

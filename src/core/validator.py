@@ -3,15 +3,14 @@ from datetime import datetime
 def validate(dia, mes, ano):
     try:
         nascimento = datetime(ano, mes, dia)
-        today = datetime.now()
-        
-        if ano == datetime.now().year:
-            age = today.month - mes
-            return age
-        else:
-            age = today.year - nascimento.year
-            if (today.month, today.day) < (nascimento.month, nascimento.day):
-                age -= 1
-            return age
+        hoje = datetime.now()
+
+        idade = hoje.year - nascimento.year
+
+        if (hoje.month, hoje.day) < (nascimento.month, nascimento.day):
+            idade -= 1
+
+        return idade
+
     except ValueError:
         return False

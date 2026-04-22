@@ -16,13 +16,16 @@ def start(message):
     user_id = message.from_user.id
     user_data[user_id] = {}
 
-    # Cria botões inline para escolher caso seja gestante ou não
+    # Cria botões inline para escolha da faixa etária/grupo
     markup = quick_markup({
-        'Desejo ver as minhas vacinas': {'callback_data': 'vac'},
-        'Sou gestante': {'callback_data': 'gestante'}
-    }, row_width=1)
+        'Gestante': {'callback_data': 'grupo_gestante'},
+        'Criança': {'callback_data': 'grupo_crianca'},
+        'Adolescente e Jovem': {'callback_data': 'grupo_adolescente'},
+        'Adulto': {'callback_data': 'grupo_adulto'},
+        'Idoso': {'callback_data': 'grupo_idoso'}
+    }, row_width=3)
     
-    bot.send_message(message.chat.id, "Escolha sua opção:", reply_markup=markup)
+    bot.send_message(message.chat.id, "Escolha o grupo para consultar as vacinas:", reply_markup=markup)
 
 @bot.message_handler(commands=['procurar'])
 def procurar(message):

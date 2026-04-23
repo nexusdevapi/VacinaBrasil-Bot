@@ -70,20 +70,11 @@ Não deve haver persistência dos dados através de bancos de dados.
   <a href="https://www.python.org/">
     <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
   </a>
-  <a href="https://pytba.readthedocs.io/">
-    <img src="https://img.shields.io/badge/pyTelegramBotAPI-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white"/>
-  </a>
   <a href="https://telegram.org/">
     <img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white"/>
   </a>
   <a href="https://www.json.org/">
     <img src="https://img.shields.io/badge/JSON-000000?style=for-the-badge&logo=json&logoColor=white"/>
-  </a>
-  <a href="https://docs.python.org/3/library/datetime.html">
-    <img src="https://img.shields.io/badge/datetime-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
-  </a>
-  <a href="https://docs.python.org/3/library/pathlib.html">
-    <img src="https://img.shields.io/badge/pathlib-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
   </a>
   <a href="https://git-scm.com/">
     <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white"/>
@@ -94,6 +85,7 @@ Não deve haver persistência dos dados através de bancos de dados.
   <a href="https://code.visualstudio.com/">
     <img src="https://img.shields.io/badge/Visual%20Studio%20Code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white"/>
   </a>
+  <br>
   <a href="https://colab.research.google.com/">
     <img src="https://img.shields.io/badge/Google%20Colab-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white"/>
   </a>
@@ -104,17 +96,19 @@ Não deve haver persistência dos dados através de bancos de dados.
 
 ## 🏗 Estrutura do Projeto
 
-* `main.py` — Arquivo principal do bot, responsável por iniciá-lo e controlar o funcionamento dele no Telegram;
+* `src/main.py` — Inicia o bot e controla o funcionamento dele no Telegram;
 
-* `engine.py` — Implementa a lógica central do bot, processando as informações fornecidas pelo usuário e determinando quais respostas são apropriadas;
+* `scripts/scraping.py` — extrai e processa os dados de vacinação a partir dos calendários oficiais disponíveis do site do Ministério da Saúde;
 
-* `validator.py` — Realiza verificações e validações dos dados informados pelo usuário de forma a garantir que estejam adequados para processamento;
+* `src/core/engine.py` — Processa as informações fornecidas pelo usuário e determina quais respostas são apropriadas;
 
-* `loader.py` — Responsável por carregar e preparar os dados utilizados pelo sistema;
+* `src/core/validator.py` — Verificaça e valida os dados informados pelo usuário de forma a garantir que estejam adequados para processamento;
 
-* `helpers.py` — Conjunto de funções auxiliares utilizadas em diferentes partes do projeto;
+* `src/core/loader.py` — Carrega e prepara os dados utilizados pelo sistema;
 
-* `Arquivos JSON` — Arquivos que armazenam os dados de vacinação utilizados pelo bot, organizados de forma estruturada para permitir a consulta das vacinas recomendadas de acordo com a faixa etária ou período de gestação;
+* `src/utils/helpers.py` — Funções auxiliares utilizadas em diferentes partes do projeto;
+
+* `data/processed/` — diretório onde o arquivo JSON gerado a partir do scraping é armazenado;
 
 * `requirements.txt` — Lista de bibliotecas Python necessárias para executar o projeto.
 
@@ -135,6 +129,7 @@ Não deve haver persistência dos dados através de bancos de dados.
 | Sprint            | Previsão   | Status         | Histórico |
 |-------------------|------------|----------------|-----------|
 | 01                | 05/04/2026 | Concluída ✅   | [MVP](MVP/sp1.md) |
+| 02                | 03/05/2026 | Em andamento 🟡    | [MVP](MVP/sp2.md) |
 
 ## 📖 Manual do Usuário
 
@@ -325,8 +320,7 @@ Para executar o bot localmente é necessário:
 * Conexão à Internet;
 * [Python](https://www.python.org/downloads/) 3.9 ou superior instalado;
 * [Git](https://git-scm.com/install/);
-* Token de um bot criado no **BotFather (@BotFather no Telegram)**;
-* Biblioteca **pyTelegramBotAPI** instalada.
+* Token de um bot criado no **BotFather (@BotFather no Telegram)**.
 
 ### 1.2 Instalação
 
@@ -345,7 +339,7 @@ python -m pip install -r requirements.txt
 
 ### 1.3 Executando o Bot
 
-Dentro da pasta `src`, execute:
+Após realizar as etapas anteriores, execute o seguinte comando:
 
 ```bash
 python src/main.py

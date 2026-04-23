@@ -320,7 +320,7 @@ Para executar o bot localmente é necessário:
 * Conexão à Internet;
 * [Python](https://www.python.org/downloads/) 3.9 ou superior instalado;
 * [Git](https://git-scm.com/install/);
-* Token de um bot criado no **BotFather (@BotFather no Telegram)**.
+* Token de um bot criado no **BotFather** (@BotFather no Telegram).
 
 ### 1.2 Instalação
 

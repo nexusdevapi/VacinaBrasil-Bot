@@ -170,7 +170,7 @@ A interação ocorre diretamente pelo chat do Telegram, onde o usuário selecion
 
 3. Abra a conversa e digite `/start` ou envie uma mensagem qualquer
 
-Quando executada essa etapa, o bot iniciará a interação e exibirá as opções disponíveis.
+Após a execução dessa etapa, o bot iniciará a interação e exibirá as opções disponíveis.
 
 ---
 

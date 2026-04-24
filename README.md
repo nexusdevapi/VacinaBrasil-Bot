@@ -13,8 +13,8 @@ O projeto segue a metodologia ágil **Scrum**, com foco em desenvolvimento colab
 ## 🎥 Demonstração
 
 <p align="center">
-  <a href="https://www.youtube.com/watch?v=hXleYF3Y0eo">
-    <img src="https://img.youtube.com/vi/hXleYF3Y0eo/maxresdefault.jpg" width="800">
+  <a href="https://www.youtube.com/watch?v=tY-uqS3kM9k">
+    <img src="https://img.youtube.com/vi/tY-uqS3kM9k/maxresdefault.jpg" width="800">
   </a>
 </p>
 
@@ -108,7 +108,7 @@ Não deve haver persistência dos dados através de bancos de dados.
 
 * `src/utils/helpers.py` — Funções auxiliares utilizadas em diferentes partes do projeto;
 
-* `data/processed/` — diretório onde o arquivo JSON gerado a partir do scraping é armazenado;
+* `data/processed/` — diretório onde os arquivos JSON são armazenados;
 
 * `requirements.txt` — Lista de bibliotecas Python necessárias para executar o projeto.
 
@@ -141,7 +141,7 @@ A interação ocorre diretamente pelo chat do Telegram, onde o usuário selecion
 
 ---
 
-### 2. Público-alvo e Problemas Resolvidos 👤🩺
+### 2. Público-alvo e Dores Atendidas 👤🩺
 
 #### Usuários atendidos
 
@@ -150,7 +150,7 @@ A interação ocorre diretamente pelo chat do Telegram, onde o usuário selecion
 * **Idosos:** Usuários que desejam consultar quais imunizações são recomendadas a partir dos 60 anos.
 * **Gestantes:** Mulheres que precisam saber quais vacinas são indicadas durante o período de gestação.
 
-#### Problemas que o bot resolve
+#### Dores que o bot atende
 
 * **Dificuldade de interpretação do calendário vacinal:** As tabelas oficiais possuem muitas informações. O bot simplifica e mostra apenas as vacinas relevantes para o usuário.
 * **Cálculo manual de faixa etária:** Muitas pessoas não sabem em qual categoria do calendário se encaixam. O bot calcula automaticamente a idade a partir da data de nascimento.
@@ -178,7 +178,7 @@ Quando executada essa etapa, o bot iniciará a interação e exibirá as opçõe
 
 #### 4.1 Menu inicial
 
-Após o envio da primeira mensagem ou do comando `/start`, o bot responderá com a mensagem:
+Após o comando `/start`, o bot responderá com a mensagem:
 
 **Escolha sua opção:**
 
@@ -316,7 +316,7 @@ Para executar o bot localmente é necessário:
 * Conexão à Internet;
 * [Python](https://www.python.org/downloads/) 3.9 ou superior instalado;
 * [Git](https://git-scm.com/install/);
-* Token de um bot criado no **BotFather** (@BotFather no Telegram).
+* Token de um bot criado no **BotFather (@BotFather no Telegram)**;
 
 ### 1.2 Instalação
 
@@ -335,10 +335,10 @@ python -m pip install -r requirements.txt
 
 ### 1.3 Executando o Bot
 
-Após realizar as etapas anteriores, execute o seguinte comando:
+Dentro da pasta `src`, execute:
 
 ```bash
-python src/main.py
+python main.py
 ```
 
 Antes de executar o bot, certifique-se de inserir o token do Telegram no arquivo `main.py`.

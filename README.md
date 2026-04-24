@@ -174,6 +174,8 @@ A interação ocorre diretamente pelo chat do Telegram, onde o usuário selecion
 /start
 ```
 
+ou envie uma mensagem qualquer
+
 Após enviar o comando, o bot iniciará a interação e exibirá as opções disponíveis.
 
 ---
@@ -182,7 +184,7 @@ Após enviar o comando, o bot iniciará a interação e exibirá as opções dis
 
 #### 4.1 Menu inicial
 
-Após o comando `/start`, o bot responderá com a mensagem:
+Após o envio da primeira mensagem ou do comando `/start`, o bot responderá com a mensagem:
 
 **Escolha sua opção:**
 

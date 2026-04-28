@@ -188,8 +188,6 @@ e exibirá as seguintes opções:
 * `Adulto 🧑‍💼`
 * `Idoso 👴`
 
----
-
 #### 4.2 Consulta por faixa etária/grupo
 
 1. Clique em uma **faixa etária** ou em **Gestante 🤰**
@@ -224,8 +222,6 @@ pneumocócica 23 – valente
 varicela
     - 2 doses (somente indígena e trabalhador de saúde, sem histórico da doença ou na dúvida e conforme histórico vacinal)
 ```
-
----
 
 #### 4.3 Consulta por nome da vacina
 

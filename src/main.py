@@ -1,21 +1,24 @@
 import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from telebot.util import quick_markup
-from datetime import datetime
+from datetime import datetime, timedelta
 from core.engine import *
+from data_handler.scraping_update import se_precisar_update
 
-TOKEN = "8513074082:AAFLGcnPjAjGuTar9LjOTzMEXIGOzx56FOM"
+TOKEN = ""
 bot = telebot.TeleBot(TOKEN)
 
 user_data = {}
 idade = 0
+
+reiniciar_menu_natural = timedelta(minutes=1)
 
 # /start
 @bot.message_handler(commands=['start'])
 def start(message):
     user_id = message.from_user.id
 
-    user_data[user_id] = {"started_once": True}
+    user_data[user_id] = {"ultimo_menu": datetime.now()}
 
     menu(message.chat.id)
 
@@ -45,9 +48,18 @@ def procurar(message):
 def start_natural(message):
     user_id = message.from_user.id
 
+    agora = datetime.now()
+
     if user_id not in user_data:
-        user_data[user_id] = {"started_once": True}
-        start(message)
+        user_data[user_id] = {"ultimo_menu": agora}
+        menu(message.chat.id)
+        return
+
+    ultimo_menu = user_data[user_id]["ultimo_menu"]
+
+    if agora - ultimo_menu >= reiniciar_menu_natural:
+        user_data[user_id]["ultimo_menu"] = agora
+        menu(message.chat.id)
     else:
         bot.reply_to(message, 'Use: /start para exibir o menu novamente')
 
@@ -77,5 +89,7 @@ def callback_handler(call):
 
     bot.answer_callback_query(call.id)
 
+# Verifica se há alguma atualização nos calendários
+se_precisar_update()
 # Iniciar bot
 bot.polling()

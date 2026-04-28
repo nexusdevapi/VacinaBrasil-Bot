@@ -102,8 +102,6 @@ Não deve haver persistência dos dados através de bancos de dados.
 
 * `src/core/engine.py` — Processa as informações fornecidas pelo usuário e determina quais respostas são apropriadas;
 
-* `src/core/validator.py` — Verificaça e valida os dados informados pelo usuário de forma a garantir que estejam adequados para processamento;
-
 * `src/core/loader.py` — Carrega e prepara os dados utilizados pelo sistema;
 
 * `src/utils/helpers.py` — Funções auxiliares utilizadas em diferentes partes do projeto;

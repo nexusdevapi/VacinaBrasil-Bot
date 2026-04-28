@@ -13,7 +13,7 @@ O projeto segue a metodologia ágil **Scrum**, com foco em desenvolvimento colab
 ## 🎥 Demonstração
 
 <p align="center">
-  <a href="https://www.youtube.com/watch?v=tY-uqS3kM9k">
+  <a href="TROCAR_PELO_NOVO_LINK">
     <img src="https://img.youtube.com/vi/tY-uqS3kM9k/maxresdefault.jpg" width="800">
   </a>
 </p>
@@ -135,9 +135,9 @@ Não deve haver persistência dos dados através de bancos de dados.
 
 ### 1. Apresentação
 
-O bot de vacinação (`@vacinabrasil_bot`) é um assistente no Telegram que permite consultar rapidamente quais vacinas são recomendadas de acordo com a **idade do usuário** ou **período de gestação**.
+O bot de vacinação (`@vacinabrasil_bot`) é um assistente no Telegram que permite consultar rapidamente quais vacinas são recomendadas de acordo com a **faixa etária do usuário** ou **período de gestação**.
 
-A interação ocorre diretamente pelo chat do Telegram, onde o usuário seleciona opções ou informa dados básicos, e o sistema retorna as vacinas recomendadas para aquele perfil. A base de dados utilizada pelo bot é composta por arquivos JSON processados a partir de calendários de vacinação disponibilizados pelo Ministério da Saúde em `https://www.gov.br/saude/pt-br/vacinacao/calendario`.
+A interação ocorre diretamente pelo chat do Telegram, onde o usuário seleciona opções ou informa dados básicos, e o sistema retorna as vacinas recomendadas para aquele perfil. A base de dados utilizada pelo bot é composta por arquivos JSON gerados a partir de calendários de vacinação disponibilizados como arquivos PDF pelo Ministério da Saúde em `https://www.gov.br/saude/pt-br/vacinacao/calendario`.
 
 ---
 
@@ -178,58 +178,60 @@ Após a execução dessa etapa, o bot iniciará a interação e exibirá as opç
 
 #### 4.1 Menu inicial
 
-Após o comando `/start`, o bot responderá com a mensagem:
+Após enviada a primeira mensagem, o bot responderá com a mensagem:
 
 **Escolha sua opção:**
 
-e exibirá dois botões:
+e exibirá as seguintes opções:
 
-* `Desejo ver as minhas vacinas`
-* `Sou gestante`
+* `Gestante 🤰`
+* `Criança 👶`
+* `Jovens 🧑`
+* `Adulto 🧑‍💼`
+* `Idoso 👴`
 
 ---
 
-#### 4.2 Consulta por data de nascimento
+#### 4.2 Consulta por faixa etária/grupo
 
-1. Clique em **Desejo ver as minhas vacinas**
-2. O bot solicitará o **dia de nascimento** (botões)
-3. Em seguida solicitará o **mês de nascimento** (botões)
-4. Depois solicitará o **ano de nascimento** (botões)
-
-Após a seleção completa da data, o sistema calcula automaticamente a idade do usuário e identifica a faixa etária correspondente.
-
-O bot então retorna as vacinas recomendadas para aquela idade.
+1. Clique em uma **faixa etária** ou em **Gestante 🤰**
+2. O bot exibirá as vacinas recomendadas para as pessoas que se encaixam na faixa etária escolhida.
 
 Exemplo de resposta:
 
 ```
-Vacina - Dose
---------------------
-Hepatite B - 3 doses
-dT - 3 doses
-Febre amarela - 1 dose
+9 a 14 anos
+HPV4
+    - 1 dose (conforme histórico vacinal)
+
+10 a 14 anos
+dengue tetravalente
+    - 2 doses (conforme histórico vacinal)
+
+11 a 14 anos
+meningite meningocócica ACWY
+    - 1 dose
+
+10 a 24 anos
+hepatite B
+    - 3 doses (conforme histórico vacinal)
+dT
+    - 3 doses (conforme histórico vacinal)
+febre amarela
+    - 1 dose (conforme histórico vacinal)
+tríplice viral SCR
+    - 2 doses (conforme histórico vacinal)
+pneumocócica 23 – valente
+    - 2 doses (somente indígena, sem histórico vacinal com pneumo conjugada)
+varicela
+    - 2 doses (somente indígena e trabalhador de saúde, sem histórico da doença ou na dúvida e conforme histórico vacinal)
 ```
 
 ---
 
-#### 4.3 Consulta para gestantes
+#### 4.3 Consulta por nome da vacina
 
-1. Clique em **Sou gestante**
-2. O bot solicitará a **semana de gestação** (botões)
-3. Após a seleção da semana, o sistema retorna as vacinas recomendadas para aquele período da gestação.
-
-Exemplo de resposta:
-
-```
-Vacina - Dose
---------------------
-Hepatite B - 3 doses
-dT - 3 doses
-```
-
-#### 4.4 Consulta por nome da vacina
-
-Além das consultas por idade ou gestação, o bot também permite buscar informações específicas sobre uma vacina pelo nome.
+Além das consultas a partir dos botões, o bot também permite buscar informações específicas sobre uma vacina pelo nome.
 
 Para isso, utilize o comando:
 
@@ -240,17 +242,27 @@ Para isso, utilize o comando:
 Exemplo de uso:
 
 ```
-/procurar dengue
+/procurar dT
 ```
 
 Como funciona:
 
-Ao enviar o comando, o bot realiza uma busca na base de dados e retorna informações a respeito da faixa etária que deve tomar a vacina informada.
+Ao enviar o comando, o bot realiza uma busca na base de dados e retorna informações a respeito da faixa etária/grupo que deve tomar a vacina informada.
 
 Exemplo de resposta:
 
 ```
-A vacina dengue deve ser tomada a partir dos 10 anos
+Agendar ao saber da gravidez
+dT
+    - 3 doses (conforme histórico vacinal)
+
+A partir de 7 anos (todas as idades)
+dT
+    - 3 doses (conforme histórico vacinal)
+
+10 a 24 anos
+dT
+    - 3 doses (conforme histórico vacinal)
 ```
 
 ---
@@ -262,11 +274,21 @@ Após a consulta, o bot retorna uma lista com as vacinas recomendadas e suas res
 Exemplo:
 
 ```
-Vacina - Dose
---------------------
-Hepatite B - 3 doses
-dT - 3 doses
-Febre amarela - 1 dose
+Agendar ao saber da gravidez
+hepatite B
+    - 3 doses (conforme histórico vacinal)
+dT
+    - 3 doses (conforme histórico vacinal)
+influenza trivalente
+    - 1 dose por temporada
+covid-19
+    - 1 dose a cada gestação
+dTpa
+    - 1 dose a partir da 20ª semana gestacional, em cada gestação
+febre amarela 1
+    - 1 dose, em casos excepcionais, conforme histórico vacinal
+vírus sincicial respiratório (VVSR)
+    - 1 dose a partir da 28ª semana gestacional, em cada gestação
 ```
 
 As informações são apresentadas de forma direta, indicando o **nome da vacina** e a **dose ou periodicidade recomendada**.
@@ -276,7 +298,7 @@ As informações são apresentadas de forma direta, indicando o **nome da vacina
 ### 6. Observações
 
 * O bot precisa estar **em execução** para responder às mensagens.
-* Caso alguma combinação de data não seja válida, o sistema solicitará que o processo seja reiniciado.
+* O usuário pode iniciar a conversa a partir do envio do comando `/procurar`.
 * O tempo de resposta pode levar alguns segundos enquanto o sistema processa os dados.
 
 ---
@@ -288,21 +310,30 @@ Digite:
 ```
 /start
 ```
+ou envie uma mensagem qualquer.
 
-Selecione **Desejo ver as minhas vacinas**
+Selecione uma das **faixas etárias ou grupos disponíveis** clicando em um dos botões.
 
-Escolha o **dia**, **mês** e **ano** de nascimento utilizando os botões.
-
-Após a seleção completa da data, o bot exibirá as vacinas recomendadas para a faixa etária correspondente.
+Após a seleção de uma faixa etária/grupo, o bot exibirá as vacinas recomendadas para o grupo escolhido pelo usuário.
 
 Exemplo de saída:
 
 ```
-Vacina - Dose
---------------------
-Hepatite B - 3 doses
-dT - 3 doses
-Febre amarela - 1 dose
+Agendar ao saber da gravidez
+hepatite B
+    - 3 doses (conforme histórico vacinal)
+dT
+    - 3 doses (conforme histórico vacinal)
+influenza trivalente
+    - 1 dose por temporada
+covid-19
+    - 1 dose a cada gestação
+dTpa
+    - 1 dose a partir da 20ª semana gestacional, em cada gestação
+febre amarela 1
+    - 1 dose, em casos excepcionais, conforme histórico vacinal
+vírus sincicial respiratório (VVSR)
+    - 1 dose a partir da 28ª semana gestacional, em cada gestação
 ```
 
 ## 🛠️ Manual de Instalação <a id="manual-instalacao"></a>
@@ -333,12 +364,22 @@ Instale as dependências:
 python -m pip install -r requirements.txt
 ```
 
-### 1.3 Executando o Bot
+### 1.3 Inserindo um Token
 
-Dentro da pasta `src`, execute:
+Abra o arquivo `main.py` localizado na pasta `src` na raiz do projeto e insira um **token gerado pelo BotFather** no seguinte espaço:
 
 ```bash
-python main.py
+TOKEN = ""
 ```
 
-Antes de executar o bot, certifique-se de inserir o token do Telegram no arquivo `main.py`.
+`(Exemplo de Token: "7391826405:AAQxZr7KpLmN8sVtY2HdFJcW9uB3EgR5iKQ")`
+
+### 1.4 Executando o Bot
+
+Dentro do diretório gerado, execute:
+
+```bash
+python src/main.py
+```
+
+Agora é só iniciar uma conversa com o bot no Telegram e manter-se em dia!

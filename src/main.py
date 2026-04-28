@@ -61,7 +61,7 @@ def start_natural(message):
         user_data[user_id]["ultimo_menu"] = agora
         menu(message.chat.id)
     else:
-        bot.reply_to(message, 'Use: /start para exibir o menu novamente')
+        bot.reply_to(message, 'Use: /start para exibir o menu novamente ou aguarde um minuto.')
 
 # Callbacks - editam a primeira mensagem e retornar a vacina de acordo com a situação
 @bot.callback_query_handler(func=lambda call: True)

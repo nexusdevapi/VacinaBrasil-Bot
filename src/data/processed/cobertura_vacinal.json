@@ -1,0 +1,102 @@
+{
+  "Norte": {
+    "cobertura_geral": 66.2,
+    "vacinas": {
+      "BCG": 82.5,
+      "Covid-19": 58.4,
+      "Dengue": 42.1,
+      "dT": 68.5,
+      "dTpa": 64.2,
+      "Febre amarela": 71.0,
+      "Hepatite B": 66.8,
+      "HPV": 48.5,
+      "Influenza": 61.2,
+      "Meningococica C": 70.4,
+      "Penta": 67.8,
+      "Poliomielite VIP": 69.5,
+      "Triplice viral": 72.1,
+      "Varicela": 65.3,
+      "VVSR": 51.0
+    }
+  },
+  "Nordeste": {
+    "cobertura_geral": 77.8,
+    "vacinas": {
+      "BCG": 91.2,
+      "Covid-19": 71.4,
+      "Dengue": 52.0,
+      "dT": 78.1,
+      "dTpa": 74.5,
+      "Febre amarela": 76.2,
+      "Hepatite B": 79.6,
+      "HPV": 59.1,
+      "Influenza": 76.3,
+      "Meningococica C": 81.4,
+      "Penta": 80.0,
+      "Poliomielite VIP": 83.7,
+      "Triplice viral": 85.1,
+      "Varicela": 78.2,
+      "VVSR": 61.8
+    }
+  },
+  "Centro-Oeste": {
+    "cobertura_geral": 78.1,
+    "vacinas": {
+      "BCG": 92.0,
+      "Covid-19": 73.5,
+      "Dengue": 55.2,
+      "dT": 79.0,
+      "dTpa": 75.4,
+      "Febre amarela": 81.1,
+      "Hepatite B": 80.2,
+      "HPV": 60.7,
+      "Influenza": 77.1,
+      "Meningococica C": 82.5,
+      "Penta": 81.2,
+      "Poliomielite VIP": 84.0,
+      "Triplice viral": 85.5,
+      "Varicela": 79.4,
+      "VVSR": 64.0
+    }
+  },
+  "Sudeste": {
+    "cobertura_geral": 81.2,
+    "vacinas": {
+      "BCG": 95.5,
+      "Covid-19": 78.1,
+      "Dengue": 61.4,
+      "dT": 82.2,
+      "dTpa": 79.0,
+      "Febre amarela": 77.9,
+      "Hepatite B": 83.3,
+      "HPV": 65.5,
+      "Influenza": 80.4,
+      "Meningococica C": 86.1,
+      "Penta": 84.2,
+      "Poliomielite VIP": 87.5,
+      "Triplice viral": 89.0,
+      "Varicela": 82.1,
+      "VVSR": 68.2
+    }
+  },
+  "Sul": {
+    "cobertura_geral": 88.6,
+    "vacinas": {
+      "BCG": 98.0,
+      "Covid-19": 83.5,
+      "Dengue": 68.1,
+      "dT": 88.0,
+      "dTpa": 84.4,
+      "Febre amarela": 82.2,
+      "Hepatite B": 89.1,
+      "HPV": 71.4,
+      "Influenza": 86.6,
+      "Meningococica C": 91.3,
+      "Penta": 90.0,
+      "Poliomielite VIP": 92.5,
+      "Triplice viral": 94.1,
+      "Varicela": 87.5,
+      "VVSR": 74.0
+    }
+  }
+}

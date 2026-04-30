@@ -79,10 +79,10 @@ Não deve haver persistência dos dados através de bancos de dados.
   <a href="https://github.com/">
     <img src="https://img.shields.io/badge/GitHub-121011?style=for-the-badge&logo=github&logoColor=white"/>
   </a>
+  <br>
   <a href="https://code.visualstudio.com/">
     <img src="https://img.shields.io/badge/Visual%20Studio%20Code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white"/>
   </a>
-  <br>
   <a href="https://www.atlassian.com/software/jira">
     <img src="https://img.shields.io/badge/Jira%20Software-0052CC?style=for-the-badge&logo=jira&logoColor=white"/>
   </a>
@@ -92,15 +92,17 @@ Não deve haver persistência dos dados através de bancos de dados.
 
 * `src/main.py` — Inicia o bot e controla o funcionamento dele no Telegram;
 
-* `scripts/scraping.py` — extrai e processa os dados de vacinação a partir dos calendários oficiais disponíveis do site do Ministério da Saúde;
+* `src/data_handler/scraping.py` — extrai e processa os dados de vacinação a partir dos calendários oficiais disponíveis do site do Ministério da Saúde;
+
+* `src/data_handler/scraping_update.py` — atualiza os dados extraídos pelo arquivo `scraping.py` semanalmente para entregar os dados mais recentes ao usuário;
+
+* `src/data_handler/loader.py` — Carrega e prepara os dados utilizados pelo sistema;
 
 * `src/core/engine.py` — Processa as informações fornecidas pelo usuário e determina quais respostas são apropriadas;
 
-* `src/core/loader.py` — Carrega e prepara os dados utilizados pelo sistema;
-
 * `src/utils/helpers.py` — Funções auxiliares utilizadas em diferentes partes do projeto;
 
-* `data/processed/` — diretório onde os arquivos JSON são armazenados;
+* `src/data/processed/` — diretório onde os arquivos JSON são armazenados;
 
 * `requirements.txt` — Lista de bibliotecas Python necessárias para executar o projeto.
 

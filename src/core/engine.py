@@ -13,7 +13,7 @@ def pega_vacina(periodo):
     return resultado
 
 def procura_vacina(nome):
-    status = ['']
+    status = list()
     resultado = ''
     data = carregar_json('calendario_vacinas.json')
     nome = nome.lower().strip()

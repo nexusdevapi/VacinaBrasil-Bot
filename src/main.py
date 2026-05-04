@@ -7,7 +7,7 @@ from data_handler.scraping_update import se_precisar_update
 import json
 from pathlib import Path
 
-TOKEN = ""
+TOKEN = "8513074082:AAGjP_NN8H8EuLWU1xwzRBRQ7ycSwlw--j0"
 bot = telebot.TeleBot(TOKEN)
 
 user_data = {}
@@ -74,7 +74,6 @@ def procurar(message):
     bot.reply_to(message, procura_vacina(termo), parse_mode='HTML')
 
 # Inicia o bot a partir de qualquer mensagem
-
 @bot.message_handler(func=lambda message: message.text and not message.text.startswith('/'))
 def start_natural(message):
     user_id = message.from_user.id
@@ -99,22 +98,48 @@ def start_natural(message):
 def callback_handler(call):
 
     def edita_mensagem(mensagem):
-        bot.edit_message_text(pega_vacina(mensagem), call.message.chat.id, call.message.message_id, parse_mode='HTML')
+        markup = InlineKeyboardMarkup()
+        markup.row(InlineKeyboardButton("⬅️ Voltar", callback_data="voltar"))
+        bot.edit_message_text(pega_vacina(mensagem), call.message.chat.id, call.message.message_id, parse_mode='HTML', reply_markup=markup)
 
     if call.data == 'cobertura':
-        markup = quick_markup({
-            'Norte': {'callback_data': 'regiao_Norte'},
-            'Nordeste': {'callback_data': 'regiao_Nordeste'},
-            'Centro-Oeste': {'callback_data': 'regiao_Centro-Oeste'},
-            'Sudeste': {'callback_data': 'regiao_Sudeste'},
-            'Sul': {'callback_data': 'regiao_Sul'}
-        }, row_width=2)
+        markup = InlineKeyboardMarkup()
+
+        markup.row(
+            InlineKeyboardButton("Norte", callback_data="regiao_Norte"),
+            InlineKeyboardButton("Nordeste", callback_data="regiao_Nordeste")
+        )
+
+        markup.row(
+            InlineKeyboardButton("Centro-Oeste", callback_data="regiao_Centro-Oeste"),
+            InlineKeyboardButton("Sudeste", callback_data="regiao_Sudeste")
+        )
+
+        markup.row(
+            InlineKeyboardButton("Sul", callback_data="regiao_Sul")
+        )
+
+        markup.row(
+            InlineKeyboardButton("⬅️ Voltar", callback_data="voltar")
+        )
 
         bot.edit_message_text("Escolha a região:", call.message.chat.id, call.message.message_id, reply_markup=markup)
 
     if call.data.startswith('regiao_'):
         regiao = call.data.replace('regiao_', '')
-        bot.edit_message_text(consultar_cobertura(regiao), call.message.chat.id, call.message.message_id)
+
+        markup = InlineKeyboardMarkup()
+        markup.row(InlineKeyboardButton("⬅️ Voltar", callback_data="voltar"))
+
+        bot.edit_message_text(
+            consultar_cobertura(regiao),
+            call.message.chat.id,
+            call.message.message_id,
+            reply_markup=markup
+        )
+
+    if call.data == 'voltar':
+        menu(call.message.chat.id)
 
     if call.data.endswith('gestante'):
         edita_mensagem('Gestante')

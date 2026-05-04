@@ -4,7 +4,7 @@
   <img src="assets/img/banner_vacina_brasil.png">
 </p>
 
-Assistente virtual para Telegram que informa vacinas recomendadas com base na idade do usuário ou na semana de gestação.
+Assistente virtual para Telegram que informa vacinas recomendadas com base na faixa etária.
 
 Projeto desenvolvido durante o **1º semestre de 2026** por estudantes do curso de **Análise e Desenvolvimento de Sistemas da FATEC São José dos Campos**.
 
@@ -37,7 +37,6 @@ O projeto segue a metodologia ágil **Scrum**, com foco em desenvolvimento colab
 Desenvolver um assistente virtual para Telegram que utilize dados de portais públicos oficiais de saúde sobre vacinação para informar o cidadão sobre:
 
 * Calendário vacinal para diferentes faixas etárias (crianças, adultos e idosos);
-* Consulta de vacinas recomendadas a partir da data de nascimento do usuário;
 * Consulta de vacinas recomendadas para gestantes de acordo com a semana de gestação.
 
 Não deve haver persistência dos dados através de bancos de dados.
@@ -111,25 +110,25 @@ Não deve haver persistência dos dados através de bancos de dados.
 | Rank | Prioridade | User Story | Sprint |
 | :--- | :---: | :--- | :---: |
 | 1 | Alta | Como usuário, quero acessar o bot pelo Telegram para iniciar a consulta de informações sobre vacinação. | 1 |
-| 2 | Alta | Como usuário, quero informar minha data de nascimento para receber as vacinas recomendadas para minha idade. | 1 |
-| 3 | Alta | Como usuário gestante, quero informar a semana de gestação para receber as vacinas recomendadas para esse período. | 1 |
+| 2 | Alta | Como usuário, quero selecionar minha faixa etária para receber as vacinas recomendadas. | 1 |
+| 3 | Alta | Como usuário, quero utilizar um menu interativo com botões para navegar pelas opções do sistema. | 1 |
 | 4 | Alta | Como equipe de desenvolvimento, precisamos estruturar o repositório Git e organizar as tarefas no Jira para gerenciar o desenvolvimento do projeto. | 1 |
-| 5 | Média | Como usuário, quero utilizar botões no Telegram para consultar facilmente as vacinas recomendadas para minha idade ou período de gestação. | 2 |
-| 6 | Baixa | Como usuário, quero gerar um resumo simples das vacinas recomendadas para minha faixa etária. | 3 |
-| 7 | Média | Como administrador, preciso disponibilizar os manuais de usuário e instalação para permitir a execução do bot em outros ambientes. | 3 |
+| 5 | Alta | Como usuário, quero melhorar a navegação pelo menu interativo com botões para tornar a experiência mais intuitiva. | 2 |
+| 6 | Alta | Como usuário, quero consultar a cobertura vacinal por região para obter informações atualizadas. | 2 |
+| 7 | Alta | Como equipe de desenvolvimento, queremos corrigir erros identificados durante a validação do sistema para garantir respostas corretas. | 2 |
 
 ## 📊 Registro das Sprints
 
 | Sprint            | Previsão   | Status         | Histórico |
 |-------------------|------------|----------------|-----------|
 | 01                | 05/04/2026 | Concluída ✅   | [MVP](MVP/sp1.md) |
-| 02                | 03/05/2026 | Em andamento 🟡    | [MVP](MVP/sp2.md) |
+| 02                | 03/05/2026 | Concluída ✅    | [MVP](MVP/sp2.md) |
 
 ## 📖 Manual do Usuário
 
 ### 1. Apresentação
 
-O bot de vacinação (`@vacinabrasil_bot`) é um assistente no Telegram que permite consultar rapidamente quais vacinas são recomendadas de acordo com a **faixa etária do usuário** ou **período de gestação**.
+O bot de vacinação (`@vacinabrasil_bot`) é um assistente no Telegram que permite consultar rapidamente quais vacinas são recomendadas de acordo com a **faixa etária selecionada pelo usuário**.
 
 A interação ocorre diretamente pelo chat do Telegram, onde o usuário seleciona opções ou informa dados básicos, e o sistema retorna as vacinas recomendadas para aquele perfil. A base de dados utilizada pelo bot é composta por arquivos JSON gerados a partir de calendários de vacinação disponibilizados como arquivos PDF pelo Ministério da Saúde em `https://www.gov.br/saude/pt-br/vacinacao/calendario`.
 
@@ -147,9 +146,9 @@ A interação ocorre diretamente pelo chat do Telegram, onde o usuário selecion
 #### Dores que o bot atende
 
 * **Dificuldade de interpretação do calendário vacinal:** As tabelas oficiais possuem muitas informações. O bot simplifica e mostra apenas as vacinas relevantes para o usuário.
-* **Cálculo manual de faixa etária:** Muitas pessoas não sabem em qual categoria do calendário se encaixam. O bot calcula automaticamente a idade a partir da data de nascimento.
 * **Acesso rápido à informação:** Em vez de navegar por páginas e documentos, o usuário pode consultar as vacinas diretamente no Telegram.
-* **Informação específica para gestantes:** O bot permite consultar rapidamente as vacinas recomendadas conforme a semana de gestação.
+* **Informação específica para gestantes:** O bot permite consultar rapidamente as vacinas recomendadas de acordo com a faixa etária de interesse do usuário.
+* **Consulta de cobertura vacinal:** O usuário consegue consultar, através da navegação por botões, as coberturas vacinais de diversas regiões do Brasil.
 
 ---
 

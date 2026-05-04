@@ -7,7 +7,7 @@ from data_handler.scraping_update import se_precisar_update
 import json
 from pathlib import Path
 
-TOKEN = "8513074082:AAGjP_NN8H8EuLWU1xwzRBRQ7ycSwlw--j0"
+TOKEN = ""
 bot = telebot.TeleBot(TOKEN)
 
 user_data = {}
@@ -22,7 +22,7 @@ def consultar_cobertura(regiao):
         dados = json.load(arquivo)
 
     if regiao not in dados:
-        return "Região não encontrada."
+        return "Região não encontrada!"
 
     info = dados[regiao]
 
@@ -57,21 +57,25 @@ def menu(chat_id):
     
     bot.send_message(chat_id, "Bem-vindo(a) ao Vacina Brasil Bot 💉🇧🇷\nEscolha o que deseja consultar:", reply_markup=markup)
 
+# /procurar
 @bot.message_handler(commands=['procurar'])
 def procurar(message):
     if len(message.text.split()) < 2:
-        bot.reply_to(message, 'Use: /procurar nome da vacina ou região')
+        bot.reply_to(message, 'Use: /procurar nome da vacina ou região.')
         return
 
     termo = ' '.join(message.text.split()[1:]).strip().lower()
-    
-    regioes = ["norte", "nordeste", "centro-oeste", "sudeste", "sul"]
 
-    for r in regioes:
-        if termo in r or r in termo:
-            return bot.reply_to(message, consultar_cobertura(r.capitalize()))
+    termo_regiao = termo.replace("-", "").replace(" ", "")
 
-    bot.reply_to(message, procura_vacina(termo), parse_mode='HTML')
+    regioes = {"norte": "Norte", "nordeste": "Nordeste",  "centrooeste": "Centro-Oeste", "sudeste": "Sudeste", "sul": "Sul"}
+
+    if termo_regiao in regioes:
+        return bot.reply_to(message, consultar_cobertura(regioes[termo_regiao]))
+
+    resposta = procura_vacina(termo)
+
+    bot.reply_to(message, resposta, parse_mode='HTML')
 
 # Inicia o bot a partir de qualquer mensagem
 @bot.message_handler(func=lambda message: message.text and not message.text.startswith('/'))

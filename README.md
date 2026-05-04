@@ -141,7 +141,7 @@ A interação ocorre diretamente pelo chat do Telegram, onde o usuário selecion
 * **Responsáveis por crianças:** Pais ou responsáveis que desejam acompanhar as vacinas recomendadas para seus filhos.
 * **Jovens e adultos:** Pessoas que querem verificar quais vacinas ou reforços são indicados para sua faixa etária.
 * **Idosos:** Usuários que desejam consultar quais imunizações são recomendadas a partir dos 60 anos.
-* **Gestantes:** Mulheres que precisam saber quais vacinas são indicadas durante o período de gestação.
+* **Gestantes:** Mulheres que precisam saber quais vacinas são indicadas durante a gestação.o.
 
 #### Dores que o bot atende
 
@@ -173,7 +173,8 @@ Após a execução dessa etapa, o bot iniciará a interação e exibirá as opç
 
 Após enviada a primeira mensagem, o bot responderá com a mensagem:
 
-**Escolha sua opção:**
+**Bem-vindo(a) ao Vacina Brasil Bot 💉🇧🇷
+Escolha o que deseja consultar:**
 
 e exibirá as seguintes opções:
 
@@ -186,7 +187,7 @@ e exibirá as seguintes opções:
 
 #### 4.2 Consulta por faixa etária/grupo
 
-1. Clique em uma **faixa etária** ou em **Gestante 🤰**
+1. Clique em uma **faixa etária** ou em **`Gestante 🤰`**.
 2. O bot exibirá as vacinas recomendadas para as pessoas que se encaixam na faixa etária escolhida.
 
 Exemplo de resposta:
@@ -219,14 +220,46 @@ varicela
     - 2 doses (somente indígena e trabalhador de saúde, sem histórico da doença ou na dúvida e conforme histórico vacinal)
 ```
 
-#### 4.3 Consulta por nome da vacina
+#### 4.3 Consulta de cobertura vacinal por região
 
-Além das consultas a partir dos botões, o bot também permite buscar informações específicas sobre uma vacina pelo nome.
+1. Clique em **`Cobertura 📊`**.
+2. Selecione a região desejada.
+3. O bot exibirá a cobertura vacinal de diversas vacinas para a região escolhida.
+
+Exemplo de resposta:
+
+```
+📊 Cobertura vacinal - Sudeste
+
+Cobertura geral: 81.2%
+
+Vacinas:
+
+- BCG: 95.5%
+- Covid-19: 78.1%
+- Dengue: 61.4%
+- dT: 82.2%
+- dTpa: 79.0%
+- Febre amarela: 77.9%
+- Hepatite B: 83.3%
+- HPV: 65.5%
+- Influenza: 80.4%
+- Meningococica C: 86.1%
+- Penta: 84.2%
+- Poliomielite VIP: 87.5%
+- Triplice viral: 89.0%
+- Varicela: 82.1%
+- VVSR: 68.2%
+```
+
+#### 4.4 Consulta por nome da vacina ou da região
+
+Além das consultas a partir dos botões, o bot também permite buscar informações específicas sobre uma vacina ou uma região pelo seu nome.
 
 Para isso, utilize o comando:
 
 ```
-/procurar <nome_da_vacina>
+/procurar <nome_da_vacina_ou_região>
 ```
 
 Exemplo de uso:
@@ -235,11 +268,15 @@ Exemplo de uso:
 /procurar dT
 ```
 
+```
+/procurar norte
+```
+
 Como funciona:
 
-Ao enviar o comando, o bot realiza uma busca na base de dados e retorna informações a respeito da faixa etária/grupo que deve tomar a vacina informada.
+Ao enviar o comando, o bot realiza uma busca na base de dados e retorna informações a respeito da faixa etária/grupo que deve tomar a vacina informada ou dos dados da cobertura vacinal relacionados a região informada.
 
-Exemplo de resposta:
+Exemplos de respostas:
 
 ```
 Agendar ao saber da gravidez
@@ -253,6 +290,30 @@ dT
 10 a 24 anos
 dT
     - 3 doses (conforme histórico vacinal)
+```
+
+```
+📊 Cobertura vacinal - Centro-Oeste
+
+Cobertura geral: 78.1%
+
+Vacinas:
+
+- BCG: 92.0%
+- Covid-19: 73.5%
+- Dengue: 55.2%
+- dT: 79.0%
+- dTpa: 75.4%
+- Febre amarela: 81.1%
+- Hepatite B: 80.2%
+- HPV: 60.7%
+- Influenza: 77.1%
+- Meningococica C: 82.5%
+- Penta: 81.2%
+- Poliomielite VIP: 84.0%
+- Triplice viral: 85.5%
+- Varicela: 79.4%
+- VVSR: 64.0%
 ```
 
 ---
@@ -288,7 +349,7 @@ As informações são apresentadas de forma direta, indicando o **nome da vacina
 ### 6. Observações
 
 * O bot precisa estar **em execução** para responder às mensagens.
-* O usuário pode iniciar a conversa a partir do envio do comando `/procurar`.
+* O usuário também pode iniciar a interação utilizando o comando `/procurar` para realizar uma busca direta.
 * O tempo de resposta pode levar alguns segundos enquanto o sistema processa os dados.
 
 ---
@@ -337,7 +398,7 @@ Para executar o bot localmente é necessário:
 * Conexão à Internet;
 * [Python](https://www.python.org/downloads/) 3.9 ou superior instalado;
 * [Git](https://git-scm.com/install/);
-* Token de um bot criado no **BotFather (@BotFather no Telegram)**;
+* Token de um bot criado no **BotFather** (@BotFather no Telegram).
 
 ### 1.2 Instalação
 

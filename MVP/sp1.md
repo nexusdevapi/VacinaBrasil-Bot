@@ -35,9 +35,9 @@ Desenvolver um assistente virtual para Telegram focado em saúde pública. O bot
 
 | Critério | Descrição |
 | :--- | :--- |
-| **Funcionalidade Implementada** | O bot retorna vacinas de acordo com a idade ou semana de gestação. |
+| **Funcionalidade Implementada** | O bot retorna vacinas de acordo com a faixa etária selecionada. |
 | **Revisão de Código** | O código foi revisado por outro membro ou validado tecnicamente. |
-| **Zero APIs Externas** | A entrega utiliza apenas processamento local de dados, conforme o requisito. |
+| **Zero APIs Externas** | A entrega utiliza apenas scraping e processamento local de dados, conforme o requisito. |
 | **Integração no Git** | O código foi mergeado no branch principal sem conflitos. |
 | **Validação do PO** | O Product Owner validou que a entrega atende à necessidade mínima do usuário. |
 

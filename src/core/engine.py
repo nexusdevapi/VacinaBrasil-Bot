@@ -26,5 +26,5 @@ def procura_vacina(nome):
             resultado += f'<b>{status.replace('\n', ' ')}</b>\n' if resultado == '' else f'\n<b>{status.replace('\n', ' ')}</b>\n'
             resultado += f'{info['vacina'].replace('\n', ' ')}\n    - {info['dose'].replace('\n', ' ')}\n'
     if resultado == '':
-        resultado = 'Vacina não encontrada!'
+        resultado = 'Termo não encontrado!'
     return resultado

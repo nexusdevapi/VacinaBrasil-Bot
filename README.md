@@ -182,6 +182,7 @@ e exibirá as seguintes opções:
 * `Jovens 🧑`
 * `Adulto 🧑‍💼`
 * `Idoso 👴`
+* `Cobertura 📊`
 
 #### 4.2 Consulta por faixa etária/grupo
 

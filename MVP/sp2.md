@@ -4,7 +4,7 @@
 
 ## 🏅 Desafio <a id="desafio"></a>
 
-Desenvolver um assistente virtual para Telegram focado em saúde pública. O bot informa ao usuário **as vacinas recomendadas de acordo com a idade ou semana de gestação**, utilizando **dados processados localmente a partir de arquivos JSON**.
+Desenvolver um assistente virtual para Telegram focado em saúde pública. O bot informa ao usuário **as vacinas recomendadas de acordo com a faixa etária selecionada** e mostra a **cobetura vacinal de todas as regiões do Brasil**, utilizando **scraping** e **dados processados localmente a partir de arquivos JSON**.
 
 ---
 

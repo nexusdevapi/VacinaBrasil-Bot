@@ -7,11 +7,10 @@ from data_handler.scraping_update import se_precisar_update
 import json
 from pathlib import Path
 
-TOKEN = "8513074082:AAH-hYYQsAWvY6CB5LbT_4e8j4gA2Q2ZmcU"
+TOKEN = ""
 bot = telebot.TeleBot(TOKEN)
 
 user_data = {}
-idade = 0
 
 reiniciar_menu_natural = timedelta(minutes=1)
 
@@ -58,7 +57,6 @@ def menu(chat_id):
     
     bot.send_message(chat_id, "Bem-vindo(a) ao Vacina Brasil Bot 💉🇧🇷\nEscolha o que deseja consultar:", reply_markup=markup)
 
-@bot.message_handler(commands=['procurar'])
 @bot.message_handler(commands=['procurar'])
 def procurar(message):
     if len(message.text.split()) < 2:

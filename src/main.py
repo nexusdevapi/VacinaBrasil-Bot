@@ -139,7 +139,16 @@ def callback_handler(call):
         )
 
     if call.data == 'voltar':
-        menu(call.message.chat.id)
+        markup = quick_markup({
+            'Gestante 🤰': {'callback_data': 'grupo_gestante'},
+            'Criança 👶': {'callback_data': 'grupo_crianca'},
+            'Jovens 🧑': {'callback_data': 'grupo_adolescente'},
+            'Adulto 🧑‍💼': {'callback_data': 'grupo_adulto'},
+            'Idoso 👴': {'callback_data': 'grupo_idoso'},
+            'Cobertura 📊': {'callback_data': 'cobertura'}
+        }, row_width=3)
+    
+        bot.edit_message_text("Bem-vindo(a) ao Vacina Brasil Bot 💉🇧🇷\nEscolha o que deseja consultar:", call.message.chat.id, call.message.message_id, reply_markup=markup)
 
     if call.data.endswith('gestante'):
         edita_mensagem('Gestante')

@@ -4,14 +4,37 @@ from telebot.util import quick_markup
 from datetime import datetime, timedelta
 from core.engine import *
 from data_handler.scraping_update import se_precisar_update
+import json
+from pathlib import Path
 
-TOKEN = ""
+TOKEN = "8513074082:AAH-hYYQsAWvY6CB5LbT_4e8j4gA2Q2ZmcU"
 bot = telebot.TeleBot(TOKEN)
 
 user_data = {}
 idade = 0
 
 reiniciar_menu_natural = timedelta(minutes=1)
+
+JSON_COBERTURA = Path("src/data/processed/cobertura_vacinal.json")
+
+# Consultar cobertura vacinal
+def consultar_cobertura(regiao):
+    with open(JSON_COBERTURA, "r", encoding="utf-8") as arquivo:
+        dados = json.load(arquivo)
+
+    if regiao not in dados:
+        return "Região não encontrada."
+
+    info = dados[regiao]
+
+    texto = f"📊 Cobertura vacinal - {regiao}\n\n"
+    texto += f"Cobertura geral: {info['cobertura_geral']}%\n\n"
+    texto += "Vacinas:\n\n"
+
+    for vacina, cobertura in info["vacinas"].items():
+        texto += f"- {vacina}: {cobertura}%\n"
+
+    return texto
 
 # /start
 @bot.message_handler(commands=['start'])
@@ -29,18 +52,28 @@ def menu(chat_id):
         'Criança 👶': {'callback_data': 'grupo_crianca'},
         'Jovens 🧑': {'callback_data': 'grupo_adolescente'},
         'Adulto 🧑‍💼': {'callback_data': 'grupo_adulto'},
-        'Idoso 👴': {'callback_data': 'grupo_idoso'}
+        'Idoso 👴': {'callback_data': 'grupo_idoso'},
+        'Cobertura 📊': {'callback_data': 'cobertura'}
     }, row_width=3)
     
-    bot.send_message(chat_id, "Escolha o grupo para consultar as vacinas:", reply_markup=markup)
+    bot.send_message(chat_id, "Bem-vindo(a) ao Vacina Brasil Bot 💉🇧🇷\nEscolha o que deseja consultar:", reply_markup=markup)
 
+@bot.message_handler(commands=['procurar'])
 @bot.message_handler(commands=['procurar'])
 def procurar(message):
     if len(message.text.split()) < 2:
-        bot.reply_to(message, 'Use: /procurar nome da vacina')
+        bot.reply_to(message, 'Use: /procurar nome da vacina ou região')
         return
-    vacina = ' '.join([x for x in message.text.split()[1:]]).rstrip().lower()
-    bot.reply_to(message, procura_vacina(vacina), parse_mode='HTML')
+
+    termo = ' '.join(message.text.split()[1:]).strip().lower()
+    
+    regioes = ["norte", "nordeste", "centro-oeste", "sudeste", "sul"]
+
+    for r in regioes:
+        if termo in r or r in termo:
+            return bot.reply_to(message, consultar_cobertura(r.capitalize()))
+
+    bot.reply_to(message, procura_vacina(termo), parse_mode='HTML')
 
 # Inicia o bot a partir de qualquer mensagem
 
@@ -63,12 +96,27 @@ def start_natural(message):
     else:
         bot.reply_to(message, 'Use: /start para exibir o menu novamente ou aguarde um minuto.')
 
-# Callbacks - editam a primeira mensagem e retornar a vacina de acordo com a situação
+# Callbacks
 @bot.callback_query_handler(func=lambda call: True)
 def callback_handler(call):
 
     def edita_mensagem(mensagem):
         bot.edit_message_text(pega_vacina(mensagem), call.message.chat.id, call.message.message_id, parse_mode='HTML')
+
+    if call.data == 'cobertura':
+        markup = quick_markup({
+            'Norte': {'callback_data': 'regiao_Norte'},
+            'Nordeste': {'callback_data': 'regiao_Nordeste'},
+            'Centro-Oeste': {'callback_data': 'regiao_Centro-Oeste'},
+            'Sudeste': {'callback_data': 'regiao_Sudeste'},
+            'Sul': {'callback_data': 'regiao_Sul'}
+        }, row_width=2)
+
+        bot.edit_message_text("Escolha a região:", call.message.chat.id, call.message.message_id, reply_markup=markup)
+
+    if call.data.startswith('regiao_'):
+        regiao = call.data.replace('regiao_', '')
+        bot.edit_message_text(consultar_cobertura(regiao), call.message.chat.id, call.message.message_id)
 
     if call.data.endswith('gestante'):
         edita_mensagem('Gestante')

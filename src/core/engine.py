@@ -28,3 +28,21 @@ def procura_vacina(nome):
     if resultado == '':
         resultado = 'Termo não encontrado!'
     return resultado
+
+# Consultar cobertura vacinal
+def consultar_cobertura(regiao):
+    dados = carregar_json('cobertura_vacinal.json')
+
+    if regiao not in dados:
+        return "Região não encontrada!"
+
+    info = dados[regiao]
+
+    texto = f"📊 Cobertura vacinal - {regiao}\n\n"
+    texto += f"Cobertura geral: {info['cobertura_geral']}%\n\n"
+    texto += "Vacinas:\n\n"
+
+    for vacina, cobertura in info["vacinas"].items():
+        texto += f"- {vacina}: {cobertura}%\n"
+
+    return texto

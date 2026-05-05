@@ -14,27 +14,6 @@ user_data = {}
 
 reiniciar_menu_natural = timedelta(minutes=1)
 
-JSON_COBERTURA = Path("src/data/processed/cobertura_vacinal.json")
-
-# Consultar cobertura vacinal
-def consultar_cobertura(regiao):
-    with open(JSON_COBERTURA, "r", encoding="utf-8") as arquivo:
-        dados = json.load(arquivo)
-
-    if regiao not in dados:
-        return "Região não encontrada!"
-
-    info = dados[regiao]
-
-    texto = f"📊 Cobertura vacinal - {regiao}\n\n"
-    texto += f"Cobertura geral: {info['cobertura_geral']}%\n\n"
-    texto += "Vacinas:\n\n"
-
-    for vacina, cobertura in info["vacinas"].items():
-        texto += f"- {vacina}: {cobertura}%\n"
-
-    return texto
-
 # /start
 @bot.message_handler(commands=['start'])
 def start(message):

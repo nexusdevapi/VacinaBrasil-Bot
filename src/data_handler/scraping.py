@@ -9,7 +9,7 @@ import pdfplumber
 BASE_DIR = Path(__file__).resolve().parents[1]
 sys.path.append(str(BASE_DIR))
 
-from utils.helpers import extrair_idade
+from utils.helpers import *
 
 # calendários relevantes disponíveis em https://www.gov.br/saude/pt-br/vacinacao/arquivos/
 urls = [
@@ -57,6 +57,9 @@ def gerar_calendario_vacinas():
 
                         idade_texto = linha[0] or ''
                         idade_min, idade_max = extrair_idade(idade_texto)
+
+                        if linha[1][0] == linha[1][1] and linha[1][2] == linha[1][3]:
+                            linha[1] = remove_repetido(linha[1])
 
                         registro = {
                             'grupo': grupo,

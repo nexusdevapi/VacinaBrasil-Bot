@@ -18,3 +18,10 @@ def extrair_idade(idade_texto):
         return int(numeros[0]), None
     else:
         return None, None
+
+def remove_repetido(palavra):
+    result = [palavra[0]]
+    for l in palavra[1:]:
+        if l != result[-1]:
+            result.append(l)
+    return ''.join(result)

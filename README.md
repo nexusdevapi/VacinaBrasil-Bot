@@ -4,7 +4,7 @@
   <img src="assets/img/banner_vacina_brasil.png">
 </p>
 
-Assistente virtual para Telegram que informa vacinas recomendadas com base na idade do usuário ou na semana de gestação.
+Assistente virtual para Telegram que informa vacinas recomendadas com base na faixa etária.
 
 Projeto desenvolvido durante o **1º semestre de 2026** por estudantes do curso de **Análise e Desenvolvimento de Sistemas da FATEC São José dos Campos**.
 
@@ -13,7 +13,7 @@ O projeto segue a metodologia ágil **Scrum**, com foco em desenvolvimento colab
 ## 🎥 Demonstração
 
 <p align="center">
-  <a href="TROCAR_PELO_NOVO_LINK">
+  <a href="https://youtu.be/MrXPcIRiMaQ">
     <img src="https://img.youtube.com/vi/tY-uqS3kM9k/maxresdefault.jpg" width="800">
   </a>
 </p>
@@ -37,7 +37,6 @@ O projeto segue a metodologia ágil **Scrum**, com foco em desenvolvimento colab
 Desenvolver um assistente virtual para Telegram que utilize dados de portais públicos oficiais de saúde sobre vacinação para informar o cidadão sobre:
 
 * Calendário vacinal para diferentes faixas etárias (crianças, adultos e idosos);
-* Consulta de vacinas recomendadas a partir da data de nascimento do usuário;
 * Consulta de vacinas recomendadas para gestantes de acordo com a semana de gestação.
 
 Não deve haver persistência dos dados através de bancos de dados.
@@ -73,21 +72,15 @@ Não deve haver persistência dos dados através de bancos de dados.
   <a href="https://telegram.org/">
     <img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white"/>
   </a>
-  <a href="https://www.json.org/">
-    <img src="https://img.shields.io/badge/JSON-000000?style=for-the-badge&logo=json&logoColor=white"/>
-  </a>
   <a href="https://git-scm.com/">
     <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white"/>
   </a>
   <a href="https://github.com/">
     <img src="https://img.shields.io/badge/GitHub-121011?style=for-the-badge&logo=github&logoColor=white"/>
   </a>
+  <br>
   <a href="https://code.visualstudio.com/">
     <img src="https://img.shields.io/badge/Visual%20Studio%20Code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white"/>
-  </a>
-  <br>
-  <a href="https://colab.research.google.com/">
-    <img src="https://img.shields.io/badge/Google%20Colab-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white"/>
   </a>
   <a href="https://www.atlassian.com/software/jira">
     <img src="https://img.shields.io/badge/Jira%20Software-0052CC?style=for-the-badge&logo=jira&logoColor=white"/>
@@ -98,15 +91,17 @@ Não deve haver persistência dos dados através de bancos de dados.
 
 * `src/main.py` — Inicia o bot e controla o funcionamento dele no Telegram;
 
-* `scripts/scraping.py` — extrai e processa os dados de vacinação a partir dos calendários oficiais disponíveis do site do Ministério da Saúde;
+* `src/data_handler/scraping.py` — extrai e processa os dados de vacinação a partir dos calendários oficiais disponíveis do site do Ministério da Saúde;
+
+* `src/data_handler/scraping_update.py` — atualiza os dados extraídos pelo arquivo `scraping.py` semanalmente para entregar os dados mais recentes ao usuário;
+
+* `src/data_handler/loader.py` — Carrega e prepara os dados utilizados pelo sistema;
 
 * `src/core/engine.py` — Processa as informações fornecidas pelo usuário e determina quais respostas são apropriadas;
 
-* `src/core/loader.py` — Carrega e prepara os dados utilizados pelo sistema;
-
 * `src/utils/helpers.py` — Funções auxiliares utilizadas em diferentes partes do projeto;
 
-* `data/processed/` — diretório onde os arquivos JSON são armazenados;
+* `src/data/processed/` — diretório onde os arquivos JSON são armazenados;
 
 * `requirements.txt` — Lista de bibliotecas Python necessárias para executar o projeto.
 
@@ -115,25 +110,25 @@ Não deve haver persistência dos dados através de bancos de dados.
 | Rank | Prioridade | User Story | Sprint |
 | :--- | :---: | :--- | :---: |
 | 1 | Alta | Como usuário, quero acessar o bot pelo Telegram para iniciar a consulta de informações sobre vacinação. | 1 |
-| 2 | Alta | Como usuário, quero informar minha data de nascimento para receber as vacinas recomendadas para minha idade. | 1 |
-| 3 | Alta | Como usuário gestante, quero informar a semana de gestação para receber as vacinas recomendadas para esse período. | 1 |
+| 2 | Alta | Como usuário, quero selecionar minha faixa etária para receber as vacinas recomendadas. | 1 |
+| 3 | Alta | Como usuário, quero utilizar um menu interativo com botões para navegar pelas opções do sistema. | 1 |
 | 4 | Alta | Como equipe de desenvolvimento, precisamos estruturar o repositório Git e organizar as tarefas no Jira para gerenciar o desenvolvimento do projeto. | 1 |
-| 5 | Média | Como usuário, quero utilizar botões no Telegram para consultar facilmente as vacinas recomendadas para minha idade ou período de gestação. | 2 |
-| 6 | Baixa | Como usuário, quero gerar um resumo simples das vacinas recomendadas para minha faixa etária. | 3 |
-| 7 | Média | Como administrador, preciso disponibilizar os manuais de usuário e instalação para permitir a execução do bot em outros ambientes. | 3 |
+| 5 | Alta | Como usuário, quero melhorar a navegação pelo menu interativo com botões para tornar a experiência mais intuitiva. | 2 |
+| 6 | Alta | Como usuário, quero consultar a cobertura vacinal por região para obter informações atualizadas. | 2 |
+| 7 | Alta | Como equipe de desenvolvimento, queremos corrigir erros identificados durante a validação do sistema para garantir respostas corretas. | 2 |
 
 ## 📊 Registro das Sprints
 
 | Sprint            | Previsão   | Status         | Histórico |
 |-------------------|------------|----------------|-----------|
 | 01                | 05/04/2026 | Concluída ✅   | [MVP](MVP/sp1.md) |
-| 02                | 03/05/2026 | Em andamento 🟡    | [MVP](MVP/sp2.md) |
+| 02                | 03/05/2026 | Concluída ✅    | [MVP](MVP/sp2.md) |
 
 ## 📖 Manual do Usuário
 
 ### 1. Apresentação
 
-O bot de vacinação (`@vacinabrasil_bot`) é um assistente no Telegram que permite consultar rapidamente quais vacinas são recomendadas de acordo com a **faixa etária do usuário** ou **período de gestação**.
+O bot de vacinação (`@vacinabrasil_bot`) é um assistente no Telegram que permite consultar rapidamente quais vacinas são recomendadas de acordo com a **faixa etária selecionada pelo usuário**.
 
 A interação ocorre diretamente pelo chat do Telegram, onde o usuário seleciona opções ou informa dados básicos, e o sistema retorna as vacinas recomendadas para aquele perfil. A base de dados utilizada pelo bot é composta por arquivos JSON gerados a partir de calendários de vacinação disponibilizados como arquivos PDF pelo Ministério da Saúde em `https://www.gov.br/saude/pt-br/vacinacao/calendario`.
 
@@ -146,14 +141,14 @@ A interação ocorre diretamente pelo chat do Telegram, onde o usuário selecion
 * **Responsáveis por crianças:** Pais ou responsáveis que desejam acompanhar as vacinas recomendadas para seus filhos.
 * **Jovens e adultos:** Pessoas que querem verificar quais vacinas ou reforços são indicados para sua faixa etária.
 * **Idosos:** Usuários que desejam consultar quais imunizações são recomendadas a partir dos 60 anos.
-* **Gestantes:** Mulheres que precisam saber quais vacinas são indicadas durante o período de gestação.
+* **Gestantes:** Mulheres que precisam saber quais vacinas são indicadas durante a gestação.o.
 
 #### Dores que o bot atende
 
 * **Dificuldade de interpretação do calendário vacinal:** As tabelas oficiais possuem muitas informações. O bot simplifica e mostra apenas as vacinas relevantes para o usuário.
-* **Cálculo manual de faixa etária:** Muitas pessoas não sabem em qual categoria do calendário se encaixam. O bot calcula automaticamente a idade a partir da data de nascimento.
 * **Acesso rápido à informação:** Em vez de navegar por páginas e documentos, o usuário pode consultar as vacinas diretamente no Telegram.
-* **Informação específica para gestantes:** O bot permite consultar rapidamente as vacinas recomendadas conforme a semana de gestação.
+* **Informação específica para gestantes:** O bot permite consultar rapidamente as vacinas recomendadas de acordo com a faixa etária de interesse do usuário.
+* **Consulta de cobertura vacinal:** O usuário consegue consultar, através da navegação por botões, as coberturas vacinais de diversas regiões do Brasil.
 
 ---
 
@@ -178,7 +173,8 @@ Após a execução dessa etapa, o bot iniciará a interação e exibirá as opç
 
 Após enviada a primeira mensagem, o bot responderá com a mensagem:
 
-**Escolha sua opção:**
+**Bem-vindo(a) ao Vacina Brasil Bot 💉🇧🇷
+Escolha o que deseja consultar:**
 
 e exibirá as seguintes opções:
 
@@ -187,10 +183,11 @@ e exibirá as seguintes opções:
 * `Jovens 🧑`
 * `Adulto 🧑‍💼`
 * `Idoso 👴`
+* `Cobertura 📊`
 
 #### 4.2 Consulta por faixa etária/grupo
 
-1. Clique em uma **faixa etária** ou em **Gestante 🤰**
+1. Clique em uma **faixa etária** ou em **`Gestante 🤰`**.
 2. O bot exibirá as vacinas recomendadas para as pessoas que se encaixam na faixa etária escolhida.
 
 Exemplo de resposta:
@@ -223,14 +220,46 @@ varicela
     - 2 doses (somente indígena e trabalhador de saúde, sem histórico da doença ou na dúvida e conforme histórico vacinal)
 ```
 
-#### 4.3 Consulta por nome da vacina
+#### 4.3 Consulta de cobertura vacinal por região
 
-Além das consultas a partir dos botões, o bot também permite buscar informações específicas sobre uma vacina pelo nome.
+1. Clique em **`Cobertura 📊`**.
+2. Selecione a região desejada.
+3. O bot exibirá a cobertura vacinal de diversas vacinas para a região escolhida.
+
+Exemplo de resposta:
+
+```
+📊 Cobertura vacinal - Sudeste
+
+Cobertura geral: 81.2%
+
+Vacinas:
+
+- BCG: 95.5%
+- Covid-19: 78.1%
+- Dengue: 61.4%
+- dT: 82.2%
+- dTpa: 79.0%
+- Febre amarela: 77.9%
+- Hepatite B: 83.3%
+- HPV: 65.5%
+- Influenza: 80.4%
+- Meningococica C: 86.1%
+- Penta: 84.2%
+- Poliomielite VIP: 87.5%
+- Triplice viral: 89.0%
+- Varicela: 82.1%
+- VVSR: 68.2%
+```
+
+#### 4.4 Consulta por nome da vacina ou da região
+
+Além das consultas a partir dos botões, o bot também permite buscar informações específicas sobre uma vacina ou uma região pelo seu nome.
 
 Para isso, utilize o comando:
 
 ```
-/procurar <nome_da_vacina>
+/procurar <nome_da_vacina_ou_região>
 ```
 
 Exemplo de uso:
@@ -239,11 +268,15 @@ Exemplo de uso:
 /procurar dT
 ```
 
+```
+/procurar norte
+```
+
 Como funciona:
 
-Ao enviar o comando, o bot realiza uma busca na base de dados e retorna informações a respeito da faixa etária/grupo que deve tomar a vacina informada.
+Ao enviar o comando, o bot realiza uma busca na base de dados e retorna informações a respeito da faixa etária/grupo que deve tomar a vacina informada ou dos dados da cobertura vacinal relacionados a região informada.
 
-Exemplo de resposta:
+Exemplos de respostas:
 
 ```
 Agendar ao saber da gravidez
@@ -257,6 +290,30 @@ dT
 10 a 24 anos
 dT
     - 3 doses (conforme histórico vacinal)
+```
+
+```
+📊 Cobertura vacinal - Centro-Oeste
+
+Cobertura geral: 78.1%
+
+Vacinas:
+
+- BCG: 92.0%
+- Covid-19: 73.5%
+- Dengue: 55.2%
+- dT: 79.0%
+- dTpa: 75.4%
+- Febre amarela: 81.1%
+- Hepatite B: 80.2%
+- HPV: 60.7%
+- Influenza: 77.1%
+- Meningococica C: 82.5%
+- Penta: 81.2%
+- Poliomielite VIP: 84.0%
+- Triplice viral: 85.5%
+- Varicela: 79.4%
+- VVSR: 64.0%
 ```
 
 ---
@@ -292,7 +349,7 @@ As informações são apresentadas de forma direta, indicando o **nome da vacina
 ### 6. Observações
 
 * O bot precisa estar **em execução** para responder às mensagens.
-* O usuário pode iniciar a conversa a partir do envio do comando `/procurar`.
+* O usuário também pode iniciar a interação utilizando o comando `/procurar` para realizar uma busca direta.
 * O tempo de resposta pode levar alguns segundos enquanto o sistema processa os dados.
 
 ---
@@ -341,7 +398,7 @@ Para executar o bot localmente é necessário:
 * Conexão à Internet;
 * [Python](https://www.python.org/downloads/) 3.9 ou superior instalado;
 * [Git](https://git-scm.com/install/);
-* Token de um bot criado no **BotFather (@BotFather no Telegram)**;
+* Token de um bot criado no **BotFather** (@BotFather no Telegram).
 
 ### 1.2 Instalação
 

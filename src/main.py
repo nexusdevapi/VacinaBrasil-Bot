@@ -4,6 +4,7 @@ from telebot.util import quick_markup
 from datetime import datetime, timedelta
 from core.engine import *
 from data_handler.scraping_update import se_precisar_update
+import time
 import json
 from pathlib import Path
 
@@ -12,7 +13,20 @@ bot = telebot.TeleBot(TOKEN)
 
 user_data = {}
 
+ultimo_clique = {}
+
 reiniciar_menu_natural = timedelta(minutes=1)
+
+# Evita spam de botões
+def anti_spam(user_id, action, cooldown=0.8):
+    key = f"{user_id}:{action}"
+    now = time.time()
+
+    if key in ultimo_clique and now - ultimo_clique[key] < cooldown:
+        return False
+
+    ultimo_clique[key] = now
+    return True
 
 # /start
 @bot.message_handler(commands=['start'])
@@ -35,6 +49,19 @@ def menu(chat_id):
     }, row_width=3)
     
     bot.send_message(chat_id, "Bem-vindo(a) ao Vacina Brasil Bot 💉🇧🇷\nEscolha o que deseja consultar:", reply_markup=markup)
+    
+# Evita spam de botões
+def safe_edit(text, chat_id, message_id, markup=None):
+    try:
+        bot.edit_message_text(
+            text,
+            chat_id,
+            message_id,
+            reply_markup=markup,
+            parse_mode='HTML'
+        )
+    except Exception as e:
+        print(f"[safe_edit erro] {e}")
 
 # /procurar
 @bot.message_handler(commands=['procurar'])
@@ -79,11 +106,20 @@ def start_natural(message):
 # Callbacks
 @bot.callback_query_handler(func=lambda call: True)
 def callback_handler(call):
+    
+    user_id = call.from_user.id
+
+    if not anti_spam(user_id, call.data):
+        bot.answer_callback_query(call.id)
+        return
 
     def edita_mensagem(mensagem):
         markup = InlineKeyboardMarkup()
         markup.row(InlineKeyboardButton("⬅️ Voltar", callback_data="voltar"))
-        bot.edit_message_text(pega_vacina(mensagem), call.message.chat.id, call.message.message_id, parse_mode='HTML', reply_markup=markup)
+        try:
+            safe_edit(pega_vacina(mensagem), call.message.chat.id, call.message.message_id, markup)
+        except Exception:
+            pass
 
     if call.data == 'cobertura':
         markup = InlineKeyboardMarkup()
@@ -106,22 +142,17 @@ def callback_handler(call):
             InlineKeyboardButton("⬅️ Voltar", callback_data="voltar")
         )
 
-        bot.edit_message_text("Escolha a região:", call.message.chat.id, call.message.message_id, reply_markup=markup)
+        safe_edit("Escolha a região:", call.message.chat.id, call.message.message_id, markup)
 
-    if call.data.startswith('regiao_'):
+    elif call.data.startswith('regiao_'):
         regiao = call.data.replace('regiao_', '')
 
         markup = InlineKeyboardMarkup()
         markup.row(InlineKeyboardButton("⬅️ Voltar", callback_data="voltar"))
 
-        bot.edit_message_text(
-            consultar_cobertura(regiao),
-            call.message.chat.id,
-            call.message.message_id,
-            reply_markup=markup
-        )
+        safe_edit(consultar_cobertura(regiao), call.message.chat.id, call.message.message_id, markup)
 
-    if call.data == 'voltar':
+    elif call.data == 'voltar':
         markup = quick_markup({
             'Gestante 🤰': {'callback_data': 'grupo_gestante'},
             'Criança 👶': {'callback_data': 'grupo_crianca'},
@@ -131,26 +162,22 @@ def callback_handler(call):
             'Cobertura 📊': {'callback_data': 'cobertura'}
         }, row_width=3)
     
-        bot.edit_message_text("Bem-vindo(a) ao Vacina Brasil Bot 💉🇧🇷\nEscolha o que deseja consultar:", call.message.chat.id, call.message.message_id, reply_markup=markup)
+        safe_edit("Bem-vindo(a) ao Vacina Brasil Bot 💉🇧🇷\nEscolha o que deseja consultar:", call.message.chat.id, call.message.message_id, markup)
 
-    if call.data.endswith('gestante'):
+    elif call.data.endswith('gestante'):
         edita_mensagem('Gestante')
 
-    if call.data.endswith('crianca'):
+    elif call.data.endswith('crianca'):
         edita_mensagem('Criança')
 
-    if call.data.endswith('adolescente'):
+    elif call.data.endswith('adolescente'):
         edita_mensagem('Adolescente')
     
-    if call.data.endswith('adulto'):
+    elif call.data.endswith('adulto'):
         edita_mensagem('Adulto')
     
-    if call.data.endswith('idoso'):
+    elif call.data.endswith('idoso'):
         edita_mensagem('Idoso')
-
-    # Exibe o menu novamente após a exibição das vacinas
-
-    bot.answer_callback_query(call.id)
 
 # Verifica se há alguma atualização nos calendários
 se_precisar_update()

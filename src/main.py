@@ -4,6 +4,7 @@ from telebot.util import quick_markup
 from datetime import datetime, timedelta
 from core.engine import *
 from data_handler.scraping_update import se_precisar_update
+import time
 import json
 from pathlib import Path
 
@@ -11,6 +12,9 @@ TOKEN = ""
 bot = telebot.TeleBot(TOKEN)
 
 user_data = {}
+
+ultimo_clique = {}
+cooldown_clique = 0.8
 
 reiniciar_menu_natural = timedelta(minutes=1)
 
@@ -35,6 +39,19 @@ def menu(chat_id):
     }, row_width=3)
     
     bot.send_message(chat_id, "Bem-vindo(a) ao Vacina Brasil Bot 💉🇧🇷\nEscolha o que deseja consultar:", reply_markup=markup)
+    
+# Evita spam de botões
+def safe_edit(text, chat_id, message_id, markup=None):
+    try:
+        bot.edit_message_text(
+            text,
+            chat_id,
+            message_id,
+            reply_markup=markup,
+            parse_mode='HTML'
+        )
+    except Exception:
+        pass
 
 # /procurar
 @bot.message_handler(commands=['procurar'])
@@ -79,11 +96,24 @@ def start_natural(message):
 # Callbacks
 @bot.callback_query_handler(func=lambda call: True)
 def callback_handler(call):
+    
+    user_id = call.from_user.id
+    now = time.time()
+
+    if user_id in ultimo_clique:
+        if now - ultimo_clique[user_id] < cooldown_clique:
+            bot.answer_callback_query(call.id)
+            return
+
+    ultimo_clique[user_id] = now
 
     def edita_mensagem(mensagem):
         markup = InlineKeyboardMarkup()
         markup.row(InlineKeyboardButton("⬅️ Voltar", callback_data="voltar"))
-        bot.edit_message_text(pega_vacina(mensagem), call.message.chat.id, call.message.message_id, parse_mode='HTML', reply_markup=markup)
+        try:
+            bot.edit_message_text(pega_vacina(mensagem), call.message.chat.id, call.message.message_id, parse_mode='HTML', reply_markup=markup)
+        except Exception:
+            pass
 
     if call.data == 'cobertura':
         markup = InlineKeyboardMarkup()
@@ -147,10 +177,6 @@ def callback_handler(call):
     
     if call.data.endswith('idoso'):
         edita_mensagem('Idoso')
-
-    # Exibe o menu novamente após a exibição das vacinas
-
-    bot.answer_callback_query(call.id)
 
 # Verifica se há alguma atualização nos calendários
 se_precisar_update()

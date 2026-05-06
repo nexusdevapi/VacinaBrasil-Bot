@@ -8,7 +8,7 @@ import time
 import json
 from pathlib import Path
 
-TOKEN = "8513074082:AAGjP_NN8H8EuLWU1xwzRBRQ7ycSwlw--j0"
+TOKEN = ""
 bot = telebot.TeleBot(TOKEN)
 
 user_data = {}

@@ -272,7 +272,7 @@ Exemplo de uso:
 ```
 
 ```
-/procurar norte
+/procurar centro-oeste
 ```
 
 Como funciona:

@@ -105,7 +105,7 @@ Não deve haver persistência dos dados através de bancos de dados.
 
 * `requirements.txt` — Lista de bibliotecas Python necessárias para executar o projeto.
 
-## 📌 Product Backlog
+## 📌 Backlog do Produto
 
 | Rank | Prioridade | User Story | Sprint |
 | :--- | :---: | :--- | :---: |
@@ -116,8 +116,8 @@ Não deve haver persistência dos dados através de bancos de dados.
 | 5 | Alta | Como usuário, quero consultar a cobertura vacinal por região para obter informações atualizadas. | 2 |
 | 6 | Média | Como usuário, quero melhorar a navegação pelo menu interativo com botões para tornar a experiência mais intuitiva. | 2 |
 | 7 | Alta | Como equipe de desenvolvimento, queremos corrigir erros identificados durante a validação do sistema para garantir respostas corretas. | 2 |
-| 6 | Baixa | Como usuário, quero gerar um resumo simples das vacinas recomendadas para minha faixa etária. | 3 |
-| 7 | Média | Como administrador, preciso disponibilizar os manuais de usuário e instalação para permitir a execução do bot em outros ambientes. | 3 |
+| 8 | Baixa | Como usuário, quero gerar um resumo simples das vacinas recomendadas para minha faixa etária. | 3 |
+| 9 | Média | Como administrador, preciso disponibilizar os manuais de usuário e instalação para permitir a execução do bot em outros ambientes. | 3 |
 
 ## 📊 Registro das Sprints
 

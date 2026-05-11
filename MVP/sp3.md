@@ -1,10 +1,10 @@
 # API 1º Semestre ADS - Vacina Brasil Bot (NexusDev)
 
-> Status do Projeto: Sprint 1 - Concluída ✅ (11/03 - 10/04)
+> Status do Projeto: Sprint 3 - Em andamento 🟡 (11/05 - 31/05)
 
 ## 🏅 Desafio <a id="desafio"></a>
 
-Desenvolver um assistente virtual para Telegram focado em saúde pública. O bot informa ao usuário **as vacinas recomendadas de acordo com a faixa etária selecionada**, utilizando **scraping** e **dados processados localmente a partir de arquivos JSON**.
+Desenvolver um assistente virtual para Telegram focado em saúde pública. O bot informa ao usuário **as vacinas recomendadas de acordo com a faixa etária selecionada** e mostra a **cobetura vacinal de todas as regiões do Brasil**, utilizando **scraping** e **dados processados localmente a partir de arquivos JSON**.
 
 ---
 
@@ -12,10 +12,8 @@ Desenvolver um assistente virtual para Telegram focado em saúde pública. O bot
 
 | Rank | Prioridade | User Story | Sprint |
 | :--- | :---: | :--- | :---: |
-| 1 | Alta | Como usuário, quero acessar o bot pelo Telegram para iniciar a consulta de informações sobre vacinação. | 1 |
-| 2 | Alta | Como usuário, quero selecionar minha faixa etária para receber as vacinas recomendadas. | 1 |
-| 3 | Alta | Como usuário, quero utilizar um menu interativo com botões para navegar pelas opções do sistema. | 1 |
-| 4 | Alta | Como equipe de desenvolvimento, precisamos estruturar o repositório Git e organizar as tarefas no Jira para gerenciar o desenvolvimento do projeto. | 1 |
+| 1 | Alta | Como usuário, quero gerar um resumo simples das vacinas recomendadas para minha faixa etária. | 3 |
+| 2 | Alta | Como administrador, preciso disponibilizar os manuais de usuário e instalação para permitir a execução do bot em outros ambientes. | 3 |
 
 ---
 
@@ -35,7 +33,7 @@ Desenvolver um assistente virtual para Telegram focado em saúde pública. O bot
 
 | Critério | Descrição |
 | :--- | :--- |
-| **Funcionalidade Implementada** | O bot retorna vacinas de acordo com a faixa etária selecionada. |
+| **Funcionalidade Implementada** | O bot retorna a cobertura vacinal da região selecionada pelo usuário. |
 | **Revisão de Código** | O código foi revisado por outro membro ou validado tecnicamente. |
 | **Zero APIs Externas** | A entrega utiliza apenas scraping e processamento local de dados, conforme o requisito. |
 | **Integração no Git** | O código foi mergeado no branch principal sem conflitos. |

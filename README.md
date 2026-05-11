@@ -95,6 +95,8 @@ Não deve haver persistência dos dados através de bancos de dados.
 
 * `src/data_handler/scraping_update.py` — atualiza os dados extraídos pelo arquivo `scraping.py` semanalmente para entregar os dados mais recentes ao usuário;
 
+* `src/data_handler/scraping_cobertura.py` — obtém dados da cobertura vacinal de diversas regiões do país a partir de arquivos disponibilizados pelo Ministério da Saúde;
+
 * `src/data_handler/loader.py` — Carrega e prepara os dados utilizados pelo sistema;
 
 * `src/core/engine.py` — Processa as informações fornecidas pelo usuário e determina quais respostas são apropriadas;
@@ -114,10 +116,10 @@ Não deve haver persistência dos dados através de bancos de dados.
 | 3 | Alta | Como usuário, quero utilizar um menu interativo com botões para navegar pelas opções do sistema. | 1 |
 | 4 | Alta | Como equipe de desenvolvimento, precisamos estruturar o repositório Git e organizar as tarefas no Jira para gerenciar o desenvolvimento do projeto. | 1 |
 | 5 | Alta | Como usuário, quero consultar a cobertura vacinal por região para obter informações atualizadas. | 2 |
-| 6 | Média | Como usuário, quero melhorar a navegação pelo menu interativo com botões para tornar a experiência mais intuitiva. | 2 |
+| 6 | Média | Como equipe de desenvolvimento, queremos melhorar a navegação pelo menu interativo com botões para tornar a experiência mais intuitiva. | 2 |
 | 7 | Alta | Como equipe de desenvolvimento, queremos corrigir erros identificados durante a validação do sistema para garantir respostas corretas. | 2 |
-| 8 | Baixa | Como usuário, quero gerar um resumo simples das vacinas recomendadas para minha faixa etária. | 3 |
-| 9 | Média | Como administrador, preciso disponibilizar os manuais de usuário e instalação para permitir a execução do bot em outros ambientes. | 3 |
+| 8 | Alta | Como usuário, quero gerar um resumo simples das vacinas recomendadas para minha faixa etária. | 3 |
+| 9 | Alta | Como administrador, preciso disponibilizar os manuais de usuário e instalação para permitir a execução do bot em outros ambientes. | 3 |
 
 ## 📊 Registro das Sprints
 
@@ -144,7 +146,7 @@ A interação ocorre diretamente pelo chat do Telegram, onde o usuário selecion
 * **Responsáveis por crianças:** Pais ou responsáveis que desejam acompanhar as vacinas recomendadas para seus filhos.
 * **Jovens e adultos:** Pessoas que querem verificar quais vacinas ou reforços são indicados para sua faixa etária.
 * **Idosos:** Usuários que desejam consultar quais imunizações são recomendadas a partir dos 60 anos.
-* **Gestantes:** Mulheres que precisam saber quais vacinas são indicadas durante a gestação.o.
+* **Gestantes:** Mulheres que precisam saber quais vacinas são indicadas durante a gestação.
 
 #### Dores que o bot atende
 
@@ -177,50 +179,65 @@ Após a execução dessa etapa, o bot iniciará a interação e exibirá as opç
 Após enviada a primeira mensagem, o bot responderá com a mensagem:
 
 **Bem-vindo(a) ao Vacina Brasil Bot 💉🇧🇷
-Escolha o que deseja consultar:**
+O que deseja consultar hoje?**
 
 e exibirá as seguintes opções:
 
-* `Gestante 🤰`
-* `Criança 👶`
-* `Jovens 🧑`
-* `Adulto 🧑‍💼`
-* `Idoso 👴`
+* `Faixas Etárias 📅`
 * `Cobertura 📊`
+* `PDFs 📄`
+* `Fontes ℹ️`
+
 
 #### 4.2 Consulta por faixa etária/grupo
 
-1. Clique em uma **faixa etária** ou em **`Gestante 🤰`**.
-2. O bot exibirá as vacinas recomendadas para as pessoas que se encaixam na faixa etária escolhida.
+1. Clique em **`Faixas Etárias 📅`**.
+2. Será exibido um menu no qual o usuário deverá escolher entre uma faixa etária ou `Gestante 🤰`.
+3. O bot exibirá as vacinas recomendadas para as pessoas que se encaixam na faixa etária/grupo escolhido.
 
 Exemplo de resposta:
 
 ```
-9 a 14 anos
-HPV4
-    - 1 dose (conforme histórico vacinal)
+🗓️ 9 a 14 anos:
 
-10 a 14 anos
-dengue tetravalente
-    - 2 doses (conforme histórico vacinal)
+💉 HPV4
+    • 1 dose (conforme histórico vacinal)
 
-11 a 14 anos
-meningite meningocócica ACWY
-    - 1 dose
+───────────────────
 
-10 a 24 anos
-hepatite B
-    - 3 doses (conforme histórico vacinal)
-dT
-    - 3 doses (conforme histórico vacinal)
-febre amarela
-    - 1 dose (conforme histórico vacinal)
-tríplice viral SCR
-    - 2 doses (conforme histórico vacinal)
-pneumocócica 23 – valente
-    - 2 doses (somente indígena, sem histórico vacinal com pneumo conjugada)
-varicela
-    - 2 doses (somente indígena e trabalhador de saúde, sem histórico da doença ou na dúvida e conforme histórico vacinal)
+🗓️ 10 a 14 anos:
+
+💉 dengue tetravalente
+    • 2 doses (conforme histórico vacinal)
+
+───────────────────
+
+🗓️ 11 a 14 anos:
+
+💉 meningite meningocócica ACWY
+    • 1 dose
+
+───────────────────
+
+🗓️ 10 a 24 anos:
+
+💉 hepatite B
+    • 3 doses (conforme histórico vacinal)
+
+💉 dT
+    • 3 doses (conforme histórico vacinal)
+
+💉 febre amarela
+    • 1 dose (conforme histórico vacinal)
+
+💉 tríplice viral SCR
+    • 2 doses (conforme histórico vacinal)
+
+💉 pneumocócica 23 – valente
+    • 2 doses (somente indígena, sem histórico vacinal com pneumo conjugada)
+
+💉 varicela
+    • 2 doses (somente indígena e trabalhador de saúde, sem histórico da doença ou na dúvida e conforme histórico vacinal)
 ```
 
 #### 4.3 Consulta de cobertura vacinal por região
@@ -236,23 +253,23 @@ Exemplo de resposta:
 
 Cobertura geral: 81.2%
 
-Vacinas:
+💉 Vacinas:
 
-- BCG: 95.5%
-- Covid-19: 78.1%
-- Dengue: 61.4%
-- dT: 82.2%
-- dTpa: 79.0%
-- Febre amarela: 77.9%
-- Hepatite B: 83.3%
-- HPV: 65.5%
-- Influenza: 80.4%
-- Meningococica C: 86.1%
-- Penta: 84.2%
-- Poliomielite VIP: 87.5%
-- Triplice viral: 89.0%
-- Varicela: 82.1%
-- VVSR: 68.2%
+• BCG: 95.5%
+• Covid-19: 78.1%
+• Dengue: 61.4%
+• dT: 82.2%
+• dTpa: 79.0%
+• Febre amarela: 77.9%
+• Hepatite B: 83.3%
+• HPV: 65.5%
+• Influenza: 80.4%
+• Meningococica C: 86.1%
+• Penta: 84.2%
+• Poliomielite VIP: 87.5%
+• Triplice viral: 89.0%
+• Varicela: 82.1%
+• VVSR: 68.2%
 ```
 
 #### 4.4 Consulta por nome da vacina ou da região
@@ -282,17 +299,30 @@ Ao enviar o comando, o bot realiza uma busca na base de dados e retorna informa�
 Exemplos de respostas:
 
 ```
-Agendar ao saber da gravidez
-dT
-    - 3 doses (conforme histórico vacinal)
+🗓️ Agendar ao saber da gravidez:
 
-A partir de 7 anos (todas as idades)
-dT
-    - 3 doses (conforme histórico vacinal)
+💉 dT
+    • 3 doses (conforme histórico vacinal)
 
-10 a 24 anos
-dT
-    - 3 doses (conforme histórico vacinal)
+🗓️ A partir de 7 anos (todas as idades):
+
+💉 dT
+    • 3 doses (conforme histórico vacinal)
+
+🗓️ 10 a 24 anos:
+
+💉 dT
+    • 3 doses (conforme histórico vacinal)
+
+🗓️ 25 a 59 anos:
+
+💉 dT ¹
+    • 3 doses (conforme histórico vacinal)
+
+🗓️ A partir dos 60 anos:
+
+💉 dT ¹
+    • 3 doses (conforme histórico vacinal)
 ```
 
 ```
@@ -300,23 +330,23 @@ dT
 
 Cobertura geral: 78.1%
 
-Vacinas:
+💉 Vacinas:
 
-- BCG: 92.0%
-- Covid-19: 73.5%
-- Dengue: 55.2%
-- dT: 79.0%
-- dTpa: 75.4%
-- Febre amarela: 81.1%
-- Hepatite B: 80.2%
-- HPV: 60.7%
-- Influenza: 77.1%
-- Meningococica C: 82.5%
-- Penta: 81.2%
-- Poliomielite VIP: 84.0%
-- Triplice viral: 85.5%
-- Varicela: 79.4%
-- VVSR: 64.0%
+• BCG: 92.0%
+• Covid-19: 73.5%
+• Dengue: 55.2%
+• dT: 79.0%
+• dTpa: 75.4%
+• Febre amarela: 81.1%
+• Hepatite B: 80.2%
+• HPV: 60.7%
+• Influenza: 77.1%
+• Meningococica C: 82.5%
+• Penta: 81.2%
+• Poliomielite VIP: 84.0%
+• Triplice viral: 85.5%
+• Varicela: 79.4%
+• VVSR: 64.0%
 ```
 
 ---
@@ -328,21 +358,28 @@ Após a consulta, o bot retorna uma lista com as vacinas recomendadas e suas res
 Exemplo:
 
 ```
-Agendar ao saber da gravidez
-hepatite B
-    - 3 doses (conforme histórico vacinal)
-dT
-    - 3 doses (conforme histórico vacinal)
-influenza trivalente
-    - 1 dose por temporada
-covid-19
-    - 1 dose a cada gestação
-dTpa
-    - 1 dose a partir da 20ª semana gestacional, em cada gestação
-febre amarela 1
-    - 1 dose, em casos excepcionais, conforme histórico vacinal
-vírus sincicial respiratório (VVSR)
-    - 1 dose a partir da 28ª semana gestacional, em cada gestação
+🗓️ Agendar ao saber da gravidez:
+
+💉 hepatite B
+    • 3 doses (conforme histórico vacinal)
+
+💉 dT
+    • 3 doses (conforme histórico vacinal)
+
+💉 influenza trivalente
+    • 1 dose por temporada
+
+💉 covid-19
+    • 1 dose a cada gestação
+
+💉 dTpa
+    • 1 dose a partir da 20ª semana gestacional, em cada gestação
+
+💉 febre amarela 1
+    • 1 dose, em casos excepcionais, conforme histórico vacinal
+
+💉 vírus sincicial respiratório (VVSR)
+    • 1 dose a partir da 28ª semana gestacional, em cada gestação
 ```
 
 As informações são apresentadas de forma direta, indicando o **nome da vacina** e a **dose ou periodicidade recomendada**.
@@ -354,6 +391,7 @@ As informações são apresentadas de forma direta, indicando o **nome da vacina
 * O bot precisa estar **em execução** para responder às mensagens.
 * O usuário também pode iniciar a interação utilizando o comando `/procurar` para realizar uma busca direta.
 * O tempo de resposta pode levar alguns segundos enquanto o sistema processa os dados.
+* Os dados são obtidos novamente toda semana, mesmo se não ocorreram alterações.
 
 ---
 
@@ -366,28 +404,38 @@ Digite:
 ```
 ou envie uma mensagem qualquer.
 
-Selecione uma das **faixas etárias ou grupos disponíveis** clicando em um dos botões.
+Selecione uma das **opções** exibidas no menu ao clicar em um dos botões.
 
-Após a seleção de uma faixa etária/grupo, o bot exibirá as vacinas recomendadas para o grupo escolhido pelo usuário.
+Após a seleção de uma das opções, o bot exibirá mais opções relacionadas a opção escolhida.
 
-Exemplo de saída:
+Exemplo de saída para `Faixas Etárias 📅`, `Idoso 👴`:
 
 ```
-Agendar ao saber da gravidez
-hepatite B
-    - 3 doses (conforme histórico vacinal)
-dT
-    - 3 doses (conforme histórico vacinal)
-influenza trivalente
-    - 1 dose por temporada
-covid-19
-    - 1 dose a cada gestação
-dTpa
-    - 1 dose a partir da 20ª semana gestacional, em cada gestação
-febre amarela 1
-    - 1 dose, em casos excepcionais, conforme histórico vacinal
-vírus sincicial respiratório (VVSR)
-    - 1 dose a partir da 28ª semana gestacional, em cada gestação
+🗓️ A partir dos 60 anos:
+
+💉 hepatite B
+    • 3 doses (conforme histórico vacinal)
+
+💉 dT ¹
+    • 3 doses (conforme histórico vacinal)
+
+💉 febre amarela 2
+    • 1 dose, em casos excepcionais (conforme histórico vacinal)
+
+💉 tríplice viral SCR
+    • 2 doses (somente trabalhadores de saúde, conforme histórico vacinal)
+
+💉 pneumocócica 23-valente 3
+    • 2 doses (somente para idosos acamados e/ou institucionalizados, sem histórico vacinal, e povos indígenas sem histórico vacinal com pneumocócica conjugada)
+
+💉 varicela
+    • 2 doses (somente povos indígenas e trabalhadores de saúde, que não tiveram a doença ou na dúvida, conforme histórico vacinal)
+
+💉 influenza trivalente
+    • 1 dose anual com a vacina da temporada
+
+💉 covid-19
+    • 1 dose semestral
 ```
 
 ## 🛠️ Manual de Instalação <a id="manual-instalacao"></a>
@@ -426,7 +474,7 @@ Abra o arquivo `main.py` localizado na pasta `src` na raiz do projeto e insira u
 TOKEN = ""
 ```
 
-`(Exemplo de Token: "7391826405:AAQxZr7KpLmN8sVtY2HdFJcW9uB3EgR5iKQ")`
+`(Exemplo de Token: "8391826405:AAQxZr7KpLmN8sVtY2HdFJcW9uB3EgR5iKQ")`
 
 ### 1.4 Executando o Bot
 

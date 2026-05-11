@@ -1,6 +1,6 @@
 # API 1º Semestre ADS - Vacina Brasil Bot (NexusDev)
 
-> Status do Projeto: Sprint 2 - Concluída ✅
+> Status do Projeto: Sprint 2 - Concluída ✅ (13/04 - 03/05)
 
 ## 🏅 Desafio <a id="desafio"></a>
 
@@ -12,8 +12,8 @@ Desenvolver um assistente virtual para Telegram focado em saúde pública. O bot
 
 | Rank | Prioridade | User Story | Sprint |
 | :--- | :---: | :--- | :---: |
-| 1 | Alta | Como usuário, quero melhorar a navegação pelo menu interativo com botões para tornar a experiência mais intuitiva. | 2 |
-| 2 | Alta | Como usuário, quero consultar a cobertura vacinal por região para obter informações atualizadas. | 2 |
+| 1 | Alta | Como usuário, quero consultar a cobertura vacinal por região para obter informações atualizadas. | 2 |
+| 2 | Média | Como equipe de desenvolvimento, queremos melhorar a navegação pelo menu interativo com botões para tornar a experiência mais intuitiva. | 2 |
 | 3 | Alta | Como equipe de desenvolvimento, queremos corrigir erros identificados durante a validação do sistema para garantir respostas corretas. | 2 |
 
 ---

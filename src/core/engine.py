@@ -8,8 +8,8 @@ def pega_vacina(periodo):
 
     for info in data:
         if info['idade_texto'] != '':
-            resultado += f'<b>{info['idade_texto'].replace('\n', ' ')}</b>\n' if resultado == '' else f'\n<b>{info['idade_texto'].replace('\n', ' ')}</b>\n'
-        resultado += f'{info['vacina'].replace('\n', ' ')}\n    - {info['dose'].replace('\n', ' ')}\n'
+            resultado += f'🗓️ <b>{info['idade_texto'].replace('\n', ' ')}</b>:\n\n' if resultado == '' else f'───────────────────\n\n🗓️ <b>{info['idade_texto'].replace('\n', ' ')}</b>:\n\n'
+        resultado += f'💉 {info['vacina'].replace('\n', ' ')}\n    • {info['dose'].replace('\n', ' ')}\n\n'
     return resultado
 
 def procura_vacina(nome):
@@ -23,8 +23,8 @@ def procura_vacina(nome):
         vacina = re.sub(r'\d+|[¹²³⁴⁵⁶⁷⁸⁹]', '', info['vacina'])
         vacina = vacina.replace('\n', ' ').lower().strip()
         if vacina == nome or (nome != 'dt' and vacina.startswith(nome + ' ')):
-            resultado += f'<b>{status.replace('\n', ' ')}</b>\n' if resultado == '' else f'\n<b>{status.replace('\n', ' ')}</b>\n'
-            resultado += f'{info['vacina'].replace('\n', ' ')}\n    - {info['dose'].replace('\n', ' ')}\n'
+            resultado += f'🗓️ <b>{status.replace('\n', ' ')}</b>:\n\n' if resultado == '' else f'🗓️ <b>{status.replace('\n', ' ')}</b>:\n\n'
+            resultado += f'💉 {info['vacina'].replace('\n', ' ')}\n    • {info['dose'].replace('\n', ' ')}\n\n'
     if resultado == '':
         resultado = 'Termo não encontrado!'
     return resultado
@@ -40,9 +40,9 @@ def consultar_cobertura(regiao):
 
     texto = f"📊 Cobertura vacinal - {regiao}\n\n"
     texto += f"Cobertura geral: {info['cobertura_geral']}%\n\n"
-    texto += "Vacinas:\n\n"
+    texto += "💉 Vacinas:\n\n"
 
     for vacina, cobertura in info["vacinas"].items():
-        texto += f"- {vacina}: {cobertura}%\n"
+        texto += f"• {vacina}: {cobertura}%\n"
 
     return texto

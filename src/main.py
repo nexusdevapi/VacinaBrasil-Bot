@@ -18,7 +18,7 @@ user_data = {}
 ultimo_clique = {}
 reiniciar_menu_natural = timedelta(minutes=1)
 pdf_cooldown = {}
-COOLDOWN_PDF = 8
+COOLDOWN_PDF = 5
 
 # Evita spam de botões
 def anti_spam(user_id, action, cooldown=0.8):
@@ -156,7 +156,7 @@ def callback_handler(call):
         texto2 = pega_vacina(mensagem)
         
         markup = InlineKeyboardMarkup()
-        markup.row(InlineKeyboardButton('📄 Baixar PDF', callback_data=f'baixar_pdf_{grupo}'))
+        markup.row(InlineKeyboardButton('📄 Ver ou Baixar PDF', callback_data=f'baixar_pdf_{grupo}'))
         
         markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='voltar_calendario'))
         
@@ -191,14 +191,16 @@ def callback_handler(call):
             bot.answer_callback_query(call.id, 'PDF não encontrado')
             return
 
-        resp = requests.get(url)
-        resp.raise_for_status()
+        nome = grupo.replace('grupo_', '').capitalize()
 
-        pdf = BytesIO(resp.content)
-        pdf.name = f'{grupo.replace('grupo_', '').capitalize()}.pdf'
+        msg_pdf = bot.send_message(
+            call.message.chat.id,
+            '📄 Calendário de vacinação - ' + nome + '\n\n'
+            '🔗 <a href='' + url + ''>Abrir documento oficial (PDF)</a>\n\n',
+            parse_mode='HTML',
+            disable_web_page_preview=False
+        )
 
-        msg_pdf = bot.send_document(call.message.chat.id, pdf, caption=f'\u200B\n📄 Calendário de vacinação - {grupo.replace('grupo_', '').capitalize()}')
-        
         user_data.setdefault(call.from_user.id, {})['pdf_msg_id'] = msg_pdf.message_id
 
     elif call.data == 'cobertura':
@@ -209,6 +211,15 @@ def callback_handler(call):
         markup = InlineKeyboardMarkup()
         markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='voltar_cobertura'))
         safe_edit(consultar_cobertura(regiao), call.message.chat.id, call.message.message_id, markup)
+        
+    elif call.data == 'fontes':
+        safe_edit(
+            'ℹ️ <b>Fontes oficiais do sistema</b>\n\n'
+            '📄 <b>Calendário vacinal (PDFs)</b>\n'
+            'https://www.gov.br/saude/pt-br/vacinacao/arquivos/\n\n',
+            call.message.chat.id,
+            call.message.message_id
+        )
 
     elif call.data == 'grupo_gestante':
         edita_mensagem('Gestante', 'grupo_gestante')
@@ -226,12 +237,23 @@ def callback_handler(call):
         volta_para(call, 'menu_principal')
     
     elif call.data == 'voltar_calendario':
-        pdf_id = user_data.get(call.from_user.id, {}).get('pdf_msg_id')
+
+        user_id = call.from_user.id
+        chat_id = call.message.chat.id
+
+        data = user_data.get(user_id, {})
+
+        pdf_id = data.get('pdf_msg_id')
+
         if pdf_id:
             try:
-                bot.delete_message(call.message.chat.id, pdf_id)
-            except:
-                pass
+                bot.delete_message(chat_id, pdf_id)
+            except Exception as e:
+                print('erro ao deletar pdf:', e)
+
+            data['pdf_msg_id'] = None
+            user_data[user_id] = data
+
         volta_para(call, 'calendario')
     
     elif call.data == 'voltar_cobertura':

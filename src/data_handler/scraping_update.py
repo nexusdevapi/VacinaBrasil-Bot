@@ -16,5 +16,11 @@ def precisa_update():
 
 
 def se_precisar_update():
-    if precisa_update():
-        gerar_calendario_vacinas()
+    try:
+        if precisa_update():
+            gerar_calendario_vacinas()
+            return True
+        return False
+    except Exception as e:
+        print(f"Erro no update: {e}")
+        return False

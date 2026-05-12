@@ -11,34 +11,21 @@ sys.path.append(str(BASE_DIR))
 
 from utils.helpers import *
 
-# calendários relevantes disponíveis em https://www.gov.br/saude/pt-br/vacinacao/arquivos/
-urls = [
-    'https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-gestante/',
-    'https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-crianca/',
-    'https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-adolescentes-jovens/',
-    'https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-adulto/',
-    'https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-idoso/',
-]
+GRUPOS = {
+    'grupo_idoso': 'Idoso',
+    'grupo_adulto': 'Adulto',
+    'grupo_jovens': 'Adolescente e Jovem',
+    'grupo_crianca': 'Criança',
+    'grupo_gestante': 'Gestante'
+}
 
 # lista que armazena os dados obtidos
 def gerar_calendario_vacinas():
     arquivo_json = []
+    
+    for grupo, url in urls.items():
 
-    for url in urls:
-        nome = url.split('/')[-2] + '.pdf'
-
-        if 'idoso' in nome:
-            grupo = 'Idoso'
-        elif 'adulto' in nome:
-            grupo = 'Adulto'
-        elif 'adolescentes-jovens' in nome:
-            grupo = 'Adolescente e Jovem'
-        elif 'crianca' in nome:
-            grupo = 'Criança'
-        elif 'gestante' in nome:
-            grupo = 'Gestante'
-        else:
-            grupo = 'Nenhum'
+        grupo_nome = GRUPOS.get(grupo, 'Nenhum')
 
         resp = requests.get(url)
         resp.raise_for_status()
@@ -58,15 +45,21 @@ def gerar_calendario_vacinas():
                         idade_texto = linha[0] or ''
                         idade_min, idade_max = extrair_idade(idade_texto)
 
-                        if linha[1][0] == linha[1][1] and linha[1][2] == linha[1][3]:
-                            linha[1] = remove_repetido(linha[1])
+                        vacina = linha[1] or ''
+                        vacina_str = str(vacina)
 
+                        if len(vacina_str) >= 4:
+                            if vacina_str[0] == vacina_str[1] and vacina_str[2] == vacina_str[3]:
+                                vacina = remove_repetido(vacina_str)
+                            else:
+                                vacina = vacina_str
+                                
                         registro = {
-                            'grupo': grupo,
+                            'grupo': grupo_nome,
                             'idade_min': idade_min,
                             'idade_max': idade_max,
                             'idade_texto': idade_texto,
-                            'vacina': linha[1] or '',
+                            'vacina': vacina or '',
                             'dose': linha[2] or '',
                             'descricao': linha[3] or '',
                             'observacoes': None
@@ -80,8 +73,3 @@ def gerar_calendario_vacinas():
 
     with open(OUTPUT_DIR / "calendario_vacinas.json", "w", encoding="utf-8") as f:
         json.dump(arquivo_json, f, ensure_ascii=False, indent=2)
-    
-
-
-
-

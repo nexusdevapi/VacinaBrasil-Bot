@@ -11,7 +11,7 @@ import requests
 from pathlib import Path
 from io import BytesIO
 
-TOKEN = ""
+TOKEN = "8513074082:AAEdhwh-BRONRAuKDZmNzHILG-kwdWJYtbE"
 bot = telebot.TeleBot(TOKEN)
 
 user_data = {}
@@ -19,6 +19,59 @@ ultimo_clique = {}
 reiniciar_menu_natural = timedelta(minutes=1)
 pdf_cooldown = {}
 COOLDOWN_PDF = 5
+
+grupos = {
+    'grupo_gestante': 'Gestante',
+    'grupo_crianca': 'Criança',
+    'grupo_jovens': 'Adolescente',
+    'grupo_adulto': 'Adulto',
+    'grupo_idoso': 'Idoso'
+}
+
+regioes = {
+    'norte': 'Norte',
+    'nordeste': 'Nordeste',
+    'centrooeste': 'Centro-Oeste',
+    'sudeste': 'Sudeste',
+    'sul': 'Sul'
+}
+
+def anti_spam(user_id, action, cooldown=0.8):
+    key = f'{user_id}:{action}'
+    now = time.time()
+    if key in ultimo_clique and now - ultimo_clique[key] < cooldown:
+        return False
+    ultimo_clique[key] = now
+    return True
+
+
+def delete_if_exists(chat_id, user_id, key):
+    data = user_data.get(user_id, {})
+    msg_id = data.get(key)
+
+    if msg_id:
+        try:
+            bot.delete_message(chat_id, msg_id)
+        except:
+            pass
+        data[key] = None
+
+
+def save_msg_id(user_id, key, msg):
+    user_data.setdefault(user_id, {})[key] = msg.message_id
+
+
+def safe_edit(text, chat_id, message_id, markup=None):
+    try:
+        bot.edit_message_text(
+            text,
+            chat_id,
+            message_id,
+            reply_markup=markup,
+            parse_mode='HTML'
+        )
+    except Exception:
+        pass
 
 # Evita spam de botões
 def anti_spam(user_id, action, cooldown=0.8):
@@ -33,15 +86,24 @@ def anti_spam(user_id, action, cooldown=0.8):
 @bot.message_handler(commands=['start'])
 def start(message):
     user_id = message.from_user.id
-    user_data[user_id] = {'ultimo_menu': datetime.now()}
-    menu(message.chat.id)
+    chat_id = message.chat.id
+    data = user_data.setdefault(user_id, {})
+    old_msg_id = data.get('menu_msg_id')
+    
+    delete_if_exists(chat_id, user_id, 'menu_msg_id')
+    delete_if_exists(chat_id, user_id, 'warning_msg_id')
+    delete_if_exists(chat_id, user_id, 'pdf_msg_id')
+    delete_if_exists(chat_id, user_id, 'search_msg_id')
+
+    data['ultimo_menu'] = datetime.now()
+    menu(chat_id, user_id)
 
 # Menu principal
 def menu_principal():
     return quick_markup({
         'Calendário Vacinal 📅': {'callback_data': 'calendario_vacinal'},
         'Cobertura 📊': {'callback_data': 'cobertura'},
-        'Fontes ℹ️': {'callback_data': 'fontes'}
+        'Saiba Mais ℹ️': {'callback_data': 'fontes'}
     }, row_width=2)
 
 # Menu regiões - cobertura
@@ -90,53 +152,90 @@ def safe_edit(text, chat_id, message_id, markup=None):
             reply_markup=markup,
             parse_mode='HTML'
         )
-    except Exception as e:
-        print(f'[safe_edit erro] {e}')
+    except Exception:
+        pass
 
 # Função que envia ou edita o menu
-def menu(chat_id, message_id=None):
+def menu(chat_id, user_id):
     text = 'Bem-vindo(a) ao Vacina Brasil Bot 💉🇧🇷\nO que deseja consultar hoje?'
     markup = menu_principal()
-    if message_id:
-        safe_edit(text, chat_id, message_id, markup)
-    else:
-        bot.send_message(chat_id, text, reply_markup=markup)        
+    
+    data = user_data.setdefault(user_id, {})
+    old_msg_id = data.get('menu_msg_id')
+    
+    if old_msg_id:
+        try:
+            bot.delete_message(chat_id, old_msg_id)
+        except:
+            pass
+        
+    old_warning = data.get('warning_msg_id')
+    
+    if old_warning:
+        try:
+            bot.delete_message(chat_id, old_warning)
+        except:
+            pass
+            
+    msg = bot.send_message(chat_id, text, reply_markup=markup)
+    data['menu_msg_id'] = msg.message_id
 
 # /procurar
 @bot.message_handler(commands=['procurar'])
 def procurar(message):
+    user_id = message.from_user.id
+    chat_id = message.chat.id
+    data = user_data.setdefault(user_id, {})
+
+    delete_if_exists(chat_id, user_id, 'search_msg_id')
+    
     if len(message.text.split()) < 2:
-        bot.reply_to(message, 'Use: /procurar nome da vacina ou região.')
+        msg = bot.reply_to(message, 'Use: /procurar nome da vacina ou região.')
+        save_msg_id(user_id, 'search_msg_id', msg)
         return
     termo = ' '.join(message.text.split()[1:]).strip().lower()
     termo_regiao = termo.replace('-', '').replace(' ', '')
     regioes = {'norte': 'Norte', 'nordeste': 'Nordeste',  'centrooeste': 'Centro-Oeste', 'sudeste': 'Sudeste', 'sul': 'Sul'}
+    
     if termo_regiao in regioes:
-        return bot.reply_to(message, consultar_cobertura(regioes[termo_regiao]))
+        msg = bot.reply_to(message, consultar_cobertura(regioes[termo_regiao]))
+        save_msg_id(user_id, 'search_msg_id', msg)
+        return
+    
     resposta = procura_vacina(termo)
-    bot.reply_to(message, resposta, parse_mode='HTML')
+    msg = bot.reply_to(message, resposta, parse_mode='HTML')
+    save_msg_id(user_id, 'search_msg_id', msg)
 
 # Inicia o bot a partir de qualquer mensagem
-@bot.message_handler(func=lambda message: message.text and not message.text.startswith('/'))
+@bot.message_handler(func=lambda m: m.text and not m.text.startswith('/'))
 def start_natural(message):
     user_id = message.from_user.id
+    chat_id = message.chat.id
     agora = datetime.now()
-    if user_id not in user_data:
-        user_data[user_id] = {'ultimo_menu': agora}
-        menu(message.chat.id)
+    
+    data = user_data.setdefault(user_id, {})
+    
+    ultimo_menu = data.get('ultimo_menu')
+    
+    if ultimo_menu is None:
+        data['ultimo_menu'] = agora
+        menu(chat_id, user_id)
         return
-    ultimo_menu = user_data[user_id]['ultimo_menu']
+
     if agora - ultimo_menu >= reiniciar_menu_natural:
-        user_data[user_id]['ultimo_menu'] = agora
-        menu(message.chat.id)
+        data['ultimo_menu'] = agora
+        delete_if_exists(chat_id, user_id, 'pdf_msg_id')
+        delete_if_exists(chat_id, user_id, 'search_msg_id')
+        menu(chat_id, user_id)
     else:
-        bot.reply_to(message, 'Use: /start para exibir o menu novamente ou aguarde um minuto.')
+        msg = bot.reply_to(message, 'Use: /start para exibir o menu novamente ou aguarde um minuto.')
+        save_msg_id(user_id, 'search_msg_id', msg)
 
 # Função pra voltar
 def volta_para(call, destino):
     menus = {
         'menu_principal': ('Bem-vindo(a) ao Vacina Brasil Bot 💉🇧🇷\nO que deseja consultar hoje?', menu_principal),
-        'calendario': ('Escolha a faixa etária:', menu_calendario),
+        'calendario_vacinal': ('Escolha a faixa etária:', menu_calendario),
         'cobertura': ('Escolha a região:', menu_regioes),
     }
     if destino in menus:
@@ -160,10 +259,7 @@ def callback_handler(call):
         
         markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='voltar_calendario'))
         
-        try:
-            safe_edit(texto2, call.message.chat.id, call.message.message_id, markup)
-        except Exception:
-            pass
+        safe_edit(texto2, call.message.chat.id, call.message.message_id, markup)
 
     if call.data == 'calendario_vacinal':
         safe_edit('Escolha a faixa etária:', call.message.chat.id, call.message.message_id, menu_calendario())
@@ -193,13 +289,9 @@ def callback_handler(call):
 
         nome = grupo.replace('grupo_', '').capitalize()
 
-        msg_pdf = bot.send_message(
-            call.message.chat.id,
-            '📄 Calendário de vacinação - ' + nome + '\n\n'
-            '🔗 <a href='' + url + ''>Abrir documento oficial (PDF)</a>\n\n',
-            parse_mode='HTML',
-            disable_web_page_preview=False
-        )
+        msg_pdf = bot.send_message(call.message.chat.id,
+            f'📄 Calendário de vacinação - {nome}\n\n'
+            f'🔗 <a href="{url}">Abrir documento oficial (PDF)</a>\n\n', parse_mode='HTML', disable_web_page_preview=False)
 
         user_data.setdefault(call.from_user.id, {})['pdf_msg_id'] = msg_pdf.message_id
 
@@ -213,52 +305,72 @@ def callback_handler(call):
         safe_edit(consultar_cobertura(regiao), call.message.chat.id, call.message.message_id, markup)
         
     elif call.data == 'fontes':
+        
+        markup = InlineKeyboardMarkup()
+        markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='voltar_menu'))
+    
         safe_edit(
             'ℹ️ <b>Fontes oficiais do sistema</b>\n\n'
-            '📄 <b>Calendário vacinal (PDFs)</b>\n'
-            'https://www.gov.br/saude/pt-br/vacinacao/arquivos/\n\n',
+            
+            '📄 <b>Calendários de Vacinação (PDFs)</b>\n\u200B \n'
+            'https://www.gov.br/saude/pt-br/vacinacao/arquivos/\n\n'
+            
+            '📊 <b>Dados da Cobertura Vacinal</b>\n\u200B \n'
+            'https://infoms.saude.gov.br/extensions/SEIDIGI_DEMAS_VACINACAO_CALENDARIO_NACIONAL_COBERTURA_RESIDENCIA/SEIDIGI_DEMAS_VACINACAO_CALENDARIO_NACIONAL_COBERTURA_RESIDENCIA.html\n\n'
+            
+            '👨‍💻 <b>Sobre o Bot</b>\n\u200B \n'
+            '<b>Assistente virtual para Telegram que informa vacinas recomendadas com base na faixa etária.</b>\n\n'
+            'Projeto desenvolvido durante o <b>1º semestre de 2026</b> por estudantes do curso de <b>Análise e Desenvolvimento de Sistemas</b> da <b>FATEC São José dos Campos.</b>\n\n'
+            'O projeto segue a metodologia ágil <b>Scrum</b>, com foco em <b>desenvolvimento colaborativo e organização de tarefas.</b>\n\n'
+            
+            '👥 <b>Equipe</b>\n\u200B \n'
+            '• Nicolas Fonseca Meira — Scrum Master\n'
+            '• Miguel Silva Gomes — Product Owner\n'
+            '• Gabriel Yudi Fujimoto — Scrum Team\n',
             call.message.chat.id,
-            call.message.message_id
+            call.message.message_id,
+            markup
         )
-
-    elif call.data == 'grupo_gestante':
-        edita_mensagem('Gestante', 'grupo_gestante')
-    elif call.data == 'grupo_crianca':
-        edita_mensagem('Criança', 'grupo_crianca')
-    elif call.data == 'grupo_jovens':
-        edita_mensagem('Adolescente', 'grupo_jovens')
-    elif call.data == 'grupo_adulto':
-        edita_mensagem('Adulto', 'grupo_adulto')
-    elif call.data == 'grupo_idoso' :
-        edita_mensagem('Idoso', 'grupo_idoso')
 
     # Botões de voltar
     if call.data == 'voltar_menu':
         volta_para(call, 'menu_principal')
-    
+
     elif call.data == 'voltar_calendario':
+        safe_edit(
+            'Escolha a faixa etária:',
+            call.message.chat.id,
+            call.message.message_id,
+            menu_calendario()
+        )
 
-        user_id = call.from_user.id
-        chat_id = call.message.chat.id
-
-        data = user_data.get(user_id, {})
-
-        pdf_id = data.get('pdf_msg_id')
-
-        if pdf_id:
-            try:
-                bot.delete_message(chat_id, pdf_id)
-            except Exception as e:
-                print('erro ao deletar pdf:', e)
-
-            data['pdf_msg_id'] = None
-            user_data[user_id] = data
-
-        volta_para(call, 'calendario')
-    
     elif call.data == 'voltar_cobertura':
-        volta_para(call, 'cobertura')
-        
+        safe_edit(
+            'Escolha a região:',
+            call.message.chat.id,
+            call.message.message_id,
+            menu_regioes()
+        )
+
+    elif call.data in grupos:
+        edita_mensagem(grupos[call.data], call.data)
+
+    elif call.data == 'calendario_vacinal':
+        safe_edit(
+            'Escolha a faixa etária:',
+            call.message.chat.id,
+            call.message.message_id,
+            menu_calendario()
+        )
+
+    elif call.data == 'cobertura':
+        safe_edit(
+            'Escolha a região:',
+            call.message.chat.id,
+            call.message.message_id,
+            menu_regioes()
+        )
+
     bot.answer_callback_query(call.id)
 
 # Verifica se há alguma atualização nos calendários

@@ -46,9 +46,8 @@ Não deve haver persistência dos dados através de bancos de dados.
 | Nome                   | Função        | LinkedIn & GitHub                                                                                              |
 | :--------------------- | :-----------: | :-----------------------------------------------------------------------------------------------------------: |
 | Nicolas Fonseca Meira   | Scrum Master | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/nicolas-fonseca-60386130b/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/NicolasFonsecaM) |
-| Caio Gabriel Ferreira de Paula |  Product Owner | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/caiogabrielfp-cpu) |
-| Gabriel Yudi Fujimoto  | Scrum Team    | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/gabriel-fujimoto-a90239367/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/fujimotogabriel) |
-| Miguel Silva Gomes     | Scrum Team    | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/miguelsg479/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/miguelsg97) |
+| Miguel Silva Gomes     | Product Owner | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/miguelsg479/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/miguelsg97) |
+| Gabriel Yudi Fujimoto  | Scrum Team | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/gabriel-fujimoto-a90239367/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/fujimotogabriel) |
 
 ## 🎓 Orientadores
 
@@ -183,17 +182,17 @@ O que deseja consultar hoje?**
 
 e exibirá as seguintes opções:
 
-* `Faixas Etárias 📅`
+* `Calendário Vacinal 📅`
 * `Cobertura 📊`
-* `PDFs 📄`
 * `Fontes ℹ️`
 
 
 #### 4.2 Consulta por faixa etária/grupo
 
-1. Clique em **`Faixas Etárias 📅`**.
+1. Clique em **`Calendário Vacinal 📅`**.
 2. Será exibido um menu no qual o usuário deverá escolher entre uma faixa etária ou `Gestante 🤰`.
 3. O bot exibirá as vacinas recomendadas para as pessoas que se encaixam na faixa etária/grupo escolhido.
+4. O usuário poderá também, se desejar, clicar no botão `Ver ou Baixar PDF 📄` ao final da mensagem para acessar via navegador ou baixar o PDF oficial contendo as recomendações de vacinas e dosagens para o grupo desejado disponibilizado pelo Ministério da Saúde.
 
 Exemplo de resposta:
 
@@ -408,7 +407,7 @@ Selecione uma das **opções** exibidas no menu ao clicar em um dos botões.
 
 Após a seleção de uma das opções, o bot exibirá mais opções relacionadas a opção escolhida.
 
-Exemplo de saída para `Faixas Etárias 📅`, `Idoso 👴`:
+Exemplo de saída para `Calendário Vacinal 📅`, `Idoso 👴`:
 
 ```
 🗓️ A partir dos 60 anos:

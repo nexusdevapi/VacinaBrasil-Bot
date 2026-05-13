@@ -33,7 +33,7 @@ Desenvolver um assistente virtual para Telegram focado em saúde pública. O bot
 
 | Critério | Descrição |
 | :--- | :--- |
-| **Funcionalidade Implementada** |  |
+| **Funcionalidades Implementadas** | Botões `Saiba Mais ℹ️`, `Ver ou Baixar PDF`, integração com Ollama e interpretação de linguagem natural, localização de unidades de saúde próximas com base em endereços. |
 | **Revisão de Código** | O código foi revisado por outro membro ou validado tecnicamente. |
 | **Zero APIs Externas** | A entrega utiliza apenas scraping e processamento local de dados, conforme o requisito. |
 | **Integração no Git** | O código foi mergeado no branch principal sem conflitos. |
@@ -48,8 +48,7 @@ Desenvolver um assistente virtual para Telegram focado em saúde pública. O bot
 | Nome | Função | LinkedIn & GitHub |
 | :--------------------- | :-----------: | :-----------------------------------------------------------------------------------------------------------: |
 | Nicolas Fonseca Meira | Scrum Master | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/nicolas-fonseca-60386130b/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/NicolasFonsecaM) |
-| Caio Gabriel Ferreira de Paula | Product Owner | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/caiogabrielfp-cpu) |
+| Miguel Silva Gomes | Product Owner | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/miguelsg479/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/miguelsg97) |
 | Gabriel Yudi Fujimoto | Scrum Team | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/gabriel-fujimoto-a90239367/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/fujimotogabriel) |
-| Miguel Silva Gomes | Scrum Team | [<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="24"/>](https://www.linkedin.com/in/miguelsg479/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/miguelsg97) |
 
 </div>

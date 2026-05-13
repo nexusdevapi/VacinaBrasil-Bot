@@ -11,7 +11,7 @@ import requests
 from pathlib import Path
 from io import BytesIO
 
-TOKEN = "8513074082:AAEdhwh-BRONRAuKDZmNzHILG-kwdWJYtbE"
+TOKEN = ""
 bot = telebot.TeleBot(TOKEN)
 
 user_data = {}

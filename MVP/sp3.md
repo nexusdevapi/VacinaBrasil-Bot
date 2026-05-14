@@ -12,8 +12,13 @@ Desenvolver um assistente virtual para Telegram focado em saúde pública. O bot
 
 | Rank | Prioridade | User Story | Sprint |
 | :--- | :---: | :--- | :---: |
-| 1 | Alta | Como usuário, quero gerar um resumo simples das vacinas recomendadas para minha faixa etária. | 3 |
-| 2 | Alta | Como administrador, preciso disponibilizar os manuais de usuário e instalação para permitir a execução do bot em outros ambientes. | 3 |
+| 1 | Baixa | Como usuário, quero visualizar um botão com mais informações sobre o assistente e sua equipe de desenvolvimento para entender a origem da ferramenta. | 3 |
+| 2 | Baixa | Como usuário, quero um botão para visualizar e baixar os calendários vacinais originais (PDFs) para guardar ou imprimir. | 3 |
+| 3 | Média | Como usuário, quero um menu mais limpo e organizado, com submenus, para não ficar confuso com muitas opções na mesma tela. | 3 |
+| 4 | Média | Garantir que os nomes das vacinas estejam idênticos em todas as bases de dados e no código para evitar bugs nas consultas. | 3 |
+| 5 | Alta | Como usuário, quero poder digitar perguntas de forma livre (ex: "quais vacinas pra idoso?") e ser compreendido pelo bot, sem precisar clicar em botões. | 3 |
+| 6 | Alta | Como usuário, quero poder pesquisar a cobertura vacinal especificamente da minha cidade ou macrorregião, e não apenas do estado todo. | 3 |
+| 7 | Alta | Como usuário, quero informar meu endereço ou enviar minha localização para que o bot mostre o posto de saúde mais próximo. | 3 |
 
 ---
 

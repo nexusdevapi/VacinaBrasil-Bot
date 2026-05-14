@@ -11,7 +11,7 @@ import requests
 from pathlib import Path
 from io import BytesIO
 
-TOKEN = ""
+TOKEN = "8513074082:AAEdhwh-BRONRAuKDZmNzHILG-kwdWJYtbE"
 bot = telebot.TeleBot(TOKEN)
 
 user_data = {}
@@ -47,14 +47,19 @@ def anti_spam(user_id, action, cooldown=0.8):
 
 def delete_if_exists(chat_id, user_id, key):
     data = user_data.get(user_id, {})
+    if not data:
+        return
+    
     msg_id = data.get(key)
+    if not msg_id:
+        return
 
-    if msg_id:
-        try:
-            bot.delete_message(chat_id, msg_id)
-        except:
-            pass
-        data[key] = None
+    try:
+        bot.delete_message(chat_id, msg_id)
+    except:
+        pass
+    
+    data[key] = None
 
 
 def save_msg_id(user_id, key, msg):
@@ -90,10 +95,8 @@ def start(message):
     data = user_data.setdefault(user_id, {})
     old_msg_id = data.get('menu_msg_id')
     
-    delete_if_exists(chat_id, user_id, 'menu_msg_id')
-    delete_if_exists(chat_id, user_id, 'warning_msg_id')
-    delete_if_exists(chat_id, user_id, 'pdf_msg_id')
-    delete_if_exists(chat_id, user_id, 'search_msg_id')
+    for key in ['menu_msg_id', 'warning_msg_id', 'pdf_msg_id', 'search_msg_id']:
+        delete_if_exists(chat_id, user_id, key)
 
     data['ultimo_menu'] = datetime.now()
     menu(chat_id, user_id)
@@ -103,7 +106,9 @@ def menu_principal():
     return quick_markup({
         'Calendário Vacinal 📅': {'callback_data': 'calendario_vacinal'},
         'Cobertura 📊': {'callback_data': 'cobertura'},
-        'Saiba Mais ℹ️': {'callback_data': 'fontes'}
+        'Assistente IA 🤖': {'callback_data': 'assistente'},
+        'Localizar 📍': {'callback_data': 'localizar'},
+        'Saiba Mais ℹ️': {'callback_data': 'fontes'},
     }, row_width=2)
 
 # Menu regiões - cobertura
@@ -245,10 +250,30 @@ def volta_para(call, destino):
 # Callbacks
 @bot.callback_query_handler(func=lambda call: True)
 def callback_handler(call):
+    
     user_id = call.from_user.id
+    
+    data = user_data.get(user_id, {})
+    
     if not anti_spam(user_id, call.data):
-        bot.answer_callback_query(call.id)
         return
+    
+    valid_ids = [
+        data.get('menu_msg_id'),
+        data.get('pdf_msg_id')
+    ]
+    
+    if call.message.message_id not in valid_ids:
+        try:
+            bot.answer_callback_query(call.id)
+        except:
+            pass
+        return
+
+    try:
+        bot.answer_callback_query(call.id)
+    except Exception:
+        pass
 
     def edita_mensagem(mensagem, grupo):
         
@@ -267,7 +292,12 @@ def callback_handler(call):
     elif call.data.startswith('baixar_pdf_'):
 
         user_id = call.from_user.id
+        data = user_data.setdefault(user_id, {})
         now = time.time()
+        
+        if data.get('pdf_msg_id'):
+            bot.answer_callback_query(call.id, "📄 O PDF já está aberto")
+            return
         
         if user_id in pdf_cooldown:
             if now - pdf_cooldown[user_id] < COOLDOWN_PDF:
@@ -288,12 +318,18 @@ def callback_handler(call):
             return
 
         nome = grupo.replace('grupo_', '').capitalize()
+        
+        delete_if_exists(
+            call.message.chat.id,
+            user_id,
+            'pdf_msg_id'
+        )
 
         msg_pdf = bot.send_message(call.message.chat.id,
             f'📄 Calendário de vacinação - {nome}\n\n'
-            f'🔗 <a href="{url}">Abrir documento oficial (PDF)</a>\n\n', parse_mode='HTML', disable_web_page_preview=False)
+            f'🔗 <a href="{url}">Abrir documento oficial (PDF)</a>\n\n', parse_mode='HTML')
 
-        user_data.setdefault(call.from_user.id, {})['pdf_msg_id'] = msg_pdf.message_id
+        data['pdf_msg_id'] = msg_pdf.message_id
 
     elif call.data == 'cobertura':
         safe_edit('Escolha a região:', call.message.chat.id, call.message.message_id, menu_regioes())
@@ -337,11 +373,22 @@ def callback_handler(call):
         volta_para(call, 'menu_principal')
 
     elif call.data == 'voltar_calendario':
+        try:
+            bot.answer_callback_query(call.id)
+        except:
+            pass
+
         safe_edit(
             'Escolha a faixa etária:',
             call.message.chat.id,
             call.message.message_id,
             menu_calendario()
+        )
+        
+        delete_if_exists(
+            call.message.chat.id,
+            user_id,
+            'pdf_msg_id'
         )
 
     elif call.data == 'voltar_cobertura':

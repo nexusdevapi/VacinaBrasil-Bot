@@ -6,10 +6,6 @@ from core.engine import *
 from utils.helpers import *
 from data_handler.scraping_update import se_precisar_update
 import time
-import json
-import requests
-from pathlib import Path
-from io import BytesIO
 
 TOKEN = ""
 bot = telebot.TeleBot(TOKEN)
@@ -36,6 +32,7 @@ regioes = {
     'sul': 'Sul'
 }
 
+# Evita spam de botões
 def anti_spam(user_id, action, cooldown=0.8):
     key = f'{user_id}:{action}'
     now = time.time()
@@ -77,15 +74,6 @@ def safe_edit(text, chat_id, message_id, markup=None):
         )
     except Exception:
         pass
-
-# Evita spam de botões
-def anti_spam(user_id, action, cooldown=0.8):
-    key = f'{user_id}:{action}'
-    now = time.time()
-    if key in ultimo_clique and now - ultimo_clique[key] < cooldown:
-        return False
-    ultimo_clique[key] = now
-    return True
 
 # /start
 @bot.message_handler(commands=['start'])
@@ -146,19 +134,6 @@ def menu_calendario():
         InlineKeyboardButton('⬅️ Voltar', callback_data='voltar_menu')
     )
     return markup
-
-# Evita spam de botões
-def safe_edit(text, chat_id, message_id, markup=None):
-    try:
-        bot.edit_message_text(
-            text,
-            chat_id,
-            message_id,
-            reply_markup=markup,
-            parse_mode='HTML'
-        )
-    except Exception:
-        pass
 
 # Função que envia ou edita o menu
 def menu(chat_id, user_id):
@@ -331,9 +306,6 @@ def callback_handler(call):
 
         data['pdf_msg_id'] = msg_pdf.message_id
 
-    elif call.data == 'cobertura':
-        safe_edit('Escolha a região:', call.message.chat.id, call.message.message_id, menu_regioes())
-
     elif call.data.startswith('regiao_'):
         regiao = call.data.replace('regiao_', '')
         markup = InlineKeyboardMarkup()
@@ -378,12 +350,7 @@ def callback_handler(call):
         except:
             pass
 
-        safe_edit(
-            'Escolha a faixa etária:',
-            call.message.chat.id,
-            call.message.message_id,
-            menu_calendario()
-        )
+        volta_para(call, 'calendario_vacinal')
         
         delete_if_exists(
             call.message.chat.id,
@@ -392,31 +359,16 @@ def callback_handler(call):
         )
 
     elif call.data == 'voltar_cobertura':
-        safe_edit(
-            'Escolha a região:',
-            call.message.chat.id,
-            call.message.message_id,
-            menu_regioes()
-        )
+        volta_para(call, 'cobertura')
 
     elif call.data in grupos:
         edita_mensagem(grupos[call.data], call.data)
 
     elif call.data == 'calendario_vacinal':
-        safe_edit(
-            'Escolha a faixa etária:',
-            call.message.chat.id,
-            call.message.message_id,
-            menu_calendario()
-        )
+        volta_para(call, 'calendario_vacinal')
 
     elif call.data == 'cobertura':
-        safe_edit(
-            'Escolha a região:',
-            call.message.chat.id,
-            call.message.message_id,
-            menu_regioes()
-        )
+        volta_para(call, 'cobertura')
 
     bot.answer_callback_query(call.id)
 

@@ -1,4 +1,6 @@
 import re
+import ollama
+import json
 from data_handler.loader import *
 
 def pega_vacina(periodo):
@@ -46,3 +48,49 @@ def consultar_cobertura(regiao):
         texto += f"• {vacina}: {cobertura}%\n"
 
     return texto
+
+def resto(texto):
+    return 'Olá, não entendi sua pergunta. Poderia fazê-lá novamente?'
+
+#def idade(ano): WIP
+    #return f'{ano} anos'
+    #- idade: transforms the user request into a date in this format: dd/mm/yyyy.
+
+def resposta_ia(perg):
+    functions = {
+        "pega": pega_vacina,
+        "procura": procura_vacina,
+        "cobertura": consultar_cobertura,
+        "resto": resto
+    }
+
+    prompt = f"""
+    You are a function selector.
+
+    Available functions:
+    - pega: searchs vaccine for age groups like child, adult or elderly. choose one of the arguments[Gestante, Criança, Adolescente e Jovem, Adulto, Idoso] accordingly to the age group
+    - procura: uses the name of a vaccine for example dengue or hepatite.
+    - cobertura: uses the main regions of brazil. arguments[Norte, Nordeste, Centro-Oeste, Sul, Sudeste]
+    - resto: uses anything unrelated to the other functions.
+
+    User request:
+    "{perg}"
+
+    Reply with a JSON in this format:
+    {{
+        "funcao": "function_name",
+        "args": "arguments"
+    }}
+    """
+    response = ollama.chat(
+        model='mistral',
+        messages=[
+            {'role': 'user', 'content': prompt}
+        ]
+    )
+
+    selected = response['message']['content'].strip()
+    selected = json.loads(selected)
+
+    if selected['funcao'] in functions:
+        return functions[selected['funcao']](selected['args'])

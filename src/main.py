@@ -75,20 +75,6 @@ def safe_edit(text, chat_id, message_id, markup=None):
     except Exception:
         pass
 
-# /start
-@bot.message_handler(commands=['start'])
-def start(message):
-    user_id = message.from_user.id
-    chat_id = message.chat.id
-    data = user_data.setdefault(user_id, {})
-    old_msg_id = data.get('menu_msg_id')
-    
-    for key in ['menu_msg_id', 'warning_msg_id', 'pdf_msg_id', 'search_msg_id']:
-        delete_if_exists(chat_id, user_id, key)
-
-    data['ultimo_menu'] = datetime.now()
-    menu(chat_id, user_id)
-
 # Menu principal
 def menu_principal():
     return quick_markup({
@@ -160,6 +146,31 @@ def menu(chat_id, user_id):
     msg = bot.send_message(chat_id, text, reply_markup=markup)
     data['menu_msg_id'] = msg.message_id
 
+# Função pra voltar
+def volta_para(call, destino):
+    menus = {
+        'menu_principal': ('Bem-vindo(a) ao Vacina Brasil Bot 💉🇧🇷\nO que deseja consultar hoje?', menu_principal),
+        'calendario_vacinal': ('Escolha a faixa etária:', menu_calendario),
+        'cobertura': ('Escolha a região:', menu_regioes),
+    }
+    if destino in menus:
+        texto, menu_func = menus[destino]
+        safe_edit(texto, call.message.chat.id, call.message.message_id, menu_func())
+
+# /start
+@bot.message_handler(commands=['start'])
+def start(message):
+    user_id = message.from_user.id
+    chat_id = message.chat.id
+    data = user_data.setdefault(user_id, {})
+    old_msg_id = data.get('menu_msg_id')
+    
+    for key in ['menu_msg_id', 'warning_msg_id', 'pdf_msg_id', 'search_msg_id']:
+        delete_if_exists(chat_id, user_id, key)
+
+    data['ultimo_menu'] = datetime.now()
+    menu(chat_id, user_id)
+
 # /procurar
 @bot.message_handler(commands=['procurar'])
 def procurar(message):
@@ -197,6 +208,10 @@ def start_natural(message):
     
     ultimo_menu = data.get('ultimo_menu')
     
+    if user_data.get('mode', False):
+        bot.reply_to(message, resposta_ia(message.text), parse_mode='html')
+        return
+
     if ultimo_menu is None:
         data['ultimo_menu'] = agora
         menu(chat_id, user_id)
@@ -210,17 +225,6 @@ def start_natural(message):
     else:
         msg = bot.reply_to(message, 'Use: /start para exibir o menu novamente ou aguarde um minuto.')
         save_msg_id(user_id, 'search_msg_id', msg)
-
-# Função pra voltar
-def volta_para(call, destino):
-    menus = {
-        'menu_principal': ('Bem-vindo(a) ao Vacina Brasil Bot 💉🇧🇷\nO que deseja consultar hoje?', menu_principal),
-        'calendario_vacinal': ('Escolha a faixa etária:', menu_calendario),
-        'cobertura': ('Escolha a região:', menu_regioes),
-    }
-    if destino in menus:
-        texto, menu_func = menus[destino]
-        safe_edit(texto, call.message.chat.id, call.message.message_id, menu_func())
 
 # Callbacks
 @bot.callback_query_handler(func=lambda call: True)
@@ -343,6 +347,8 @@ def callback_handler(call):
     # Botões de voltar
     if call.data == 'voltar_menu':
         volta_para(call, 'menu_principal')
+        if user_data.get('mode', False):
+            user_data['mode'] = False
 
     elif call.data == 'voltar_calendario':
         try:
@@ -369,6 +375,12 @@ def callback_handler(call):
 
     elif call.data == 'cobertura':
         volta_para(call, 'cobertura')
+
+    elif call.data == 'assistente':
+        user_data.update({'mode': True})
+        markup = InlineKeyboardMarkup()
+        markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='voltar_menu'))
+        safe_edit('Olá, no que posso ajudar?', call.message.chat.id, call.message.message_id, markup)
 
     bot.answer_callback_query(call.id)
 

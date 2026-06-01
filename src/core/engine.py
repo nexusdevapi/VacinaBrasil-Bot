@@ -401,4 +401,16 @@ def resposta_ia(perg):
     selected = json.loads(selected)
 
     if selected['funcao'] in functions:
-        return functions[selected['funcao']](selected['args'])
+        resultado = functions[selected['funcao']](selected['args'])
+        if selected['funcao'] == 'pega':
+            periodo = selected['args']
+            mapa_grupo = {
+                'Gestante': 'grupo_gestante',
+                'Criança': 'grupo_crianca',
+                'Adolescente': 'grupo_jovens',
+                'Adulto': 'grupo_adulto',
+                'Idoso': 'grupo_idoso',
+            }
+            grupo = next((v for k, v in mapa_grupo.items() if periodo.startswith(k)), None)
+            return (resultado, grupo)
+        return resultado

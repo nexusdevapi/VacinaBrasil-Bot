@@ -13,7 +13,7 @@ O projeto segue a metodologia ágil **Scrum**, com foco em desenvolvimento colab
 ## 🎥 Demonstração
 
 <p align="center">
-  <a href="https://youtu.be/r--tyUL2YUo">
+  <a href="https://youtu.be/2UQt_WH9Yj4">
     <img src="https://img.youtube.com/vi/tY-uqS3kM9k/maxresdefault.jpg" width="800">
   </a>
 </p>
@@ -331,16 +331,15 @@ Exemplo de resposta:
 
 🥇UBS JARDIM DAS INDUSTRIAS — mais próxima
     Rua Pirassununga, Jd Das Industrias, São José Dos Campos
-    📍 Ver no Google Maps (https://www.google.com/maps/search/?api=1&query=UBS%20JARDIM%20DAS%20INDUSTRIAS%20Rua%20Pirassununga%20Jd%20Das%20Industrias)
+    📍 Ver no Google Maps
 
 🥈UBS PARQUE INDUSTRIAL
     Rua Goiania, Parque Industrial, São José Dos Campos
-    📍 Ver no Google Maps (https://www.google.com/maps/search/?api=1&query=UBS%20PARQUE%20INDUSTRIAL%20Rua%20Goiania%20Parque%20Industrial)
+    📍 Ver no Google Maps
 
 🥉UBS LIMOEIRO
     Rua Corifeu De Azevedo Marques, Limoeiro, São José Dos Campos
-    📍 Ver no Google Maps (https://www.google.com/maps/search/?api=1&query=UBS%20LIMOEIRO%20Rua%20Corifeu%20De%20Azevedo%20Marques%20Limoeiro)
-```
+    📍 Ver no Google Maps
 
 ---
 

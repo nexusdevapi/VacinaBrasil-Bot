@@ -308,7 +308,17 @@ Exemplo de resposta:
 
 ---
 
-#### 4.4 Localizar UBS próxima
+#### 4.4 Assistente IA
+
+1. Clique em **`IA (experimental) 🤖`**.
+2. Digite sua pergunta em linguagem natural, por exemplo: *"cobertura vacinal sudeste"*.
+3. O bot interpretará a pergunta e retornará a resposta adequada.
+
+> **Requisito:** o Assistente IA utiliza o modelo **Qwen2.5** via **Ollama**, que deve estar instalado e em execução localmente (veja o Manual de Instalação).
+
+---
+
+#### 4.5 Localizar UBS próxima
 
 1. Clique em **`Localizar 📍`**.
 2. Envie sua localização pelo GPS (botão `📍 Enviar minha localização`) **ou** digite seu CEP (somente números).
@@ -334,19 +344,9 @@ Exemplo de resposta:
 
 ---
 
-#### 4.5 Assistente IA
+#### 4.6 Busca com /procurar ou através do botão **`Procurar 🔎`**
 
-1. Clique em **`IA (experimental) 🤖`**.
-2. Digite sua pergunta em linguagem natural, por exemplo: *"cobertura vacinal sudeste"*.
-3. O bot interpretará a pergunta e retornará a resposta adequada.
-
-> **Requisito:** o Assistente IA utiliza o modelo **Qwen2.5** via **Ollama**, que deve estar instalado e em execução localmente (veja o Manual de Instalação).
-
----
-
-#### 4.6 Busca por nome com /procurar
-
-Além dos botões, o bot permite buscar informações específicas sobre uma vacina ou região pelo nome:
+O bot permite buscar informações específicas sobre uma vacina ou região pelo nome tanto através de comandos quanto de botões. Para isso, basta utilizar o comando **`/procurar`** ou o botão **`Procurar 🔎`** e informar o nome da vacina, como no exemplo a seguir (comando):
 
 ```
 /procurar <nome_da_vacina_ou_região>

@@ -97,17 +97,17 @@ Não deve haver persistência dos dados através de bancos de dados.
 ```
 VacinaBrasil-Bot/
 ├── src/
-│   ├── main.py                        — Ponto de entrada: inicializa os dados e inicia o polling do bot
+│   ├── main.py                        — Inicializa os dados e inicia o polling do bot
 │   ├── bot.py                         — Configuração do bot, menus, utilitários e controle de estado por usuário
-│   ├── handlers.py                    — Handlers de mensagens e callbacks (comandos /start, /procurar, localização, IA)
+│   ├── handlers.py                    — Handlers de mensagens, callbacks e comandos
 │   ├── core/
-│   │   └── engine.py                  — Lógica de negócio: consulta de calendário, busca de vacinas, cobertura vacinal e roteamento para IA
+│   │   └── engine.py                  — Consulta de calendários, busca de vacinas, cobertura vacinal e funcionamento da IA
 │   ├── data_handler/
 │   │   ├── scraping_calendario.py     — Scraping do calendário vacinal a partir dos PDFs do Ministério da Saúde
 │   │   ├── scraping_cobertura.py      — Scraping dos dados de cobertura vacinal
 │   │   ├── scraping_ubs.py            — Obtém e processa a base de dados das UBSs
-│   │   ├── handler_ubs.py             — Localiza as UBSs mais próximas via Haversine; converte CEP em coordenadas
-│   │   └── loader.py                  — Carrega os arquivos JSON processados em memória
+│   │   ├── handler_ubs.py             — Localiza as UBSs mais próximase; converte CEP em coordenadas
+│   │   └── loader.py                  — Carrega os arquivos JSON
 │   ├── data/
 │   │   └── processed/
 │   │       ├── calendario_vacinas.json

@@ -2,6 +2,7 @@ import telebot
 import time
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from datetime import datetime
+from textwrap import dedent
 
 from bot import (
     bot, user_data, mensagem_localizacao,
@@ -250,7 +251,7 @@ def start_natural(message):
 
     if data.get('mode', False):
         markup = InlineKeyboardMarkup()
-        markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='voltar_ia_saudacao'))
+        markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='assistente'))
         resposta = resposta_ia(message.text)
 
         ia_saudacao_id = data.get('ia_saudacao_msg_id') or data.get('menu_msg_id')
@@ -353,14 +354,23 @@ def callback_handler(call):
         data['ia_saudacao_msg_id'] = call.message.message_id
         markup = InlineKeyboardMarkup()
         markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='voltar_menu'))
-        safe_edit('Olá, no que posso ajudar?', chat_id, call.message.message_id, markup)
-        return
+        msg = dedent('''
+        🤖 Olá! Seja bem-vindo(a)!
 
-    if call.data == 'voltar_ia_saudacao':
-        data['mode'] = True
-        markup = InlineKeyboardMarkup()
-        markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='voltar_menu'))
-        safe_edit('Olá, no que posso ajudar?', chat_id, call.message.message_id, markup)
+        Sou um assistente virtual especializado em informações sobre vacinação. Posso ajudar você a encontrar informações de forma rápida e prática.
+
+        🔎 O que eu posso fazer:
+
+        💉 Consultar vacinas recomendadas com base na idade informada.
+
+        📊 Verificar a cobertura vacinal por região, estado ou cidade.
+
+        🏥 Encontrar Unidades Básicas de Saúde (UBS) próximas à sua localização.
+
+        📝 Basta me enviar sua dúvida.
+        
+        Como posso ajudar você hoje?''')
+        safe_edit(msg, chat_id, call.message.message_id, markup)
         data['ia_saudacao_msg_id'] = call.message.message_id
         data['menu_msg_id'] = call.message.message_id
         data['ia_resposta_msg_id'] = None

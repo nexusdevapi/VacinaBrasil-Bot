@@ -2,6 +2,7 @@ import re
 import ollama
 import json
 import unicodedata
+from datetime import date
 from data_handler.loader import *
 
 def pega_vacina(periodo):

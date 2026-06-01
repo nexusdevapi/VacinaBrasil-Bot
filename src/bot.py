@@ -1,7 +1,6 @@
 import telebot
 import time
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
-from telebot.util import quick_markup
 from datetime import timedelta
 
 TOKEN = "SEU_TOKEN_AQUI"
@@ -16,6 +15,7 @@ COOLDOWN_PDF = 5
 
 esperando_cidade = {}
 esperando_localizacao = set()
+esperando_procurar = set()
 
 grupos = {
     'grupo_gestante': 'Gestante',
@@ -33,7 +33,7 @@ estados = [
 estados_por_pagina = 9
 
 
-# ── Utilitários ───────────────────────────────────────────────────────────────
+# utils
 
 def anti_spam(user_id, action, cooldown=0.8):
     key = f'{user_id}:{action}'
@@ -70,19 +70,26 @@ def safe_edit(text, chat_id, message_id, markup=None):
 
 
 def em_fluxo(chat_id):
-    return chat_id in esperando_localizacao or esperando_cidade.get(chat_id)
+    return chat_id in esperando_localizacao or esperando_cidade.get(chat_id) or chat_id in esperando_procurar
 
 
-# ── Menus ─────────────────────────────────────────────────────────────────────
+# menu principal
 
 def menu_principal():
-    return quick_markup({
-        'Calendário Vacinal 📅': {'callback_data': 'calendario_vacinal'},
-        'Cobertura 📊': {'callback_data': 'cobertura'},
-        'Assistente IA 🤖': {'callback_data': 'assistente'},
-        'Localizar 📍': {'callback_data': 'localizar'},
-        'Saiba Mais ℹ️': {'callback_data': 'fontes'},
-    }, row_width=2)
+    markup = InlineKeyboardMarkup()
+    markup.row(
+        InlineKeyboardButton('Calendário Vacinal 📅', callback_data='calendario_vacinal'),
+        InlineKeyboardButton('Cobertura 📊', callback_data='cobertura')
+    )
+    markup.row(
+        InlineKeyboardButton('Assistente IA 🤖', callback_data='assistente'),
+        InlineKeyboardButton('Localizar 📍', callback_data='localizar')
+    )
+    markup.row(
+        InlineKeyboardButton('🔎 Procurar', callback_data='procurar_vacina'),
+        InlineKeyboardButton('Saiba Mais ℹ️', callback_data='fontes')
+    )
+    return markup
 
 
 def menu_regioes():

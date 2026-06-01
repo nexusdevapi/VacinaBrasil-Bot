@@ -241,7 +241,7 @@ def formatar_cobertura(nome, soma, total):
 
     return mensagem[:3900]
 
-def resto(texto):
+def resto():
     return 'Olá, não entendi sua pergunta. Poderia fazê-lá novamente?'
 
 def dia(nascimento):
@@ -351,6 +351,9 @@ def idade(id):
 def localizar():
     return "__LOCALIZAR__"
 
+def greet():
+    return 'Olá, no que posso ajudar?'
+
 def resposta_ia(perg):
     functions = {
         "pega": pega_vacina,
@@ -358,14 +361,16 @@ def resposta_ia(perg):
         "cobertura": consultar_cobertura,
         "dia": dia,
         "idade": idade,
+        "greet": lambda _: greet(),
         "localizar": lambda _: localizar(),
-        "resto": resto
+        "resto": lambda _: resto()
     }
 
     prompt = f"""
     You are a function selector for a Brazilian vaccination bot.
 
     Available functions:
+    - greet: use when greeting. pass empty string as args
     - pega: searches vaccines for age groups. Arguments must be one of: Gestante, Criança, Adolescente e Jovem, Adulto, Idoso
     - procura: searches by vaccine name (e.g. dengue, hepatite, covid)
     - cobertura: searches vaccination coverage by location. Accepts Brazilian regions (Norte, Nordeste, Centro-Oeste, Sul, Sudeste), state abbreviations (SP, RJ, MG...), or city names (e.g. Sobral, Campinas). Pass exactly what the user said as the location.
@@ -396,4 +401,16 @@ def resposta_ia(perg):
     selected = json.loads(selected)
 
     if selected['funcao'] in functions:
-        return functions[selected['funcao']](selected['args'])
+        resultado = functions[selected['funcao']](selected['args'])
+        if selected['funcao'] == 'pega':
+            periodo = selected['args']
+            mapa_grupo = {
+                'Gestante': 'grupo_gestante',
+                'Criança': 'grupo_crianca',
+                'Adolescente': 'grupo_jovens',
+                'Adulto': 'grupo_adulto',
+                'Idoso': 'grupo_idoso',
+            }
+            grupo = next((v for k, v in mapa_grupo.items() if periodo.startswith(k)), None)
+            return (resultado, grupo)
+        return resultado

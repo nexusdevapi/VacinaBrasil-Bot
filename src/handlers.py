@@ -2,6 +2,7 @@ import telebot
 import time
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from datetime import datetime
+from textwrap import dedent
 
 from bot import (
     bot, user_data, mensagem_localizacao,
@@ -14,6 +15,35 @@ from bot import (
 from core.engine import pega_vacina, procura_vacina, consultar_cobertura, resposta_ia
 from utils.helpers import urls
 from data_handler.handler_ubs import proximas_ubs
+
+IA_SAUDACAO_TEXTO = dedent('''\
+🤖 Olá! Seja bem-vindo(a)!
+
+Sou um assistente virtual especializado em informações sobre vacinação. Posso ajudar você a encontrar informações de forma rápida e prática.
+
+🔎 O que eu posso fazer:
+
+💉 Consultar vacinas recomendadas com base na idade informada.
+
+📊 Verificar a cobertura vacinal por região, estado ou cidade.
+
+🏥 Encontrar Unidades Básicas de Saúde (UBS) próximas à sua localização.
+
+📝 Basta me enviar sua dúvida.
+
+Como posso ajudar você hoje?''')
+
+
+def _markup_voltar_ia():
+    markup = InlineKeyboardMarkup()
+    markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='voltar_ia'))
+    return markup
+
+
+def _markup_voltar_menu():
+    markup = InlineKeyboardMarkup()
+    markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='voltar_menu'))
+    return markup
 
 
 @bot.message_handler(commands=['start'])
@@ -135,8 +165,11 @@ def handle_localizacao(message):
 
     delete_if_exists(chat_id, user_id, 'ubs_msg_id')
 
+    veio_da_ia = data.get('mode', False) and data.get('ia_origem_ubs', False)
+    voltar_callback = 'voltar_ia_ubs' if veio_da_ia else 'voltar_menu'
+
     inline_markup = InlineKeyboardMarkup()
-    inline_markup.row(InlineKeyboardButton("⬅️ Voltar", callback_data="voltar_menu"))
+    inline_markup.row(InlineKeyboardButton("⬅️ Voltar", callback_data=voltar_callback))
     inline_markup.row(InlineKeyboardButton("🔄 Buscar novamente", callback_data="localizar"))
 
     menu_msg_id = data.get('menu_msg_id')
@@ -187,8 +220,15 @@ def handle_cep(chat_id, cep, user_id=None):
         esperando_localizacao.add(chat_id)
         return
 
+    if user_id is not None:
+        data = user_data.setdefault(user_id, {})
+        veio_da_ia = data.get('mode', False) and data.get('ia_origem_ubs', False)
+        voltar_callback = 'voltar_ia_ubs' if veio_da_ia else 'voltar_menu'
+    else:
+        voltar_callback = 'voltar_menu'
+
     inline_markup = InlineKeyboardMarkup()
-    inline_markup.row(InlineKeyboardButton("⬅️ Voltar", callback_data="voltar_menu"))
+    inline_markup.row(InlineKeyboardButton("⬅️ Voltar", callback_data=voltar_callback))
     inline_markup.row(InlineKeyboardButton("🔄 Buscar novamente", callback_data="localizar"))
 
     if user_id is not None:
@@ -249,40 +289,41 @@ def start_natural(message):
     ultimo_menu = data.get('ultimo_menu')
 
     if data.get('mode', False):
-        markup = InlineKeyboardMarkup()
-        markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='voltar_ia_saudacao'))
         resposta = resposta_ia(message.text)
 
-        ia_saudacao_id = data.get('ia_saudacao_msg_id') or data.get('menu_msg_id')
+        for key in ('ia_saudacao_msg_id', 'ia_resposta_msg_id'):
+            delete_if_exists(chat_id, user_id, key)
 
         if resposta == '__LOCALIZAR__':
+            data['ia_origem_ubs'] = True
             esperando_localizacao.add(chat_id)
             reply_markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True, input_field_placeholder="Ou digite seu CEP...")
             reply_markup.add(telebot.types.KeyboardButton("📍 Enviar minha localização", request_location=True))
             inline_markup = InlineKeyboardMarkup()
-            inline_markup.row(InlineKeyboardButton("⬅️ Voltar", callback_data="voltar_menu"))
+            inline_markup.row(InlineKeyboardButton("⬅️ Voltar", callback_data="voltar_ia"))
             texto_localizar = "Clique no botão para enviar sua localização (ative o GPS e permita acesso à localização) ou informe um CEP (somente números)"
-            if ia_saudacao_id:
-                try:
-                    bot.edit_message_text(texto_localizar, chat_id, ia_saudacao_id, reply_markup=inline_markup, parse_mode='HTML')
-                    data['menu_msg_id'] = ia_saudacao_id
-                except:
-                    msg_loc = bot.send_message(chat_id, texto_localizar, reply_markup=inline_markup, parse_mode='HTML')
-                    data['menu_msg_id'] = msg_loc.message_id
-            data['ia_saudacao_msg_id'] = None
+            msg_loc = bot.send_message(chat_id, texto_localizar, reply_markup=inline_markup, parse_mode='HTML')
+            data['menu_msg_id'] = msg_loc.message_id
             msg = bot.send_message(chat_id, "Aguardando resposta...", reply_markup=reply_markup)
             mensagem_localizacao[chat_id] = msg.message_id
             return
 
-        if ia_saudacao_id:
-            try:
-                bot.delete_message(chat_id, ia_saudacao_id)
-            except:
-                pass
-            data['ia_saudacao_msg_id'] = None
+        if isinstance(resposta, tuple):
+            texto_vacina, grupo_pdf = resposta
+            markup = InlineKeyboardMarkup()
+            if grupo_pdf:
+                markup.row(InlineKeyboardButton('📄 Ver ou Baixar PDF', callback_data=f'baixar_pdf_{grupo_pdf}'))
+            markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='voltar_ia'))
+            delete_if_exists(chat_id, user_id, 'pdf_msg_id')
+            msg = bot.send_message(chat_id, texto_vacina, reply_markup=markup, parse_mode='html')
+            data['ia_resposta_msg_id'] = msg.message_id
+            data['ia_grupo_pdf'] = grupo_pdf
+            return
 
+        markup = _markup_voltar_ia()
         msg = bot.send_message(chat_id, resposta, reply_markup=markup, parse_mode='html')
         data['ia_resposta_msg_id'] = msg.message_id
+        data['ia_grupo_pdf'] = None
         return
 
     if ultimo_menu is None:
@@ -309,7 +350,11 @@ def callback_handler(call):
     if not anti_spam(user_id, call.data):
         return
 
-    valid_ids = [data.get('menu_msg_id'), data.get('pdf_msg_id'), data.get('ubs_msg_id'), data.get('ia_resposta_msg_id'), data.get('ia_saudacao_msg_id'), data.get('search_msg_id'), data.get('procurar_resultado_msg_id')]
+    valid_ids = [
+        data.get('menu_msg_id'), data.get('pdf_msg_id'), data.get('ubs_msg_id'),
+        data.get('ia_resposta_msg_id'), data.get('ia_saudacao_msg_id'),
+        data.get('search_msg_id'), data.get('procurar_resultado_msg_id')
+    ]
 
     if call.message.message_id not in valid_ids:
         try:
@@ -329,11 +374,52 @@ def callback_handler(call):
         markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='voltar_calendario'))
         safe_edit(pega_vacina(mensagem), chat_id, call.message.message_id, markup)
 
+    # IA
+    if call.data == 'assistente':
+        data['mode'] = True
+        data['ia_origem_ubs'] = False
+        markup = _markup_voltar_menu()
+        safe_edit(IA_SAUDACAO_TEXTO, chat_id, call.message.message_id, markup)
+        data['ia_saudacao_msg_id'] = call.message.message_id
+        data['menu_msg_id'] = call.message.message_id
+        data['ia_resposta_msg_id'] = None
+        return
+
+    if call.data == 'voltar_ia':
+        data['ia_resposta_msg_id'] = None
+        data['ia_grupo_pdf'] = None
+        delete_if_exists(chat_id, user_id, 'pdf_msg_id')
+        markup = _markup_voltar_menu()
+        safe_edit(IA_SAUDACAO_TEXTO, chat_id, call.message.message_id, markup)
+        data['ia_saudacao_msg_id'] = call.message.message_id
+        data['menu_msg_id'] = call.message.message_id
+        esperando_localizacao.discard(chat_id)
+        try:
+            bot.delete_message(chat_id, mensagem_localizacao.get(chat_id))
+            mensagem_localizacao.pop(chat_id, None)
+        except:
+            pass
+        try:
+            msg_rm = bot.send_message(chat_id, "\u200b", reply_markup=telebot.types.ReplyKeyboardRemove())
+            bot.delete_message(chat_id, msg_rm.message_id)
+        except:
+            pass
+        return
+
+    if call.data == 'voltar_ia_ubs':
+        data['ubs_msg_id'] = None
+        data['ia_origem_ubs'] = False
+        markup = _markup_voltar_menu()
+        safe_edit(IA_SAUDACAO_TEXTO, chat_id, call.message.message_id, markup)
+        data['ia_saudacao_msg_id'] = call.message.message_id
+        data['menu_msg_id'] = call.message.message_id
+        return
+
+    # procura
     if call.data == 'procurar_vacina':
         esperando_procurar.add(chat_id)
         data['procurar_resultado'] = False
-        markup = InlineKeyboardMarkup()
-        markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='voltar_menu'))
+        markup = _markup_voltar_menu()
         safe_edit('Informe o nome da vacina:', chat_id, call.message.message_id, markup)
         data['menu_msg_id'] = call.message.message_id
         return
@@ -341,31 +427,13 @@ def callback_handler(call):
     if call.data == 'voltar_procurar':
         esperando_procurar.add(chat_id)
         data['procurar_resultado'] = False
-        markup = InlineKeyboardMarkup()
-        markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='voltar_menu'))
+        markup = _markup_voltar_menu()
         safe_edit('Informe o nome da vacina:', chat_id, call.message.message_id, markup)
         data['menu_msg_id'] = call.message.message_id
         data['procurar_resultado_msg_id'] = None
         return
 
-    if call.data == 'assistente':
-        data['mode'] = True
-        data['ia_saudacao_msg_id'] = call.message.message_id
-        markup = InlineKeyboardMarkup()
-        markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='voltar_menu'))
-        safe_edit('Olá, no que posso ajudar?', chat_id, call.message.message_id, markup)
-        return
-
-    if call.data == 'voltar_ia_saudacao':
-        data['mode'] = True
-        markup = InlineKeyboardMarkup()
-        markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='voltar_menu'))
-        safe_edit('Olá, no que posso ajudar?', chat_id, call.message.message_id, markup)
-        data['ia_saudacao_msg_id'] = call.message.message_id
-        data['menu_msg_id'] = call.message.message_id
-        data['ia_resposta_msg_id'] = None
-        return
-
+    # calendário
     if call.data == 'calendario_vacinal':
         safe_edit('Escolha a faixa etária:', chat_id, call.message.message_id, menu_calendario())
 
@@ -397,6 +465,7 @@ def callback_handler(call):
         )
         data['pdf_msg_id'] = msg_pdf.message_id
 
+    # cobertura
     elif call.data == 'cobertura':
         data['fluxo_cidade'] = False
         esperando_cidade.pop(chat_id, None)
@@ -445,9 +514,13 @@ def callback_handler(call):
         markup.row(InlineKeyboardButton("⬅️ Voltar", callback_data="cob_estado"))
         safe_edit(consultar_cobertura(uf), chat_id, call.message.message_id, markup)
 
+    # ubs
     elif call.data == 'localizar':
         esperando_localizacao.add(chat_id)
         delete_if_exists(chat_id, user_id, 'ubs_msg_id')
+
+        if not data.get('mode', False):
+            data['ia_origem_ubs'] = False
 
         reply_markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True, input_field_placeholder="Ou digite seu CEP...")
         reply_markup.add(telebot.types.KeyboardButton("📍 Enviar minha localização", request_location=True))
@@ -467,6 +540,7 @@ def callback_handler(call):
         msg = bot.send_message(chat_id, "Aguardando resposta...", reply_markup=reply_markup)
         mensagem_localizacao[chat_id] = msg.message_id
 
+    # saiba mais
     elif call.data == 'fontes':
         markup = InlineKeyboardMarkup()
         markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='voltar_menu'))
@@ -501,6 +575,7 @@ def callback_handler(call):
         data['fluxo_cidade'] = False
         data['ia_saudacao_msg_id'] = None
         data['ia_resposta_msg_id'] = None
+        data['ia_origem_ubs'] = False
         data['procurar_resultado'] = False
         esperando_cidade.pop(chat_id, None)
         esperando_localizacao.discard(chat_id)

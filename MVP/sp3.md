@@ -1,6 +1,6 @@
 # API 1º Semestre ADS - Vacina Brasil Bot (NexusDev)
 
-> Status do Projeto: Sprint 3 - Em andamento 🟡 (11/05 - 31/05)
+> Status do Projeto: Sprint 3 - Concluída ✅ (11/05 - 31/05)
 
 ## 🏅 Desafio <a id="desafio"></a>
 

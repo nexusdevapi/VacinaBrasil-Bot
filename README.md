@@ -13,7 +13,7 @@ O projeto segue a metodologia ágil **Scrum**, com foco em desenvolvimento colab
 ## 🎥 Demonstração
 
 <p align="center">
-  <a href="https://youtu.be/amz5b3WAQUk">
+  <a href="https://youtu.be/r--tyUL2YUo">
     <img src="https://img.youtube.com/vi/tY-uqS3kM9k/maxresdefault.jpg" width="800">
   </a>
 </p>
@@ -210,8 +210,9 @@ e exibirá as seguintes opções:
 
 * `Calendário Vacinal 📅`
 * `Cobertura 📊`
-* `Assistente IA 🤖`
+* `IA (experimental) 🤖`
 * `Localizar 📍`
+* `Procurar 🔎`
 * `Saiba Mais ℹ️`
 
 ---
@@ -237,6 +238,35 @@ Exemplo de resposta:
 
 💉 dengue tetravalente
     • 2 doses (conforme histórico vacinal)
+
+───────────────────
+
+🗓️ 11 a 14 anos:
+
+💉 meningite meningocócica ACWY
+    • 1 dose
+
+───────────────────
+
+🗓️ 10 a 24 anos:
+
+💉 hepatite B
+    • 3 doses (conforme histórico vacinal)
+
+💉 dT
+    • 3 doses (conforme histórico vacinal)
+
+💉 febre amarela
+    • 1 dose (conforme histórico vacinal)
+
+💉 tríplice viral SCR
+    • 2 doses (conforme histórico vacinal)
+
+💉 pneumocócica 23 – valente
+    • 2 doses (somente indígena, sem histórico vacinal com pneumo conjugada)
+
+💉 varicela
+    • 2 doses (somente indígena e trabalhador de saúde, sem histórico da doença ou na dúvida e conforme histórico vacinal)
 ```
 
 ---
@@ -250,16 +280,30 @@ Exemplo de resposta:
 Exemplo de resposta:
 
 ```
-📊 Cobertura vacinal - Sudeste
+📊 Cobertura vacinal - Região Sudeste
 
-📈 Média das vacinas: 81.2%
+📈 Média das vacinas: 78.81%
 
 💉 Vacinas:
 
-• BCG: 95.5%
-• Covid-19: 78.1%
-• Dengue: 61.4%
-...
+• BCG: 79.5%
+• DTP (1° Reforço): 73.13%
+• Febre Amarela: 81.47%
+• Hepatite A Infantil: 76.02%
+• Hepatite B (< 30 Dias): 80.09%
+• Hepatite B (<= 1 dia): 65.21%
+• Hepatite B (<= 2 dias): 68.37%
+• Meningo C: 83.87%
+• Meningocócica Conjugada (1° Reforço): 83.18%
+• Penta (DTP/HepB/Hib): 84.23%
+• Pneumo 10: 83.47%
+• Pneumo 10 (1° Reforço): 82.08%
+• Polio Injetável (VIP): 84.9%
+• Polio Injetável (VIP)(Reforço): 76.84%
+• Rotavírus: 81.21%
+• Tríplice Viral - 1° Dose: 85.91%
+• Tríplice Viral - 2° Dose: 73.58%
+• Varicela: 75.52%
 ```
 
 ---
@@ -275,21 +319,25 @@ Exemplo de resposta:
 ```
 🏥 UBSs mais próximas:
 
-🥇 UBS JARDIM AMERICA — mais próxima
-    Rua Das Flores, 123, Jardim América, São Paulo
-    📍 Ver no Google Maps
+🥇UBS JARDIM DAS INDUSTRIAS — mais próxima
+    Rua Pirassununga, Jd Das Industrias, São José Dos Campos
+    📍 Ver no Google Maps (https://www.google.com/maps/search/?api=1&query=UBS%20JARDIM%20DAS%20INDUSTRIAS%20Rua%20Pirassununga%20Jd%20Das%20Industrias)
 
-🥈 UBS VILA NOVA
-    Av. Principal, 456, Vila Nova, São Paulo
-    📍 Ver no Google Maps
+🥈UBS PARQUE INDUSTRIAL
+    Rua Goiania, Parque Industrial, São José Dos Campos
+    📍 Ver no Google Maps (https://www.google.com/maps/search/?api=1&query=UBS%20PARQUE%20INDUSTRIAL%20Rua%20Goiania%20Parque%20Industrial)
+
+🥉UBS LIMOEIRO
+    Rua Corifeu De Azevedo Marques, Limoeiro, São José Dos Campos
+    📍 Ver no Google Maps (https://www.google.com/maps/search/?api=1&query=UBS%20LIMOEIRO%20Rua%20Corifeu%20De%20Azevedo%20Marques%20Limoeiro)
 ```
 
 ---
 
 #### 4.5 Assistente IA
 
-1. Clique em **`Assistente IA 🤖`**.
-2. Digite sua pergunta em linguagem natural, por exemplo: *"quais vacinas pra idoso?"* ou *"cobertura vacinal no nordeste"*.
+1. Clique em **`IA (experimental) 🤖`**.
+2. Digite sua pergunta em linguagem natural, por exemplo: *"cobertura vacinal sudeste"*.
 3. O bot interpretará a pergunta e retornará a resposta adequada.
 
 > **Requisito:** o Assistente IA utiliza o modelo **Qwen2.5** via **Ollama**, que deve estar instalado e em execução localmente (veja o Manual de Instalação).
@@ -318,7 +366,7 @@ Exemplos:
 
 * O bot precisa estar **em execução** para responder às mensagens.
 * Os dados de calendário e cobertura são atualizados automaticamente toda semana ao iniciar o bot.
-* O Assistente IA (`Assistente IA 🤖`) requer o Ollama com o modelo Qwen2.5 instalado localmente.
+* O Assistente IA (`IA (experimental) 🤖`) requer o Ollama com o modelo Qwen2.5 instalado localmente.
 * O tempo de resposta pode levar alguns segundos enquanto o sistema processa os dados.
 
 ---

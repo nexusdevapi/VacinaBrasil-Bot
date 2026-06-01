@@ -19,19 +19,82 @@ def pega_vacina(periodo):
         resultado += f'💉 {info['vacina'].replace('\n', ' ')}\n    • {info['dose'].replace('\n', ' ')}\n\n'
     return resultado
 
+ALIASES_VACINA = {
+    'vvsr': 'vírus sincicial respiratório',
+    'vsrc': 'vírus sincicial respiratório',
+    'virus sincicial': 'vírus sincicial respiratório',
+    'vírus sincicial': 'vírus sincicial respiratório',
+    'sincicial': 'vírus sincicial respiratório',
+    'covid': 'covid-19',
+    'covid 19': 'covid-19',
+    'covid19': 'covid-19',
+    'sars': 'covid-19',
+    'coronavirus': 'covid-19',
+    'coronavírus': 'covid-19',
+    'tríplice viral': 'tríplice viral scr',
+    'triplice viral': 'tríplice viral scr',
+    'tríplice': 'tríplice viral scr',
+    'triplice': 'tríplice viral scr',
+    'scr': 'tríplice viral scr',
+    'sarampo': 'tríplice viral scr',
+    'poliomielite': 'poliomielite inativada vip',
+    'polio': 'poliomielite inativada vip',
+    'vip': 'poliomielite inativada vip',
+    'poliomielite vip': 'poliomielite inativada vip',
+    'poliomielite "vip"': 'poliomielite inativada vip',
+    'meningocócica': 'meningocócica',
+    'meningococica': 'meningocócica',
+    'meningite': 'meningocócica',
+    'meningococo': 'meningocócica',
+    'febre amarela': 'febre amarela',
+}
+
+def _normalizar_busca(texto):
+    texto = texto.lower().strip()
+    texto = unicodedata.normalize("NFD", texto)
+    texto = "".join(c for c in texto if unicodedata.category(c) != "Mn")
+    texto = texto.replace("-", "").replace(" ", "")
+    return texto
+
 def procura_vacina(nome):
     status = ''
     resultado = ''
     data = carregar_json('calendario_vacinas.json')
-    nome = nome.lower().strip()
+    nome_original = nome.lower().strip()
+
+    nome_normalizado = _normalizar_busca(nome_original)
+    alvo = None
+    for alias, canonical in ALIASES_VACINA.items():
+        if _normalizar_busca(alias) == nome_normalizado:
+            alvo = canonical.lower()
+            break
+
+    if alvo is None:
+        alvo = nome_original
+
+    alvo_norm = _normalizar_busca(alvo)
+
     for info in data:
         if info['idade_texto'] != '':
             status = info['idade_texto']
-        vacina = re.sub(r'\d+|[¹²³⁴⁵⁶⁷⁸⁹]', '', info['vacina'])
-        vacina = vacina.replace('\n', ' ').lower().strip()
-        if vacina == nome or (nome != 'dt' and vacina.startswith(nome + ' ')):
+        vacina_raw = info['vacina'].replace('\n', ' ')
+        vacina_limpa = re.sub(r'\d+|[¹²³⁴⁵⁶⁷⁸⁹]', '', vacina_raw).lower().strip()
+        vacina_norm = _normalizar_busca(vacina_limpa)
+
+        match = False
+        if vacina_norm == alvo_norm:
+            match = True
+        elif alvo_norm not in ('dt',) and alvo_norm.startswith(vacina_norm) and vacina_norm:
+            match = True
+        elif alvo_norm not in ('dt',) and vacina_norm.startswith(alvo_norm):
+            match = True
+        elif alvo_norm in vacina_norm:
+            match = True
+
+        if match:
             resultado += f'🗓️ <b>{status.replace(chr(10), " ")}</b>:\n\n' if resultado == '' else f'🗓️ <b>{status.replace(chr(10), " ")}</b>:\n\n'
-            resultado += f'💉 {info["vacina"].replace(chr(10), " ")}\n    • {info["dose"].replace(chr(10), " ")}\n\n'
+            resultado += f'💉 {vacina_raw}\n    • {info["dose"].replace(chr(10), " ")}\n\n'
+
     if resultado == '':
         resultado = 'Termo não encontrado!'
     return resultado
@@ -285,6 +348,9 @@ def idade(id):
                     resultado += f'💉 {info['vacina'].replace('\n', ' ')}\n    • {info['dose'].replace('\n', ' ')}\n\n'
     return resultado
 
+def localizar():
+    return "__LOCALIZAR__"
+
 def resposta_ia(perg):
     functions = {
         "pega": pega_vacina,
@@ -292,22 +358,21 @@ def resposta_ia(perg):
         "cobertura": consultar_cobertura,
         "dia": dia,
         "idade": idade,
+        "localizar": lambda _: localizar(),
         "resto": resto
     }
 
     prompt = f"""
-    You are a function selector.
+    You are a function selector for a Brazilian vaccination bot.
 
     Available functions:
-    - pega: searchs vaccine for age groups like child, adult or elderly. choose one of the arguments[Gestante, Criança, Adolescente e Jovem, Adulto, Idoso] accordingly to the age group
-    - procura: uses the name of a vaccine for example dengue or hepatite.
-    - cobertura: uses the main regions of brazil. arguments[Norte, Nordeste, Centro-Oeste, Sul, Sudeste]
-    - dia: transforms a date in this format: dd/mm/yyyy.
-    - idade: uses the age of the user and classifies them in one of the three data types(years, months or weeks). For the arguments return a string in this format: x years or y months or z weeks. Don't pick any value resembling a date for this function. If the age passes 99 return 99 years. Keep the same value as the user gave just put a type on them.
-    - resto: uses anything unrelated to the other functions.
-
-    for the idade function:
-    Dont convert the values. Keep them the same. Change semana to week
+    - pega: searches vaccines for age groups. Arguments must be one of: Gestante, Criança, Adolescente e Jovem, Adulto, Idoso
+    - procura: searches by vaccine name (e.g. dengue, hepatite, covid)
+    - cobertura: searches vaccination coverage by location. Accepts Brazilian regions (Norte, Nordeste, Centro-Oeste, Sul, Sudeste), state abbreviations (SP, RJ, MG...), or city names (e.g. Sobral, Campinas). Pass exactly what the user said as the location.
+    - dia: converts a date in dd/mm/yyyy format to an age group
+    - idade: classifies an age into years/months/weeks. Format: "x years", "y months", "z weeks". Do not convert values.
+    - localizar: use when the user wants to find nearby UBS (health posts), clinics or vaccination points near them. No arguments needed.
+    - resto: use for anything unrelated to the above.
 
     User request:
     "{perg}"
@@ -318,8 +383,8 @@ def resposta_ia(perg):
         "args": "arguments"
     }}
 
-    Return only valid JSON.
-    Dont use '''
+    For localizar, use empty string as args.
+    Return only valid JSON. Do not use ```
     """
     response = ollama.chat(
         model='qwen2.5',

@@ -105,10 +105,14 @@ def cep_para_coords(cep: str):
         localidade = via.get("localidade", "")
         uf = via.get("uf", "")
 
-        partes = [p for p in [logradouro, bairro, localidade, uf] if p.strip()]
         queries = []
+
+        queries.append(f"{cep}, Brasil")
+
+        partes = [p for p in [logradouro, bairro, localidade, uf] if p.strip()]
         if len(partes) >= 2:
             queries.append(", ".join(partes) + ", Brasil")
+
         queries.append(f"{localidade}, {uf}, Brasil")
 
         for q in queries:

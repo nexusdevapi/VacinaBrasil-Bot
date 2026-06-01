@@ -27,7 +27,7 @@ O projeto segue a metodologia ágil **Scrum**, com foco em desenvolvimento colab
 * [📋 Requisitos Não Funcionais](#-requisitos-não-funcionais)
 * [🧰 Tecnologias Utilizadas](#-tecnologias-utilizadas)
 * [🏗 Estrutura do Projeto](#-estrutura-do-projeto)
-* [📌 Product Backlog](#-product-backlog)
+* [📌 Backlog do Produto](#-backlog-do-produto)
 * [📊 Registro das Sprints](#-registro-das-sprints)
 * [📖 Manual do Usuário](#-manual-do-usuário)
 * [🛠️ Manual de Instalação](#manual-instalacao)
@@ -289,7 +289,7 @@ Exemplo de resposta:
 2. Digite sua pergunta em linguagem natural, por exemplo: *"quais vacinas pra idoso?"* ou *"cobertura vacinal no nordeste"*.
 3. O bot interpretará a pergunta e retornará a resposta adequada.
 
-> **Requisito:** o Assistente IA utiliza o modelo **Mistral** via **Ollama**, que deve estar instalado e em execução localmente (veja o Manual de Instalação).
+> **Requisito:** o Assistente IA utiliza o modelo **Qwen2.5** via **Ollama**, que deve estar instalado e em execução localmente (veja o Manual de Instalação).
 
 ---
 
@@ -315,7 +315,7 @@ Exemplos:
 
 * O bot precisa estar **em execução** para responder às mensagens.
 * Os dados de calendário e cobertura são atualizados automaticamente toda semana ao iniciar o bot.
-* O Assistente IA (`Assistente IA 🤖`) requer o Ollama com o modelo Mistral instalado localmente.
+* O Assistente IA (`Assistente IA 🤖`) requer o Ollama com o modelo Qwen2.5 instalado localmente.
 * O tempo de resposta pode levar alguns segundos enquanto o sistema processa os dados.
 
 ---
@@ -349,10 +349,10 @@ python -m pip install -r requirements.txt
 
 ### 1.3 Configurando o Ollama (Assistente IA)
 
-Instale o [Ollama](https://ollama.com/) e baixe o modelo Mistral:
+Instale o [Ollama](https://ollama.com/) e baixe o modelo Qwen2.5:
 
 ```bash
-ollama pull mistral
+ollama pull qwen2.5
 ```
 
 Mantenha o Ollama em execução em segundo plano antes de iniciar o bot.

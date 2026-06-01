@@ -121,7 +121,10 @@ VacinaBrasil-Bot/
 │   └── sp3.md
 ├── assets/
 │   ├── img/
+│   │   ├── banner_vacina_brasil.png
+│   │   └── qrcode_vacinabrasil_bot.png
 │   └── video/
+│       └── vacinabrasil_bot.mp4
 └── requirements.txt
 ```
 

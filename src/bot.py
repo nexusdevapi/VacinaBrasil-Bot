@@ -82,11 +82,11 @@ def menu_principal():
         InlineKeyboardButton('Cobertura 📊', callback_data='cobertura')
     )
     markup.row(
-        InlineKeyboardButton('Assistente IA 🤖', callback_data='assistente'),
+        InlineKeyboardButton('IA (experimental) 🤖', callback_data='assistente'),
         InlineKeyboardButton('Localizar 📍', callback_data='localizar')
     )
     markup.row(
-        InlineKeyboardButton('🔎 Procurar', callback_data='procurar_vacina'),
+        InlineKeyboardButton('Procurar 🔎', callback_data='procurar_vacina'),
         InlineKeyboardButton('Saiba Mais ℹ️', callback_data='fontes')
     )
     return markup

@@ -13,7 +13,7 @@ O projeto segue a metodologia ágil **Scrum**, com foco em desenvolvimento colab
 ## 🎥 Demonstração
 
 <p align="center">
-  <a href="https://www.youtube.com/watch?v=5UggYn-CQwU">
+  <a href="https://youtu.be/amz5b3WAQUk">
     <img src="https://img.youtube.com/vi/tY-uqS3kM9k/maxresdefault.jpg" width="800">
   </a>
 </p>

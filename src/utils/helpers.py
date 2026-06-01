@@ -25,3 +25,13 @@ def remove_repetido(palavra):
         if l != result[-1]:
             result.append(l)
     return ''.join(result)
+
+# calendários relevantes disponíveis em https://www.gov.br/saude/pt-br/vacinacao/arquivos/
+urls = {
+    'grupo_gestante': 'https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-gestante/',
+    'grupo_crianca': 'https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-crianca/',
+    'grupo_jovens': 'https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-adolescentes-jovens/',
+    'grupo_adulto': 'https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-adulto/',
+    'grupo_idoso': 'https://www.gov.br/saude/pt-br/vacinacao/arquivos/calendario-nacional-de-vacinacao-idoso/',
+}
+

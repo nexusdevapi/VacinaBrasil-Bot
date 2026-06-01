@@ -4,7 +4,7 @@
   <img src="assets/img/banner_vacina_brasil.png">
 </p>
 
-Assistente virtual para Telegram que informa vacinas recomendadas com base na faixa etária.
+Assistente virtual para Telegram que informa vacinas recomendadas com base na faixa etária, mostra cobertura vacinal por região/estado/cidade e localiza as UBSs mais próximas do usuário.
 
 Projeto desenvolvido durante o **1º semestre de 2026** por estudantes do curso de **Análise e Desenvolvimento de Sistemas da FATEC São José dos Campos**.
 
@@ -36,8 +36,11 @@ O projeto segue a metodologia ágil **Scrum**, com foco em desenvolvimento colab
 
 Desenvolver um assistente virtual para Telegram que utilize dados de portais públicos oficiais de saúde sobre vacinação para informar o cidadão sobre:
 
-* Calendário vacinal para diferentes faixas etárias (crianças, adultos e idosos);
-* Consulta de vacinas recomendadas para gestantes de acordo com a semana de gestação.
+* Calendário vacinal para diferentes faixas etárias (crianças, adolescentes, adultos e idosos);
+* Consulta de vacinas recomendadas para gestantes;
+* Cobertura vacinal por região, estado ou cidade;
+* Localização das Unidades Básicas de Saúde (UBSs) mais próximas, via GPS ou CEP;
+* Respostas a perguntas em linguagem natural por meio de um Assistente IA integrado.
 
 Não deve haver persistência dos dados através de bancos de dados.
 
@@ -71,6 +74,9 @@ Não deve haver persistência dos dados através de bancos de dados.
   <a href="https://telegram.org/">
     <img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white"/>
   </a>
+  <a href="https://ollama.com/">
+    <img src="https://img.shields.io/badge/Ollama-000000?style=for-the-badge&logo=ollama&logoColor=white"/>
+  </a>
   <a href="https://git-scm.com/">
     <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white"/>
   </a>
@@ -88,23 +94,36 @@ Não deve haver persistência dos dados através de bancos de dados.
 
 ## 🏗 Estrutura do Projeto
 
-* `src/main.py` — Inicia o bot e controla o funcionamento dele no Telegram;
-
-* `src/data_handler/scraping.py` — extrai e processa os dados de vacinação a partir dos calendários oficiais disponíveis do site do Ministério da Saúde;
-
-* `src/data_handler/scraping_update.py` — atualiza os dados extraídos pelo arquivo `scraping.py` semanalmente para entregar os dados mais recentes ao usuário;
-
-* `src/data_handler/scraping_cobertura.py` — obtém dados da cobertura vacinal de diversas regiões do país a partir de arquivos disponibilizados pelo Ministério da Saúde;
-
-* `src/data_handler/loader.py` — Carrega e prepara os dados utilizados pelo sistema;
-
-* `src/core/engine.py` — Processa as informações fornecidas pelo usuário e determina quais respostas são apropriadas;
-
-* `src/utils/helpers.py` — Funções auxiliares utilizadas em diferentes partes do projeto;
-
-* `src/data/processed/` — diretório onde os arquivos JSON são armazenados;
-
-* `requirements.txt` — Lista de bibliotecas Python necessárias para executar o projeto.
+```
+VacinaBrasil-Bot/
+├── src/
+│   ├── main.py                        — Ponto de entrada: inicializa os dados e inicia o polling do bot
+│   ├── bot.py                         — Configuração do bot, menus, utilitários e controle de estado por usuário
+│   ├── handlers.py                    — Handlers de mensagens e callbacks (comandos /start, /procurar, localização, IA)
+│   ├── core/
+│   │   └── engine.py                  — Lógica de negócio: consulta de calendário, busca de vacinas, cobertura vacinal e roteamento para IA
+│   ├── data_handler/
+│   │   ├── scraping_calendario.py     — Scraping do calendário vacinal a partir dos PDFs do Ministério da Saúde
+│   │   ├── scraping_cobertura.py      — Scraping dos dados de cobertura vacinal
+│   │   ├── scraping_ubs.py            — Obtém e processa a base de dados das UBSs
+│   │   ├── handler_ubs.py             — Localiza as UBSs mais próximas via Haversine; converte CEP em coordenadas
+│   │   └── loader.py                  — Carrega os arquivos JSON processados em memória
+│   ├── data/
+│   │   └── processed/
+│   │       ├── calendario_vacinas.json
+│   │       ├── cobertura_vacinal.json
+│   │       └── ubs.csv
+│   └── utils/
+│       └── helpers.py                 — URLs dos PDFs oficiais por grupo vacinal e outras funções auxiliares
+├── MVP/
+│   ├── sp1.md
+│   ├── sp2.md
+│   └── sp3.md
+├── assets/
+│   ├── img/
+│   └── video/
+└── requirements.txt
+```
 
 ## 📌 Backlog do Produto
 
@@ -117,26 +136,27 @@ Não deve haver persistência dos dados através de bancos de dados.
 | 5 | Alta | Como usuário, quero consultar a cobertura vacinal por região para obter informações atualizadas. | 2 |
 | 6 | Média | Como equipe de desenvolvimento, queremos melhorar a navegação pelo menu interativo com botões para tornar a experiência mais intuitiva. | 2 |
 | 7 | Alta | Como equipe de desenvolvimento, queremos corrigir erros identificados durante a validação do sistema para garantir respostas corretas. | 2 |
-| 8 | Média | Como usuário, quero visualizar um botão com mais informações sobre o assistente e sua equipe de desenvolvimento para entender a origem da ferramenta. | 3 |
+| 8 | Baixa | Como usuário, quero visualizar um botão com mais informações sobre o assistente e sua equipe de desenvolvimento para entender a origem da ferramenta. | 3 |
 | 9 | Baixa | Como usuário, quero um botão para visualizar e baixar os calendários vacinais originais (PDFs) para guardar ou imprimir. | 3 |
-| 10 | Alta | Como usuário, quero poder digitar perguntas de forma livre (ex: "quais vacinas pra idoso?") e ser compreendido pelo bot, sem precisar clicar em botões. | 3 |
-| 11 | Alta | Como usuário, quero informar meu endereço ou enviar minha localização para que o bot mostre o posto de saúde mais próximo. | 3 |
+| 10 | Média | Como usuário, quero poder pesquisar a cobertura vacinal especificamente da minha cidade, estado ou macrorregião. | 3 |
+| 11 | Alta | Como usuário, quero poder digitar perguntas de forma livre (ex: "quais vacinas pra idoso?") e ser compreendido pelo bot, sem precisar clicar em botões. | 3 |
+| 12 | Alta | Como usuário, quero informar meu endereço ou enviar minha localização para que o bot mostre o posto de saúde mais próximo. | 3 |
 
 ## 📊 Registro das Sprints
 
 | Sprint            | Previsão   | Status         | Histórico |
 |-------------------|------------|----------------|-----------|
 | 01                | 05/04/2026 | Concluída ✅   | [MVP](MVP/sp1.md) |
-| 02                | 03/05/2026 | Concluída ✅    | [MVP](MVP/sp2.md) |
-| 03                | 31/05/2026 | Em andamento 🟡    | [MVP](MVP/sp3.md) |
+| 02                | 03/05/2026 | Concluída ✅   | [MVP](MVP/sp2.md) |
+| 03                | 31/05/2026 | Concluída ✅   | [MVP](MVP/sp3.md) |
 
 ## 📖 Manual do Usuário
 
 ### 1. Apresentação
 
-O bot de vacinação (`@vacinabrasil_bot`) é um assistente no Telegram que permite consultar rapidamente quais vacinas são recomendadas de acordo com a **faixa etária selecionada pelo usuário**.
+O bot de vacinação (`@vacinabrasil_bot`) é um assistente no Telegram que permite consultar rapidamente quais vacinas são recomendadas de acordo com a **faixa etária**, ver a **cobertura vacinal** por região, estado ou cidade, e localizar as **UBSs mais próximas** da sua localização.
 
-A interação ocorre diretamente pelo chat do Telegram, onde o usuário seleciona opções ou informa dados básicos, e o sistema retorna as vacinas recomendadas para aquele perfil. A base de dados utilizada pelo bot é composta por arquivos JSON gerados a partir de calendários de vacinação disponibilizados como arquivos PDF pelo Ministério da Saúde em `https://www.gov.br/saude/pt-br/vacinacao/calendario`.
+A base de dados utilizada pelo bot é composta por arquivos JSON gerados a partir de calendários de vacinação disponibilizados como arquivos PDF pelo Ministério da Saúde em `https://www.gov.br/saude/pt-br/vacinacao/calendario`, além de dados de cobertura vacinal e do cadastro de UBSs do DATASUS.
 
 ---
 
@@ -153,8 +173,9 @@ A interação ocorre diretamente pelo chat do Telegram, onde o usuário selecion
 
 * **Dificuldade de interpretação do calendário vacinal:** As tabelas oficiais possuem muitas informações. O bot simplifica e mostra apenas as vacinas relevantes para o usuário.
 * **Acesso rápido à informação:** Em vez de navegar por páginas e documentos, o usuário pode consultar as vacinas diretamente no Telegram.
-* **Informação específica para gestantes:** O bot permite consultar rapidamente as vacinas recomendadas de acordo com a faixa etária de interesse do usuário.
-* **Consulta de cobertura vacinal:** O usuário consegue consultar, através da navegação por botões, as coberturas vacinais de diversas regiões do Brasil.
+* **Consulta de cobertura vacinal:** O usuário consegue consultar, através da navegação por botões ou por nome, as coberturas vacinais de regiões, estados e municípios do Brasil.
+* **Localização de postos de saúde:** O bot mostra as 3 UBSs mais próximas com base na localização GPS ou CEP informado.
+* **Linguagem natural:** O Assistente IA permite enviar perguntas em texto livre, sem necessidade de clicar em botões.
 
 ---
 
@@ -186,15 +207,18 @@ e exibirá as seguintes opções:
 
 * `Calendário Vacinal 📅`
 * `Cobertura 📊`
-* `Fontes ℹ️`
+* `Assistente IA 🤖`
+* `Localizar 📍`
+* `Saiba Mais ℹ️`
 
+---
 
 #### 4.2 Consulta por faixa etária/grupo
 
 1. Clique em **`Calendário Vacinal 📅`**.
 2. Será exibido um menu no qual o usuário deverá escolher entre uma faixa etária ou `Gestante 🤰`.
-3. O bot exibirá as vacinas recomendadas para as pessoas que se encaixam na faixa etária/grupo escolhido.
-4. O usuário poderá também, se desejar, clicar no botão `Ver ou Baixar PDF 📄` ao final da mensagem para acessar via navegador ou baixar o PDF oficial contendo as recomendações de vacinas e dosagens para o grupo desejado disponibilizado pelo Ministério da Saúde.
+3. O bot exibirá as vacinas recomendadas para o grupo escolhido.
+4. O usuário poderá, se desejar, clicar no botão `Ver ou Baixar PDF 📄` ao final da mensagem para acessar o PDF oficial do Ministério da Saúde.
 
 Exemplo de resposta:
 
@@ -210,238 +234,93 @@ Exemplo de resposta:
 
 💉 dengue tetravalente
     • 2 doses (conforme histórico vacinal)
-
-───────────────────
-
-🗓️ 11 a 14 anos:
-
-💉 meningite meningocócica ACWY
-    • 1 dose
-
-───────────────────
-
-🗓️ 10 a 24 anos:
-
-💉 hepatite B
-    • 3 doses (conforme histórico vacinal)
-
-💉 dT
-    • 3 doses (conforme histórico vacinal)
-
-💉 febre amarela
-    • 1 dose (conforme histórico vacinal)
-
-💉 tríplice viral SCR
-    • 2 doses (conforme histórico vacinal)
-
-💉 pneumocócica 23 – valente
-    • 2 doses (somente indígena, sem histórico vacinal com pneumo conjugada)
-
-💉 varicela
-    • 2 doses (somente indígena e trabalhador de saúde, sem histórico da doença ou na dúvida e conforme histórico vacinal)
 ```
 
-#### 4.3 Consulta de cobertura vacinal por região
+---
+
+#### 4.3 Consulta de cobertura vacinal
 
 1. Clique em **`Cobertura 📊`**.
-2. Selecione a região desejada.
-3. O bot exibirá a cobertura vacinal de diversas vacinas para a região escolhida.
+2. Escolha entre **Região 🌎**, **Estado 🗺️** ou **Cidade 🏙️**.
+3. Navegue até o local desejado e o bot exibirá a cobertura vacinal por vacina.
 
 Exemplo de resposta:
 
 ```
 📊 Cobertura vacinal - Sudeste
 
-Cobertura geral: 81.2%
+📈 Média das vacinas: 81.2%
 
 💉 Vacinas:
 
 • BCG: 95.5%
 • Covid-19: 78.1%
 • Dengue: 61.4%
-• dT: 82.2%
-• dTpa: 79.0%
-• Febre amarela: 77.9%
-• Hepatite B: 83.3%
-• HPV: 65.5%
-• Influenza: 80.4%
-• Meningococica C: 86.1%
-• Penta: 84.2%
-• Poliomielite VIP: 87.5%
-• Triplice viral: 89.0%
-• Varicela: 82.1%
-• VVSR: 68.2%
+...
 ```
 
-#### 4.4 Consulta por nome da vacina ou da região
+---
 
-Além das consultas a partir dos botões, o bot também permite buscar informações específicas sobre uma vacina ou uma região pelo seu nome.
+#### 4.4 Localizar UBS próxima
 
-Para isso, utilize o comando:
+1. Clique em **`Localizar 📍`**.
+2. Envie sua localização pelo GPS (botão `📍 Enviar minha localização`) **ou** digite seu CEP (somente números).
+3. O bot retornará as 3 UBSs mais próximas com endereço e link para o Google Maps.
+
+Exemplo de resposta:
+
+```
+🏥 UBSs mais próximas:
+
+🥇 UBS JARDIM AMERICA — mais próxima
+    Rua Das Flores, 123, Jardim América, São Paulo
+    📍 Ver no Google Maps
+
+🥈 UBS VILA NOVA
+    Av. Principal, 456, Vila Nova, São Paulo
+    📍 Ver no Google Maps
+```
+
+---
+
+#### 4.5 Assistente IA
+
+1. Clique em **`Assistente IA 🤖`**.
+2. Digite sua pergunta em linguagem natural, por exemplo: *"quais vacinas pra idoso?"* ou *"cobertura vacinal no nordeste"*.
+3. O bot interpretará a pergunta e retornará a resposta adequada.
+
+> **Requisito:** o Assistente IA utiliza o modelo **Mistral** via **Ollama**, que deve estar instalado e em execução localmente (veja o Manual de Instalação).
+
+---
+
+#### 4.6 Busca por nome com /procurar
+
+Além dos botões, o bot permite buscar informações específicas sobre uma vacina ou região pelo nome:
 
 ```
 /procurar <nome_da_vacina_ou_região>
 ```
 
-Exemplo de uso:
+Exemplos:
 
 ```
 /procurar dT
-```
-
-```
 /procurar centro-oeste
-```
-
-Como funciona:
-
-Ao enviar o comando, o bot realiza uma busca na base de dados e retorna informações a respeito da faixa etária/grupo que deve tomar a vacina informada ou dos dados da cobertura vacinal relacionados a região informada.
-
-Exemplos de respostas:
-
-```
-🗓️ Agendar ao saber da gravidez:
-
-💉 dT
-    • 3 doses (conforme histórico vacinal)
-
-🗓️ A partir de 7 anos (todas as idades):
-
-💉 dT
-    • 3 doses (conforme histórico vacinal)
-
-🗓️ 10 a 24 anos:
-
-💉 dT
-    • 3 doses (conforme histórico vacinal)
-
-🗓️ 25 a 59 anos:
-
-💉 dT ¹
-    • 3 doses (conforme histórico vacinal)
-
-🗓️ A partir dos 60 anos:
-
-💉 dT ¹
-    • 3 doses (conforme histórico vacinal)
-```
-
-```
-📊 Cobertura vacinal - Centro-Oeste
-
-Cobertura geral: 78.1%
-
-💉 Vacinas:
-
-• BCG: 92.0%
-• Covid-19: 73.5%
-• Dengue: 55.2%
-• dT: 79.0%
-• dTpa: 75.4%
-• Febre amarela: 81.1%
-• Hepatite B: 80.2%
-• HPV: 60.7%
-• Influenza: 77.1%
-• Meningococica C: 82.5%
-• Penta: 81.2%
-• Poliomielite VIP: 84.0%
-• Triplice viral: 85.5%
-• Varicela: 79.4%
-• VVSR: 64.0%
+/procurar nordeste
 ```
 
 ---
 
-### 5. Respostas do sistema
-
-Após a consulta, o bot retorna uma lista com as vacinas recomendadas e suas respectivas doses.
-
-Exemplo:
-
-```
-🗓️ Agendar ao saber da gravidez:
-
-💉 hepatite B
-    • 3 doses (conforme histórico vacinal)
-
-💉 dT
-    • 3 doses (conforme histórico vacinal)
-
-💉 influenza trivalente
-    • 1 dose por temporada
-
-💉 covid-19
-    • 1 dose a cada gestação
-
-💉 dTpa
-    • 1 dose a partir da 20ª semana gestacional, em cada gestação
-
-💉 febre amarela 1
-    • 1 dose, em casos excepcionais, conforme histórico vacinal
-
-💉 vírus sincicial respiratório (VVSR)
-    • 1 dose a partir da 28ª semana gestacional, em cada gestação
-```
-
-As informações são apresentadas de forma direta, indicando o **nome da vacina** e a **dose ou periodicidade recomendada**.
-
----
-
-### 6. Observações
+### 5. Observações
 
 * O bot precisa estar **em execução** para responder às mensagens.
-* O usuário também pode iniciar a interação utilizando o comando `/procurar` para realizar uma busca direta.
+* Os dados de calendário e cobertura são atualizados automaticamente toda semana ao iniciar o bot.
+* O Assistente IA (`Assistente IA 🤖`) requer o Ollama com o modelo Mistral instalado localmente.
 * O tempo de resposta pode levar alguns segundos enquanto o sistema processa os dados.
-* Os dados são obtidos novamente toda semana, mesmo se não ocorreram alterações.
 
 ---
 
-### 7. Exemplo de uso
-
-Digite:
-
-```
-/start
-```
-ou envie uma mensagem qualquer.
-
-Selecione uma das **opções** exibidas no menu ao clicar em um dos botões.
-
-Após a seleção de uma das opções, o bot exibirá mais opções relacionadas a opção escolhida.
-
-Exemplo de saída para `Calendário Vacinal 📅`, `Idoso 👴`:
-
-```
-🗓️ A partir dos 60 anos:
-
-💉 hepatite B
-    • 3 doses (conforme histórico vacinal)
-
-💉 dT ¹
-    • 3 doses (conforme histórico vacinal)
-
-💉 febre amarela 2
-    • 1 dose, em casos excepcionais (conforme histórico vacinal)
-
-💉 tríplice viral SCR
-    • 2 doses (somente trabalhadores de saúde, conforme histórico vacinal)
-
-💉 pneumocócica 23-valente 3
-    • 2 doses (somente para idosos acamados e/ou institucionalizados, sem histórico vacinal, e povos indígenas sem histórico vacinal com pneumocócica conjugada)
-
-💉 varicela
-    • 2 doses (somente povos indígenas e trabalhadores de saúde, que não tiveram a doença ou na dúvida, conforme histórico vacinal)
-
-💉 influenza trivalente
-    • 1 dose anual com a vacina da temporada
-
-💉 covid-19
-    • 1 dose semestral
-```
-
 ## 🛠️ Manual de Instalação <a id="manual-instalacao"></a>
-
-Para instalar e executar o bot de maneira local:
 
 ### 1.1 Requisitos
 
@@ -450,7 +329,8 @@ Para executar o bot localmente é necessário:
 * Conexão à Internet;
 * [Python](https://www.python.org/downloads/) 3.9 ou superior instalado;
 * [Git](https://git-scm.com/install/);
-* Token de um bot criado no **BotFather** (@BotFather no Telegram).
+* Token de um bot criado no **BotFather** (@BotFather no Telegram);
+* [Ollama](https://ollama.com/) instalado e em execução (necessário para o Assistente IA).
 
 ### 1.2 Instalação
 
@@ -467,19 +347,29 @@ Instale as dependências:
 python -m pip install -r requirements.txt
 ```
 
-### 1.3 Inserindo um Token
+### 1.3 Configurando o Ollama (Assistente IA)
 
-Abra o arquivo `main.py` localizado na pasta `src` na raiz do projeto e insira um **token gerado pelo BotFather** no seguinte espaço:
+Instale o [Ollama](https://ollama.com/) e baixe o modelo Mistral:
 
 ```bash
-TOKEN = ""
+ollama pull mistral
+```
+
+Mantenha o Ollama em execução em segundo plano antes de iniciar o bot.
+
+### 1.4 Inserindo um Token
+
+Abra o arquivo `src/bot.py` e substitua o valor da variável `TOKEN` pelo token gerado pelo BotFather:
+
+```python
+TOKEN = "SEU_TOKEN_AQUI"
 ```
 
 `(Exemplo de Token: "8391826405:AAQxZr7KpLmN8sVtY2HdFJcW9uB3EgR5iKQ")`
 
-### 1.4 Executando o Bot
+### 1.5 Executando o Bot
 
-Dentro do diretório gerado, execute:
+Dentro do diretório clonado, execute:
 
 ```bash
 python src/main.py

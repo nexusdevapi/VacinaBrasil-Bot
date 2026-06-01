@@ -23,7 +23,7 @@ def precisa_update():
     return datetime.now() - data_modificacao > timedelta(days=7)
 
 
-def esperar(page, t=8000):
+def esperar(page, t=4000):
     page.wait_for_timeout(t)
 
 
@@ -34,16 +34,12 @@ def clicar(page, sel):
 
 
 def baixar(page, click_fn, output_path):
-
-    with page.expect_download(timeout=8000) as d:
+    with page.expect_download(timeout=30000) as d:
         click_fn()
-        page.wait_for_timeout(4000)
 
     download = d.value
-
     final_path = output_path.with_suffix(".xlsx")
     download.save_as(str(final_path))
-
     return final_path
 
 
@@ -55,20 +51,28 @@ def baixar_cobertura(page):
     page.locator("#aba2-tab").click(force=True)
     esperar(page, 8000)
 
+    page.locator('[title="Numerador"]').click(force=True)
+    esperar(page, 1000)
+
+    page.locator('[title="Denominador"]').click(force=True)
+    esperar(page, 1000)
+
+    page.locator('[data-testid="actions-toolbar-confirm"]').click(force=True)
+    esperar(page, 6000)
+
     return baixar(
         page,
         lambda: clicar(page, "#exportar-dados-QV1-10"),
         OUT_DIR / "cobertura_vacinal_geral.xlsx"
     )
 
-
 def baixar_covid_mono(page):
 
     page.goto(URL_COVID, wait_until="domcontentloaded")
-    esperar(page, 8000)
+    esperar(page, 5000)
 
     page.locator("#mono-tab").click(force=True)
-    esperar(page, 8000)
+    esperar(page, 5000)
 
     return baixar(
         page,
@@ -80,10 +84,10 @@ def baixar_covid_mono(page):
 def baixar_covid_mono_uf(page):
 
     page.goto(URL_COVID, wait_until="domcontentloaded")
-    esperar(page, 8000)
+    esperar(page, 5000)
 
     page.locator("#mono-tab").click(force=True)
-    esperar(page, 8000)
+    esperar(page, 5000)
 
     return baixar(
         page,
@@ -122,55 +126,91 @@ def clean(v):
     v = str(v).strip()
     return None if v.lower() == "nan" else v
 
-
 def parse_xlsx(path, name):
 
     df = pd.read_excel(path)
-    df = df.ffill()
 
-    cols = df.columns.tolist()
+    if "Unnamed: 1" in df.columns and df.iloc[0]['Unnamed: 1'] == 'Região Ocorrência':
 
-    fixed = cols[:5]
-    vacina_cols = cols[5:]
+        df_data = df.iloc[1:].reset_index(drop=True)
 
-    data = {}
+        num_cols = [c for c in df.columns if c.endswith('.1')]
+        den_cols = [c for c in df.columns if c.endswith('.2')]
+        vacinas  = [c.replace('.1', '') for c in num_cols]
 
-    for _, row in df.iterrows():
+        C1, C2, C3, C4, C5 = 'Unnamed: 1', 'Unnamed: 2', 'Unnamed: 3', 'Unnamed: 4', 'Imunobiológico'
 
-        occ = clean(row[fixed[0]])
-        uf = clean(row[fixed[1]])
-        macro = clean(row[fixed[2]])
-        reg = clean(row[fixed[3]])
-        mun = clean(row[fixed[4]])
+        def cell(row, col):
+            v = row[col]
+            return str(v).strip() if pd.notna(v) else None
 
-        if not all([occ, uf, macro, reg, mun]):
-            continue
+        def to_float(v):
+            try: return float(v)
+            except: return None
 
-        data.setdefault(name, {})
-        data[name].setdefault(occ, {})
-        data[name][occ].setdefault(uf, {})
-        data[name][occ][uf].setdefault(macro, {})
-        data[name][occ][uf][macro].setdefault(reg, {})
-        data[name][occ][uf][macro][reg].setdefault(mun, {})
+        brasil = {}
 
-        target = data[name][occ][uf][macro][reg][mun]
+        for _, row in df_data.iterrows():
+            n1 = cell(row, C1)
+            n2 = cell(row, C2)
+            n3 = cell(row, C3)
+            n4 = cell(row, C4)
+            n5 = cell(row, C5)
 
-        for col in vacina_cols:
-            val = row[col]
+            if n2 in (None, 'Totais') or n3 in (None, 'Totais'):
+                continue
 
-            if pd.notna(val):
+            vacinas_row = {}
+            for vacina, nc, dc in zip(vacinas, num_cols, den_cols):
+                num = to_float(row[nc])
+                den = to_float(row[dc])
+                if num is not None and den and den > 0:
+                    vacinas_row[vacina] = {
+                        "num": num,
+                        "den": den
+                    }
+
+            if not vacinas_row:
+                continue
+
+            brasil.setdefault(n1, {}).setdefault(n2, {}).setdefault(n3, {})
+
+            if n4 == 'Totais':
+                brasil[n1][n2][n3]['Totais'] = vacinas_row
+            elif n5 and n5 != 'Totais':
+                brasil[n1][n2][n3].setdefault(n5, {})
+                brasil[n1][n2][n3][n5]['Município Residência'] = n5
+                brasil[n1][n2][n3][n5].update(vacinas_row)
+
+        return {name: {"Brasil": brasil}}
+
+    else:
+        records = {}
+        for _, row in df.iterrows():
+            key = None
+            entry = {}
+            for col in df.columns:
+                v = row[col]
+                if pd.isna(v):
+                    continue
                 try:
-                    target[col] = float(val)
-                except:
-                    target[col] = str(val)
+                    entry[col] = round(float(v), 6)
+                except (ValueError, TypeError):
+                    entry[col] = str(v).strip()
 
-    return data
+            if "Cód. Município" in df.columns:
+                key = str(int(row["Cód. Município"])) if pd.notna(row["Cód. Município"]) else None
+            elif "Cód. UF" in df.columns:
+                key = str(int(row["Cód. UF"])) if pd.notna(row["Cód. UF"]) else None
 
+            if key:
+                records[key] = entry
 
+        return {name: records}
 def run():
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=False)
         context = browser.new_context(accept_downloads=True)
         page = context.new_page()
 
@@ -185,7 +225,9 @@ def run():
         browser.close()
 
     data = {}
-    data.update(parse_xlsx(cob, "cobertura_vacinal_geral"))
+    cob_data = parse_xlsx(cob, "cobertura_vacinal_geral")
+    print("Regiões encontradas:", list(cob_data.get("cobertura_vacinal_geral", {}).get("Brasil", {}).keys()))
+    data.update(cob_data)     
     data.update(parse_xlsx(mono, "covid_monovalente_municipio"))
     data.update(parse_xlsx(mono_uf, "covid_monovalente_uf"))
     data.update(parse_xlsx(biva, "covid_bivalente_municipio"))

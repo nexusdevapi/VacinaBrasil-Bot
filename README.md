@@ -340,6 +340,7 @@ Exemplo de resposta:
 🥉UBS LIMOEIRO
     Rua Corifeu De Azevedo Marques, Limoeiro, São José Dos Campos
     📍 Ver no Google Maps
+```
 
 ---
 

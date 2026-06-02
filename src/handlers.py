@@ -435,7 +435,7 @@ def callback_handler(call):
 
     # calendário
     if call.data == 'calendario_vacinal':
-        safe_edit('Escolha a faixa etária:', chat_id, call.message.message_id, menu_calendario())
+        safe_edit('Escolha o grupo/faixa etária:', chat_id, call.message.message_id, menu_calendario())
 
     elif call.data.startswith('baixar_pdf_'):
         now = time.time()

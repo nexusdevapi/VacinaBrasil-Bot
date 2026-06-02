@@ -124,7 +124,8 @@ VacinaBrasil-Bot/
 │   │   ├── banner_vacina_brasil.png
 │   │   └── qrcode_vacinabrasil_bot.png
 │   └── video/
-│       └── vacinabrasil_bot.mp4
+│       ├── vacinabrasil_bot.mp4
+│       └── vacinabrasil_bot_mobile.mp4
 └── requirements.txt
 ```
 

@@ -3,7 +3,7 @@ import time
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from datetime import timedelta
 
-TOKEN = "SEU_TOKEN_AQUI"
+TOKEN = "8513074082:AAGER062M9LPwNe-gLFDbDTG91Rjlm46D44"
 bot = telebot.TeleBot(TOKEN)
 
 user_data = {}
@@ -16,6 +16,7 @@ COOLDOWN_PDF = 5
 esperando_cidade = {}
 esperando_localizacao = set()
 esperando_procurar = set()
+esperando_data = set()
 
 grupos = {
     'grupo_gestante': 'Gestante',
@@ -70,7 +71,7 @@ def safe_edit(text, chat_id, message_id, markup=None):
 
 
 def em_fluxo(chat_id):
-    return chat_id in esperando_localizacao or esperando_cidade.get(chat_id) or chat_id in esperando_procurar
+    return chat_id in esperando_localizacao or esperando_cidade.get(chat_id) or chat_id in esperando_procurar or chat_id in esperando_data
 
 
 # menu principal
@@ -118,6 +119,7 @@ def menu_calendario():
         InlineKeyboardButton('Adulto 🧑‍💼', callback_data='grupo_adulto'),
         InlineKeyboardButton('Idoso 👴', callback_data='grupo_idoso')
     )
+    markup.row(InlineKeyboardButton('📅 Informar data', callback_data='data_nasc'))
     markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='voltar_menu'))
     return markup
 
@@ -167,7 +169,7 @@ def menu(chat_id, user_id):
             bot.delete_message(chat_id, old_warning)
         except telebot.apihelper.ApiTelegramException:
             pass
-    msg = bot.send_message(chat_id, 'Bem-vindo(a) ao Vacina Brasil Bot 💉🇧🇷\nO que deseja consultar hoje?', reply_markup=menu_principal())
+    msg = bot.send_message(chat_id, '<b>Bem-vindo(a) ao Vacina Brasil Bot 💉🇧🇷</b>\n<b>O que deseja consultar hoje?</b>\n\n<b>⚠️ ATENÇÃO:</b> este bot oferece apenas informações gerais e NÃO substitui a consulta a um profissional de saúde.', parse_mode='HTML', reply_markup=menu_principal())
     data['menu_msg_id'] = msg.message_id
 
 
@@ -177,7 +179,7 @@ def volta_para(call, destino):
         return
 
     menus = {
-        'menu_principal': ('Bem-vindo(a) ao Vacina Brasil Bot 💉🇧🇷\nO que deseja consultar hoje?', menu_principal),
+        'menu_principal': ('<b>Bem-vindo(a) ao Vacina Brasil Bot 💉🇧🇷</b>\n<b>O que deseja consultar hoje?</b>\n\n<b>⚠️ ATENÇÃO:</b> este bot oferece apenas informações gerais e NÃO substitui a consulta a um profissional de saúde.', menu_principal),
         'calendario_vacinal': ('Escolha a faixa etária:', menu_calendario),
     }
 

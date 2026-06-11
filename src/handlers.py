@@ -7,12 +7,12 @@ from textwrap import dedent
 from bot import (
     bot, user_data, mensagem_localizacao,
     reiniciar_menu_natural, pdf_cooldown, COOLDOWN_PDF,
-    esperando_cidade, esperando_localizacao, esperando_procurar, grupos,
+    esperando_cidade, esperando_localizacao, esperando_procurar, esperando_data, grupos,
     anti_spam, delete_if_exists, save_msg_id, safe_edit, em_fluxo,
     menu, menu_principal, menu_calendario, menu_regioes,
     menu_cobertura, gerar_estados_pagina, volta_para
 )
-from core.engine import pega_vacina, procura_vacina, consultar_cobertura, resposta_ia
+from core.engine import pega_vacina, procura_vacina, consultar_cobertura, resposta_ia, dia
 from utils.helpers import urls
 from data_handler.handler_ubs import proximas_ubs
 
@@ -267,6 +267,74 @@ def handle_procurar_input(message):
     data['procurar_resultado_msg_id'] = msg.message_id
 
 
+def handle_data_nasc_input(message):
+    chat_id = message.chat.id
+    user_id = message.from_user.id
+    data = user_data.setdefault(user_id, {})
+
+    esperando_data.discard(chat_id)
+
+    prompt_msg_id = data.pop('data_nasc_prompt_msg_id', None)
+    if prompt_msg_id:
+        try:
+            bot.delete_message(chat_id, prompt_msg_id)
+        except:
+            pass
+
+    resultado = dia(message.text.strip())
+
+    if isinstance(resultado, Exception) or not resultado:
+        markup = InlineKeyboardMarkup()
+        markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='calendario_vacinal'))
+        msg = bot.send_message(chat_id, '❌ Data inválida. Use o formato DD/MM/AAAA.', reply_markup=markup)
+        data['data_nasc_prompt_msg_id'] = msg.message_id
+        esperando_data.add(chat_id)
+        return
+
+    mapa_grupo = {
+        'Gestante': 'grupo_gestante',
+        'Criança': 'grupo_crianca',
+        'Adolescente': 'grupo_jovens',
+        'Adulto': 'grupo_adulto',
+        'Idoso': 'grupo_idoso',
+    }
+
+    grupo_pdf = None
+    texto = message.text.strip()
+    try:
+        dia_n, mes_n, ano_n = map(int, texto.split('/'))
+        from datetime import date
+        nasc = date(ano_n, mes_n, dia_n)
+        atual = date.today()
+        if atual.year == nasc.year:
+            anos = 0
+        else:
+            anos = atual.year - nasc.year
+            if not (nasc.month, nasc.day) <= (atual.month, atual.day):
+                anos -= 1
+
+        if anos >= 60:
+            grupo_pdf = 'grupo_idoso'
+        elif 25 <= anos <= 29:
+            grupo_pdf = 'grupo_adulto'
+        elif 10 <= anos <= 24:
+            grupo_pdf = 'grupo_jovens'
+        else:
+            grupo_pdf = 'grupo_crianca'
+    except:
+        grupo_pdf = None
+
+    markup = InlineKeyboardMarkup()
+    if grupo_pdf:
+        markup.row(InlineKeyboardButton('📄 Ver ou Baixar PDF', callback_data=f'baixar_pdf_{grupo_pdf}'))
+    markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='voltar_calendario'))
+
+    delete_if_exists(chat_id, user_id, 'pdf_msg_id')
+    msg = bot.send_message(chat_id, resultado, reply_markup=markup, parse_mode='HTML')
+    data['menu_msg_id'] = msg.message_id
+    data['data_nasc_resultado'] = message.text.strip()
+
+
 @bot.message_handler(func=lambda m: m.text and not m.text.startswith('/'))
 def start_natural(message):
     user_id = message.from_user.id
@@ -283,6 +351,10 @@ def start_natural(message):
 
     if chat_id in esperando_procurar:
         handle_procurar_input(message)
+        return
+
+    if chat_id in esperando_data:
+        handle_data_nasc_input(message)
         return
 
     data = user_data.setdefault(user_id, {})
@@ -353,7 +425,8 @@ def callback_handler(call):
     valid_ids = [
         data.get('menu_msg_id'), data.get('pdf_msg_id'), data.get('ubs_msg_id'),
         data.get('ia_resposta_msg_id'), data.get('ia_saudacao_msg_id'),
-        data.get('search_msg_id'), data.get('procurar_resultado_msg_id')
+        data.get('search_msg_id'), data.get('procurar_resultado_msg_id'),
+        data.get('data_nasc_prompt_msg_id')
     ]
 
     if call.message.message_id not in valid_ids:
@@ -371,6 +444,7 @@ def callback_handler(call):
     def edita_mensagem(mensagem, grupo):
         markup = InlineKeyboardMarkup()
         markup.row(InlineKeyboardButton('📄 Ver ou Baixar PDF', callback_data=f'baixar_pdf_{grupo}'))
+        markup.row(InlineKeyboardButton('🤖 Ver com a IA', callback_data='assistente'))
         markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='voltar_calendario'))
         safe_edit(pega_vacina(mensagem), chat_id, call.message.message_id, markup)
 
@@ -431,6 +505,15 @@ def callback_handler(call):
         safe_edit('Informe o nome da vacina:', chat_id, call.message.message_id, markup)
         data['menu_msg_id'] = call.message.message_id
         data['procurar_resultado_msg_id'] = None
+        return
+
+    if call.data == 'data_nasc':
+        esperando_data.add(chat_id)
+        markup = InlineKeyboardMarkup()
+        markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='calendario_vacinal'))
+        safe_edit('Informe uma data de nascimento:', chat_id, call.message.message_id, markup)
+        data['data_nasc_prompt_msg_id'] = call.message.message_id
+        data['menu_msg_id'] = call.message.message_id
         return
 
     # calendário
@@ -580,6 +663,7 @@ def callback_handler(call):
         esperando_cidade.pop(chat_id, None)
         esperando_localizacao.discard(chat_id)
         esperando_procurar.discard(chat_id)
+        esperando_data.discard(chat_id)
 
         try:
             msg_rm = bot.send_message(chat_id, "\u200b", reply_markup=telebot.types.ReplyKeyboardRemove())
@@ -597,6 +681,7 @@ def callback_handler(call):
         data['mode'] = False
 
     elif call.data == 'voltar_calendario':
+        esperando_data.discard(chat_id)
         volta_para(call, 'calendario_vacinal')
         delete_if_exists(chat_id, user_id, 'pdf_msg_id')
 
@@ -605,5 +690,6 @@ def callback_handler(call):
 
     elif call.data in grupos:
         edita_mensagem(grupos[call.data], call.data)
+
 
     bot.answer_callback_query(call.id)

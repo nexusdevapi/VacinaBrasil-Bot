@@ -444,7 +444,6 @@ def callback_handler(call):
     def edita_mensagem(mensagem, grupo):
         markup = InlineKeyboardMarkup()
         markup.row(InlineKeyboardButton('📄 Ver ou Baixar PDF', callback_data=f'baixar_pdf_{grupo}'))
-        markup.row(InlineKeyboardButton('🤖 Ver com a IA', callback_data='assistente'))
         markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='voltar_calendario'))
         safe_edit(pega_vacina(mensagem), chat_id, call.message.message_id, markup)
 
@@ -518,7 +517,7 @@ def callback_handler(call):
 
     # calendário
     if call.data == 'calendario_vacinal':
-        safe_edit('Escolha o grupo/faixa etária:', chat_id, call.message.message_id, menu_calendario())
+        safe_edit('Escolha o grupo/faixa etária ou informe uma data de nascimento:', chat_id, call.message.message_id, menu_calendario())
 
     elif call.data.startswith('baixar_pdf_'):
         now = time.time()

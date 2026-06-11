@@ -2,6 +2,14 @@
 
 > Status do Projeto: Sprint 1 - Concluída ✅ (11/03 - 10/04)
 
+## 🎬 Demonstração
+
+[![Vacina Brasil Bot - Demonstração](https://img.youtube.com/vi/hXleYF3Y0eo/maxresdefault.jpg)](https://www.youtube.com/watch?v=hXleYF3Y0eo)
+
+> 🔗 [Clique para assistir no YouTube](https://www.youtube.com/watch?v=hXleYF3Y0eo)
+
+---
+
 ## 🏅 Desafio <a id="desafio"></a>
 
 Desenvolver um assistente virtual para Telegram focado em saúde pública. O bot informa ao usuário **as vacinas recomendadas de acordo com a faixa etária selecionada**, utilizando **scraping** e **dados processados localmente a partir de arquivos JSON**.

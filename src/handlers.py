@@ -281,7 +281,8 @@ def handle_data_nasc_input(message):
         except:
             pass
 
-    resultado = dia(message.text.strip())
+    resultado_raw = dia(message.text.strip())
+    resultado = resultado_raw[0] if isinstance(resultado_raw, tuple) else resultado_raw
 
     if isinstance(resultado, Exception) or not resultado:
         markup = InlineKeyboardMarkup()
@@ -382,6 +383,8 @@ def start_natural(message):
 
         if isinstance(resposta, tuple):
             texto_vacina, grupo_pdf = resposta
+            if not texto_vacina or not texto_vacina.strip():
+                texto_vacina = 'Não encontrei informações para esse grupo.'
             markup = InlineKeyboardMarkup()
             if grupo_pdf:
                 markup.row(InlineKeyboardButton('📄 Ver ou Baixar PDF', callback_data=f'baixar_pdf_{grupo_pdf}'))
@@ -393,7 +396,10 @@ def start_natural(message):
             return
 
         markup = _markup_voltar_ia()
-        msg = bot.send_message(chat_id, resposta, reply_markup=markup, parse_mode='html')
+        resposta_texto = resposta[0] if isinstance(resposta, tuple) else resposta
+        if not resposta_texto or not str(resposta_texto).strip():
+            resposta_texto = 'Não encontrei informações para essa pergunta.'
+        msg = bot.send_message(chat_id, resposta_texto, reply_markup=markup, parse_mode='html')
         data['ia_resposta_msg_id'] = msg.message_id
         data['ia_grupo_pdf'] = None
         return

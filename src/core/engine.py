@@ -289,10 +289,16 @@ def idade(id):
         elif 10 <= ano <= 24:
             periodo = 'Adolescente_json'
         elif 25 <= ano <= 59:
-            return pega_vacina('Adulto')
+            return (pega_vacina('Adulto'), 'grupo_adulto')
         elif ano >= 60:
-            return pega_vacina('Idoso')
+            return (pega_vacina('Idoso'), 'grupo_idoso')
 
+        mapa_grupo_idade = {
+            'Gestante_json': 'grupo_gestante',
+            'Criança_json': 'grupo_crianca',
+            'Adolescente_json': 'grupo_jovens',
+        }
+        grupo_periodo = mapa_grupo_idade.get(periodo)
         data = pega_vacina(periodo)
     except Exception as e:
             return "Poderia repetir sua pergunta?"
@@ -313,7 +319,7 @@ def idade(id):
         if semana != -1 and ano == mes == -1:
             match = re.search(r'(\d+)ª', info['dose'])
             if match and semana < int(match.group(1)):
-                return resultado
+                return (resultado, grupo_periodo)
             if info['idade_texto'] != '':
                 resultado += f'🗓️ <b>{info['idade_texto'].replace('\n', ' ')}</b>:\n\n' if resultado == '' else f'───────────────────\n\n🗓️ <b>{info['idade_texto'].replace('\n', ' ')}</b>:\n\n'
             resultado += f'💉 {info['vacina'].replace('\n', ' ')}\n    • {info['dose'].replace('\n', ' ')}\n\n'
@@ -324,7 +330,7 @@ def idade(id):
                 resultado += f'💉 {info['vacina'].replace('\n', ' ')}\n    • {info['dose'].replace('\n', ' ')}\n\n'
         elif mes > 0 and ano == 0:
             if info['idade_texto'].endswith('anos'):
-                return resultado
+                return (resultado, grupo_periodo)
 
             if info['idade_max'] is None:
                 if mes >= info['idade_min']:
@@ -350,7 +356,7 @@ def idade(id):
                     if info['idade_texto'] != '':
                         resultado += f'🗓️ <b>{info['idade_texto'].replace('\n', ' ')}</b>:\n\n' if resultado == '' else f'───────────────────\n\n🗓️ <b>{info['idade_texto'].replace('\n', ' ')}</b>:\n\n'
                     resultado += f'💉 {info['vacina'].replace('\n', ' ')}\n    • {info['dose'].replace('\n', ' ')}\n\n'
-    return resultado
+    return (resultado, grupo_periodo)
 
 def localizar():
     return "__LOCALIZAR__"
@@ -375,7 +381,7 @@ def resposta_ia(perg):
 
     Available functions:
     - greet: use when greeting. pass empty string as args
-    - pega: searches vaccines for age groups. Arguments must be one of: Gestante, Criança, Adolescente e Jovem, Adulto, Idoso
+    - pega: searches vaccines for age groups. Arguments must be exactly one of: Gestante, Criança, Adolescente e Jovem, Adulto, Idoso
     - procura: searches by vaccine name (e.g. dengue, hepatite, covid)
     - cobertura: searches vaccination coverage by location. Accepts Brazilian regions (Norte, Nordeste, Centro-Oeste, Sul, Sudeste), state abbreviations (SP, RJ, MG...), or city names (e.g. Sobral, Campinas). Pass exactly what the user said as the location.
     - dia: converts a date in dd/mm/yyyy format to an age group
@@ -405,16 +411,26 @@ def resposta_ia(perg):
     selected = json.loads(selected)
 
     if selected['funcao'] in functions:
-        resultado = functions[selected['funcao']](selected['args'])
         if selected['funcao'] == 'pega':
             periodo = selected['args']
+            normalizacao = {
+                'Jovem': 'Adolescente e Jovem',
+                'Jovens': 'Adolescente e Jovem',
+                'Adolescente': 'Adolescente e Jovem',
+                'Adolescentes': 'Adolescente e Jovem',
+            }
+            periodo = normalizacao.get(periodo, periodo)
+            resultado = pega_vacina(periodo)
             mapa_grupo = {
                 'Gestante': 'grupo_gestante',
                 'Criança': 'grupo_crianca',
-                'Adolescente': 'grupo_jovens',
+                'Adolescente e Jovem': 'grupo_jovens',
                 'Adulto': 'grupo_adulto',
                 'Idoso': 'grupo_idoso',
             }
-            grupo = next((v for k, v in mapa_grupo.items() if periodo.startswith(k)), None)
+            grupo = mapa_grupo.get(periodo)
             return (resultado, grupo)
+        resultado = functions[selected['funcao']](selected['args'])
+        if selected['funcao'] in ('dia', 'idade') and isinstance(resultado, tuple):
+            return resultado
         return resultado

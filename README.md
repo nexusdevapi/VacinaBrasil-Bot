@@ -12,11 +12,9 @@ O projeto segue a metodologia ágil **Scrum**, com foco em desenvolvimento colab
 
 ## 🎥 Demonstração
 
-<p align="center">
-  <a href="https://youtu.be/2UQt_WH9Yj4">
-    <img src="https://img.youtube.com/vi/tY-uqS3kM9k/maxresdefault.jpg" width="800">
-  </a>
-</p>
+[![Vacina Brasil Bot - Demonstração](https://img.youtube.com/vi/wad36pTf6_Y/maxresdefault.jpg)](https://youtu.be/wad36pTf6_Y)
+
+> 🔗 [Clique para assistir no YouTube](https://youtu.be/wad36pTf6_Y)
 
 ## 📑 Índice
 

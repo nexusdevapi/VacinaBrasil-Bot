@@ -262,37 +262,41 @@ def dia(nascimento):
 
         return idade(f'{ano} years')
     except Exception as e:
-        return e
+        return "Poderia repetir sua pergunta?"
    
 def idade(id):
     ano = mes = semana = -1
     resultado = ''
     max = mini = 0
-    if 'semana' in id or 'week' in id:
-        if id == 'semana':
-            semana = 1
-        semana = int(id.split()[0])
-    elif 'month' in id:
-        mes = int(id.split()[0])
-    elif 'year' in id:
-        ano = int(id.split()[0])
-        if ano == 1:
-            ano = -1
-            mes = 12
+    try:
+
+        if 'year' in id or 'ano' in id:
+            ano = int(id.split()[0])
+            if ano == 1:
+                ano = -1
+                mes = 12
+        elif 'month' in id or 'mes' in id:
+            mes = int(id.split()[0])
+        elif 'semana' in id or 'week' in id:
+            if id == 'semana':
+                semana = 1
+            semana = int(id.split()[0])
+        
+        if semana != -1:
+            periodo = 'Gestante_json'
+        elif 0 <= ano <= 9 or 0 <= mes <= 15:
+            periodo = 'Criança_json'
+        elif 10 <= ano <= 24:
+            periodo = 'Adolescente_json'
+        elif 25 <= ano <= 59:
+            return pega_vacina('Adulto')
+        elif ano >= 60:
+            return pega_vacina('Idoso')
+
+        data = pega_vacina(periodo)
+    except Exception as e:
+            return "Poderia repetir sua pergunta?"
     
-    if semana != -1:
-        periodo = 'Gestante_json'
-    elif 0 <= ano <= 9 or 0 <= mes <= 15:
-        periodo = 'Criança_json'
-    elif 10 <= ano <= 24:
-        periodo = 'Adolescente_json'
-    elif 25 <= ano <= 29:
-        return pega_vacina('Adulto')
-    elif ano >= 60:
-        return pega_vacina('Idoso')
-
-    data = pega_vacina(periodo)
-
     for info in data:
         if info['idade_min'] is not None:
             mini = info["idade_min"]

@@ -59,35 +59,6 @@ def start(message):
     menu(chat_id, user_id)
 
 
-@bot.message_handler(commands=['procurar'])
-def procurar(message):
-    user_id = message.from_user.id
-    chat_id = message.chat.id
-
-    delete_if_exists(chat_id, user_id, 'search_msg_id')
-
-    if len(message.text.split()) < 2:
-        msg = bot.reply_to(message, 'Use: /procurar nome da vacina ou região.')
-        save_msg_id(user_id, 'search_msg_id', msg)
-        return
-
-    termo = ' '.join(message.text.split()[1:]).strip().lower()
-    termo_regiao = termo.replace('-', '').replace(' ', '')
-    regioes = {'norte': 'Norte', 'nordeste': 'Nordeste', 'centrooeste': 'Centro-Oeste', 'sudeste': 'Sudeste', 'sul': 'Sul'}
-
-    if termo_regiao in regioes:
-        msg = bot.reply_to(message, consultar_cobertura(regioes[termo_regiao]))
-        save_msg_id(user_id, 'search_msg_id', msg)
-        return
-
-    markup = InlineKeyboardMarkup()
-    markup.row(InlineKeyboardButton('⬅️ Voltar', callback_data='voltar_procurar'))
-    resposta = procura_vacina(termo)
-    msg = bot.send_message(chat_id, resposta, reply_markup=markup, parse_mode='HTML')
-    data = user_data.setdefault(user_id, {})
-    data['procurar_resultado_msg_id'] = msg.message_id
-
-
 def handle_cidade(message):
     chat_id = message.chat.id
     user_id = message.from_user.id
